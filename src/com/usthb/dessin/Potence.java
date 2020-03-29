@@ -8,5 +8,5 @@ package com.usthb.dessin;
  *
  */
 public class Potence {
-
+	
 }
