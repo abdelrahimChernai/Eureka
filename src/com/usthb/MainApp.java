@@ -4,11 +4,10 @@ package com.usthb;
  * <b>MainApp est la classe contenant le point d'entrée du programme donc elle représente l'application</b>
  * <p>
  * 	Dans la MainApp on a :
- * 		<ul>
- * 			<li>Une list des joueurs.</li>
- * 			<li>Une list de thèmes.</li>
- * 			<li></li>
- * 		</ul>
+ * 	<ul>
+ * 		<li>Une list des joueurs.</li>
+ * 		<li>Une list de thèmes.</li>
+ * 	</ul>
  * </p>
  * 
  * @see Joueur

@@ -6,8 +6,25 @@ package com.usthb.modeles;
 import java.util.Date;
 
 /**
- * @author Abdelrahim Chernai
+ * <b>Joueur est la class représentant un joueur</b>
+ * <p>
+ * 	Un joueur a :
+ * 	<ul>
+ * 		<li>Un numéro séquentielle unique</li>
+ * 		<li>Un niveau allant de 1 à 5 et représentant le niveau courant du joueur</li>
+ * 		<li>Un nom</li>
+ * 		<li>Un prénom</li>
+ * 		<li>Un pseudo unique avec le quelle le joueur s'identifie</li>
+ * 		<li>Un mot de passe</li>
+ * 		<li>Une date de naissance</li>
+ * 		<li>Une liste des parties jouées</li>
+ * </ul>
  * 
+ * @see ParieJeu
+ * 
+ * </p>
+ * @author Abdelrahim Chernai
+ * @version 1.0
  */
 public class Joueur {
 	protected int id;					//Numéro séquentiel automatique.
