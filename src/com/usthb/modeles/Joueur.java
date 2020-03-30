@@ -7,11 +7,18 @@ import java.util.Date;
 
 /**
  * @author Abdelrahim Chernai
- * 
+ * @version 2.0
  */
 public class Joueur {
 	protected int id;					//Numéro séquentiel automatique.
-	protected int currentLvl;			//Dernier niveau atteint
+	
+	/**
+	 * Le niveau le plus ressent du joueur atteint lors de dernière partie joué
+	 * 
+	 * @see Levels
+	 * @since 2.0
+	 */
+	protected Levels currentLvl;
 	protected String lastName;			//Nom du joueur.
 	protected String firstName;			//Prénom du joueur.
 	protected String username;			//Nom d'utilisateur.
