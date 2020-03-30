@@ -13,6 +13,16 @@ public class ThemeJeu {
 	protected int coefficent;						//Coefficient.
 	protected String lable;							//Libellé.
 	protected LinkedList <Question> questions;		//Liste des questions.
-	//TODO create an enumeration representing the type instance variable
+	
+	/**
+	 * Le type du thème.
+	 * <p>
+	 * 	Pour plus d'unfirmation sur les valeurs possible voir documentation de
+	 * 	l'enumeration ThemeType
+	 * </p>
+	 * 
+	 * @see ThemeType
+	 */
+	protected ThemeType type;
 	
 }
