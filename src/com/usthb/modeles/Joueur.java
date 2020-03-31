@@ -27,7 +27,7 @@ public class Joueur {
 	protected Date birthDate;			//Date de naissance.
 	
 	/**
-	 * A list of games played by the layer since his inscription.
+	 * A list of games played by the player since his inscription.
 	 * 
 	 * @see PartieJeu
 	 */
@@ -37,6 +37,13 @@ public class Joueur {
 		
 	}
 	
+	
+	/**
+	 * gives the number of points collected by the player since his inscription 
+	 * @return the total score from the played games list.
+	 * 
+	 * @see PartieJeu
+	 */
 	public int getTotalScore() {
 		int totalScore = 0;
 		
