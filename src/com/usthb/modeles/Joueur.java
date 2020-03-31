@@ -34,15 +34,53 @@ public class Joueur {
 	protected LinkedList<PartieJeu> playerGames;
 	
 	public Joueur() {
+		this.id = -1;		//Pour ne pas accéder a un joueur si on initialize
+							//pas cet variable d'instance
 		
+		this.firstName = "";//On utilise ce parameter pour verifier que le
+							//joueur n'est pas initialisé
+	}
+	
+	/**
+	 * Récupérée le numéro séquentiel du joueur
+	 * @return numéro séquentiel du joueur
+	 */
+	public int getId() {
+		return this.id;
+	}
+
+	/**
+	 * Récupérée le prénom du joueur
+	 * @return Le prénom du joueur
+	 */
+	public String getFirstName() {
+		return this.firstName;
 	}
 	
 	
 	/**
-	 * gives the number of points collected by the player since his inscription 
-	 * @return the total score from the played games list.
+	 * Récupérée le user name du joueur
+	 * @return le user name du joueur
+	 */
+	public String getUsername() {
+		return this.username;
+	}
+	
+	/**
+	 * Récupérée le mot de pass du joueur
+	 * @return
+	 */
+	public String getPassword() {
+		return this.password;
+	}
+	
+	/**
+	 * Donne le nombre de points du joueur depuis son inscription 
+	 * @return le score totale de la list partie joué.
 	 * 
 	 * @see PartieJeu
+	 * 
+	 * @see Joueur#playerGames
 	 */
 	public int getTotalScore() {
 		int totalScore = 0;
@@ -52,5 +90,4 @@ public class Joueur {
 		}
 		return totalScore;
 	}
-	
 }
