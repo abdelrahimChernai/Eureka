@@ -8,9 +8,9 @@ import java.awt.Graphics;
  * <b>S'occupe de la gestion du pendu</b>
  * 
  * <p>
- * 	Garde l'etat du pendu et s'ocupe de le dessiner selon cette Ã©tat, une
- * 	Potence est instanciÃ© dans la class PartieJeu, voir sa documentation pour
- * 	plus de dÃ©tailles.
+ * 	Garde l'état du pendu et s'ocupe de le dessiner selon cet état, une
+ * 	Potence est instancié dans la class PartieJeu, voir sa documentation pour
+ * 	plus de détailles.
  * </p>
  * 
  * @author Abdelrahim Chernai
@@ -18,16 +18,16 @@ import java.awt.Graphics;
  * 
  * @see com.usthb.modeles.PartieJeu
  */
-@SuppressWarnings("serial") //ignore this line
+
 public class Potence extends Component{
 	
 	/**
 	 * <p>
-	 * 	ReprÃ©sente l'etat de la potence qui peut Ãªtre entre 1 et 8 cet Ã©tat
-	 * 	correspond au nombre de tentative effectuÃ© par le joueur lors ce que
-	 * 	cet Ãªtat est Ã¯Â¿Â½gale a 8 ou une fausse rÃ©ponse est donnÃ©e un traitement
-	 *  sera effectuer dans la mÃ©thode PartieJeu.checkChar voir Ã¯Â¿Â½a
-	 *  documentation pour plus de dÃ©tailles.
+	 * 	Représente l'etat de la potence qui peut être entre 1 et 8 cet état
+	 * 	correspond au nombre de tentative effectué par le joueur lors ce que
+	 * 	cet état est égale a 8 ou une fausse réponse est donnée un traitement
+	 *  sera effectuer dans la méthode PartieJeu.checkChar voir la
+	 *  documentation pour plus de détailles.
 	 * </p> 
 	 * 
 	 * @see com.usthb.modeles.PartieJeu
@@ -38,8 +38,8 @@ public class Potence extends Component{
 	
 	/**
 	 * <p>
-	 * 	ReprÃ©sente si la rÃ©ponse en cours est Ã¯Â¿Â½gale a la rÃ©ponse de la question
-	 * 	des traitement seront effectuer dans la mÃ©thode PartieJeu.checkChar pour
+	 * 	Représente si la réponse en cours est égale a la réponse de la question
+	 * 	des traitement seront effectuer dans la méthode PartieJeu.checkChar pour
 	 * 	alterer l'etat de cette variable.
 	 * </p>
 	 * 
@@ -53,10 +53,10 @@ public class Potence extends Component{
 	
 	/**
 	 * <p>
-	 * 	ReprÃ©sente les dimensions de la fenÃªtre (hauteur et largeur en pixels)
-	 * 	qui est la surface sur la quelle le dessin sera posÃ©e sera utiliser afin
-	 * 	de dessiner le pendu au bonne emplacement dans la fenÃªtre. voir la
-	 * 	documentation de Potence.paint pour plus de dÃ©tailles.
+	 * 	Représente les dimensions de la fenêtre (hauteur et largeur en pixels)
+	 * 	qui est la surface sur la quelle le dessin sera posée sera utiliser afin
+	 * 	de dessiner le pendu au bonne emplacement dans la fenêtre. voir la
+	 * 	documentation de Potence.paint pour plus de détailles.
 	 * </p>
 	 * 
 	 * TODO add a link to Potence.paint
@@ -65,9 +65,9 @@ public class Potence extends Component{
 	
 	/**
 	 * <p>
-	 * 	Ajoute un Ã¯Â¿Â½ la variable state qui ne doit pas dÃ¯Â¿Â½passer 8 la 
-	 * 	verification et l'incrÃ©mentation se fait dans la mÃ©thode
-	 * 	PartieJeu.checkCher voir sa documentation pour plus de dÃ©tailles
+	 * 	Ajoute un à la variable state qui ne doit pas dépasser 8 la 
+	 * 	verification et l'incrémentation se fait dans la méthode
+	 * 	PartieJeu.checkCher voir sa documentation pour plus de détailles
 	 * </p>
 	 * 
 	 * @see Potence#state
@@ -78,13 +78,14 @@ public class Potence extends Component{
 	
 	/**
 	 * <p>
-	 * 	Cette mÃ©thode s'occupe de dessiner le pendu selon la variable sate elle
-	 * 	est utilisÃ© dans la mÃ©thode PartieJeu.checkChar
+	 * 	Cette méthode s'occupe de dessiner le pendu selon la variable sate elle
+	 * 	est utilisé dans la méthode PartieJeu.checkChar
 	 * </p>
-	 * TODO add more details on the working of the mÃ©thode
+	 * TODO add more details on the working of the méthode
 	 * 
 	 * @param
 	 */
 	public void paint(Graphics hamgmanDrawManager) {
 		
 	}
+}

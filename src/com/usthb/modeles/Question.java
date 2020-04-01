@@ -1,46 +1,46 @@
 package com.usthb.modeles;
 
 /**
- * <b>ReprÃ©sente une question ainsi que toutes les donnÃ©es associÃ©e</b>
+ * <b>Représente une question ainsi que toutes les données associée</b>
  * 
  * @author Abdelrahim Chernai
  * @version 2.0
  */
 public class Question {
-	protected int id;								//NumÃ©ro sÃ©quentiel automatique.
+	protected int id;								//Numéro séquentiel automatique.
 	//TODO add question number when clarified.
 
 	/**
-	 * Le niveaux de la question, ce dernier est associÃ© a un nombre de points
+	 * Le niveaux de la question, ce dernier est associé a un nombre de points
 	 * 
 	 * @see Levels
 	 * @since 2.0
 	 */
 	protected Levels lvl;
   
-  /**
-	 * Le texte de la question seras affichÃ© sous l'image contenant la question.
+	/**
+	 * Le texte de la question seras affiché sous l'image contenant la question.
 	 * 
 	 * @see Question#imagePath
 	 */
 	protected String lable;
 
-  /**
-	 * La rÃ©ponse que le Joueur doit trouver 
+	/**
+	 * La réponse que le Joueur doit trouver 
 	 */
-  protected String answer;
+	protected String answer;
   
-  /**
+	/**
 	 * <p>
 	 * 	Un chemin vers une image contenant la question, dans le cas ou celle-ci
-	 * 	le libellÃ© pourra la remplacÃ©.
+	 * 	le libellé pourra la remplacé.
 	 * </p>
 	 */
-	protected String imagePath;						//Lien vers l'image associÃ©e.
+	protected String imagePath;						//Lien vers l'image associée.
 
 	/**
-	 * donne le nombre de points associÃ© a une bonne repose Ã  la question
-	 * @return les point associÃ© au niveau voir documentation de Levels pour
+	 * donne le nombre de points associé a une bonne repose Ã  la question
+	 * @return les point associé au niveau voir documentation de Levels pour
 	 *  les valeurs exactes
 	 *  
 	 *  @see Levels

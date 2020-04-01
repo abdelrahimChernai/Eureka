@@ -4,10 +4,8 @@ import java.util.Date;
 import java.util.LinkedList;
 import java.util.Objects;
 
-import com.usthb.MainApp;
-
 /**
- * <b>Joueur est la class reprÃ©sentant un joueur.</b>
+ * <b>Joueur est la class représentant un joueur.</b>
  * 
  * @author Abdelrahim Chernai
  * @version 2.0
@@ -17,8 +15,8 @@ public class Joueur {
   
   /**
 	 * <p>
-	 * 	NumÃ©ro sÃ©quentiel automatique unique caractÃ©risant le joueur et utilisÃ©
-	 *  comme clÃ© pour accÃ©der au information du joueur dans la list des 
+	 * 	Numéro séquentiel automatique unique caractérisant le joueur et utilisé
+	 *  comme clé pour accéder au information du joueur dans la list des 
 	 *  joueurs.
 	 * </p>
 	 * <p>
@@ -32,9 +30,9 @@ public class Joueur {
 	
 	/**
    * <p>
-	 *  Le niveau le plus ressent du joueur atteint lors de derniÃ¨re partie jouÃ©
-   *  chaque niveau passÃ© donne un certain nombre de point et permet au joueur
-   *  de reprendre Ã§a partie au mÃªme niveau.
+	 *  Le niveau le plus ressent du joueur atteint lors de dernière partie joué
+   *  chaque niveau passé donne un certain nombre de point et permet au joueur
+   *  de reprendre Ã§a partie au même niveau.
 	 * </p>
 	 * 
 	 * @see Levels
@@ -44,24 +42,24 @@ public class Joueur {
   
 	/**
 	 * <p>
-	 * 	ReprÃ©sente le Nom du joueur, est demandÃ© lors de son inscription
+	 * 	Représente le Nom du joueur, est demandé lors de son inscription
 	 * </p>
 	 */
 	protected String lastName;
   
 	/**
 	 * <p>
-	 * 	ReprÃ©sente le PrÃ©nom du joueur, est demandÃ© lors de son inscription
+	 * 	Représente le Prénom du joueur, est demandé lors de son inscription
 	 * </p>
 	 */
 	protected String firstName;
   
 	/**
 	 * <p>
-	 * 	Le nom d'utilisateur Ã  partir du quel on gÃ©nÃ¨re un id unique cette
-	 * 	unicitÃ© est assurÃ© car lors de la rÃ©cupÃ©ration de ce nom d'utilisateur
-	 * 	une gÃ©nÃ¨re un id et on vÃ©rifie qu'il n'existe pas, si c'est le cas on
-	 *  demande au joueur de donner un autre, est aussi utilisÃ© lors de la
+	 * 	Le nom d'utilisateur Ã  partir du quel on génère un id unique cette
+	 * 	unicité est assuré car lors de la récupération de ce nom d'utilisateur
+	 * 	une génère un id et on vérifie qu'il n'existe pas, si c'est le cas on
+	 *  demande au joueur de donner un autre, est aussi utilisé lors de la
 	 *  connection de joueur.
 	 * </p>
 	 */
@@ -70,7 +68,7 @@ public class Joueur {
   /**
 	 * <p>
 	 * 	On l'utilise lors de la connection du joueur pour s'assurer de son
-	 * 	identitÃ©.
+	 * 	identité.
 	 * </p>
 	 */
 	protected String password;
@@ -88,27 +86,27 @@ public class Joueur {
 	protected LinkedList<PartieJeu> playerGames;
 	
 	public Joueur() {
-		this.id = -1;		//Pour ne pas accÃ©der a un joueur si on initialize
+		this.id = -1;		//Pour ne pas accéder a un joueur si on initialize
 							//pas cet variable d'instance
 		
 		this.firstName = "";//On utilise ce parameter pour verifier que le
-							//joueur n'est pas initialisÃ©
+							//joueur n'est pas initialisé
 		this.playerGames = null;
 	}
 	
 	/**
-	 * RÃ©cupÃ©rÃ©e le numÃ©ro sÃ©quentiel du joueur
-	 * @return numÃ©ro sÃ©quentiel du joueur
+	 * Récupérée le numéro séquentiel du joueur
+	 * @return numéro séquentiel du joueur
 	 */
 	public int getId() {
 		return this.id;
 	}
 	
 	/**
-	 * Initialise le numÃ©ro sÃ©quentiel du joueur a un entier
+	 * Initialise le numéro séquentiel du joueur a un entier
 	 * <p>
-	 * 	Note : l'unisitÃ© du id dans la liste des en joueurs avant d'utiliser
-	 *  cette mÃ©thode 
+	 * 	Note : l'unisité du id dans la liste des en joueurs avant d'utiliser
+	 *  cette méthode 
 	 * </p>
 	 */
 	public void setId() {
@@ -117,9 +115,9 @@ public class Joueur {
 	
 	/**
 	 * <p>
-	 * Utilise la fonction de Objects pour crÃ©er un NumÃ©ro sÃ©quentiel et
+	 * Utilise la fonction de Objects pour créer un Numéro séquentiel et
 	 * utilise la fonction Math.Abs pour s'asuere que id >= 0 vu qu'il est
-	 * utilisÃ© pour accÃ©der Ã  la liste des joueurs voir les mÃ©thodes connection
+	 * utilisé pour accéder Ã  la liste des joueurs voir les méthodes connection
 	 * et inscription
 	 * </p>
 	 * 
@@ -133,8 +131,8 @@ public class Joueur {
 	}
 
 	/**
-	 * RÃ©cupÃ©rÃ©e le prÃ©nom du joueur
-	 * @return Le prÃ©nom du joueur
+	 * Récupérée le prénom du joueur
+	 * @return Le prénom du joueur
 	 */
 	public String getFirstName() {
 		return this.firstName;
@@ -142,7 +140,7 @@ public class Joueur {
 	
 	
 	/**
-	 * RÃ©cupÃ©rÃ©e le user name du joueur
+	 * Récupérée le user name du joueur
 	 * @return le user name du joueur
 	 */
 	public String getUsername() {
@@ -151,9 +149,9 @@ public class Joueur {
 	
 	/**
 	 * <p>
-	 * Initialise le nom d'utilisateur au nom donnÃ©e, ce username doit Ãªtre
-	 * unique et son unicitÃ© est verifier a travers l'inicitÃ© du id gÃ©nÃ©rÃ© voir
-	 * les mÃ©thodes Joueur.setId() et Joueur.hashCode
+	 * Initialise le nom d'utilisateur au nom donnée, ce username doit être
+	 * unique et son unicité est verifier a travers l'inicité du id généré voir
+	 * les méthodes Joueur.setId() et Joueur.hashCode
 	 * </p>
 	 * @param username le nom d'utilisateur qu'on veut affecter
 	 * 
@@ -167,7 +165,7 @@ public class Joueur {
 	}
 	
 	/**
-	 * RÃ©cupÃ©rÃ©e le mot de pass du joueur
+	 * Récupérée le mot de pass du joueur
 	 * @return
 	 */
 	public String getPassword() {
@@ -176,7 +174,7 @@ public class Joueur {
 	
 	/**
 	 * Donne le nombre de points du joueur depuis son inscription 
-	 * @return le score totale de la list partie jouÃ©.
+	 * @return le score totale de la list partie joué.
 	 * 
 	 * @see PartieJeu
 	 * 

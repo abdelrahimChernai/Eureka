@@ -1,7 +1,7 @@
 package com.usthb.modeles;
 
 /**
- * <b>ReprÃ©sente une Parte du jeu et contient toutes ses donnÃ©es</b>
+ * <b>Représente une Parte du jeu et contient toutes ses données</b>
  * 
  * @author Abdelrahim Chernai
  * @version 1.0
@@ -11,9 +11,9 @@ public class PartieJeu {
 	
 	/**
 	 * <p>
-	 * 	Le score collectÃ© par le joueur durant la partie, est calculer en
-	 * 	utilisant le score du niveau de chaque question multipliÃ© par le
-	 * 	coefficient de son thÃ¨me.
+	 * 	Le score collecté par le joueur durant la partie, est calculer en
+	 * 	utilisant le score du niveau de chaque question multiplié par le
+	 * 	coefficient de son thème.
 	 * </p>
 	 * 
 	 * @see Question#lvl
@@ -21,45 +21,45 @@ public class PartieJeu {
 	 */
 	protected int score;
 	//TODO add question number or question id when clarified.
-	protected ThemeJeu theme;										//ThÃ¨me sÃ©lectionnÃ©.
+	protected ThemeJeu theme;										//Thème sélectionné.
   
   /**
-	 * RÃ©ponse actuelle saisie par le joueur.
+	 * Réponse actuelle saisie par le joueur.
 	 */
 	protected StringBuffer currentAnswer;
 	
 	/**
 	 * <b>
-	 * 	Cette fonction vÃ©rifie si le caractÃ¨re entrÃ©e par le joueur est dans le
-	 *  rÃ©ponse de la question  puis effectue des traitements selon le rÃ©sultat
+	 * 	Cette fonction vérifie si le caractère entrée par le joueur est dans le
+	 *  réponse de la question  puis effectue des traitements selon le résultat
 	 * </b>
 	 * <p>
 	 * 	Les traitement fait sont les suivant :
 	 * 	<ul>
 	 * 		<li>
-	 * 			si le caractÃ¨re est un des caractÃ¨res de la question :
+	 * 			si le caractère est un des caractères de la question :
 	 * 			<ol>
 	 * 				<li>
-	 * 					Remplace les '*' dans la rÃ©ponse en coure au positions
-	 * 					trouvÃ©es par le caractÃ¨re donnÃ©.
+	 * 					Remplace les '*' dans la réponse en coure au positions
+	 * 					trouvées par le caractère donné.
 	 * 				</li>
 	 *				<li>
-	 *					VÃ©rifie si la rÃ©ponse en cours et Ã©gale a la rÃ©ponse de
-	 *					la question si c'est le cas on considÃ¨re la rÃ©ponse
-	 *					comme trouvÃ© voir la documentation de la class Potence
-	 *					Pour plus de dÃ©tailles, sinon ne fait rein.
+	 *					Vérifie si la réponse en cours et égale a la réponse de
+	 *					la question si c'est le cas on considère la réponse
+	 *					comme trouvé voir la documentation de la class Potence
+	 *					Pour plus de détailles, sinon ne fait rein.
 	 *				</li>
 	 * 			</ol>
 	 * 		</li>
 	 * 		<li>
-	 * 			si le caractÃ¨re n'est pas un des caractÃ¨res de la question
-	 * 			lâ€™Ã©tat de la potence est incrÃ©mentÃ© puis la potence est 
-	 * 			re-dessinÃ©e voir la documentation de la class Potence Pour plus
-	 *			de dÃ©tailles
+	 * 			si le caractère n'est pas un des caractères de la question
+	 * 			l'état de la potence est incrémenté puis la potence est 
+	 * 			re-dessinée voir la documentation de la class Potence Pour plus
+	 *			de détailles
 	 * 		</li>
 	 * </ul>
 	 * </p>
-	 * @param inputChar le caractÃ¨re entrÃ©e par le joueur
+	 * @param inputChar le caractère entrée par le joueur
 	 * 
 	 * @see Question
 	 * @see PartieJeu#currentAnswer
@@ -71,7 +71,7 @@ public class PartieJeu {
 		String answer = "";
 		//TODO find the question in the theme using the number of the question and set answer 
 		
-		if (answer.indexOf(inputChar) != -1) {//si le caractÃ¨re est dans answer
+		if (answer.indexOf(inputChar) != -1) {//si le caractère est dans answer
 			for (int i = 0; i < answer.length(); i++) {
 				if (this.currentAnswer.charAt(i) == inputChar) { 
 					this.currentAnswer.insert(i, inputChar);
