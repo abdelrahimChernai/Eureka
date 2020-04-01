@@ -95,7 +95,9 @@ public class MainApp {
 		Joueur playerConnecting = new Joueur();
 		
 		do {
+			//TODO read the player's user name
 			playerConnecting.setUsername(username);
+			//TODO read the player password and put it in playerConnecting variable
 			playerConnecting.hashCode();
 			playerConnecting.setId();
 			
