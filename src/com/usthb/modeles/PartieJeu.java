@@ -23,6 +23,6 @@ public class PartieJeu {
 	/**
 	 * Réponse actuelle saisie par le joueur.
 	 */
-	protected StringBuffer currentCnswer;							//Réponse actuelle Saisie par le joueur.
+	protected StringBuffer currentCnswer;
 }
  
