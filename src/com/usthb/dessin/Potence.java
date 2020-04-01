@@ -71,7 +71,7 @@ public class Potence extends Component{
 	 * 	Cette méthode s'occupe de dessiner le pendu selon la variable sate elle
 	 * 	est utilisé dans la méthode PartieJeu.checkChar
 	 * </p>
-	 * TODO add more details on the working of the methode
+	 * TODO add more details on the working of the méthode
 	 * 
 	 * @param
 	 */
