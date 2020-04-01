@@ -13,7 +13,14 @@ public class PartieJeu {
 	protected int number;
 	
 	/**
-	 * Le score collecté par le joueur durant la partie.
+	 * <p>
+	 * 	Le score collecté par le joueur durant la partie, est calculer en
+	 * 	utilisant le score du niveau de chaque question multiplié par le
+	 * 	coefficient de son thème.
+	 * </p>
+	 * 
+	 * @see Question#lvl
+	 * @see ThemeJeu#coefficent
 	 */
 	protected int score;
 	//TODO add question number or question id when clarified.
