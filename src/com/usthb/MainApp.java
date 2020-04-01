@@ -74,7 +74,7 @@ public class MainApp {
 	
 	/**
 	 * <p>
-	 * 	prends un nom d'utilisateur et un mot de pass, genre un id unique en
+	 * 	Prends un nom d'utilisateur et un mot de pass, génère un id unique en
 	 * 	utilisant la méthode Joueur.setId puis en utilisant cet id comme clé
 	 *  accede au donnée du joueurs versifie que le user name concorde avec
 	 *  celui donnée puis si c'est le cas verifies que le mot de pass est
@@ -86,31 +86,69 @@ public class MainApp {
 	 * de la class Joueur pour plus de détailles
 	 * 
 	 * @see com.usthb.modeles.Joueur
+	 * 
+	 * @see com.usthb.modeles.Joueur#hashCode()
 	 * @see com.usthb.modeles.Joueur#id
-	 * TODO add a link to Joueur.setId 
+	 * @see com.usthb.modeles.Joueur#setId()
 	 */
-	private static Joueur connection() {
+	private static Joueur connection(String username, String password) {
 		Joueur playerConnecting = new Joueur();
 		
 		do {
-			//TODO read the player's user name and put it in playerConnecting variable
-			//TODO read the player password and put it in playerConnecting variable
-			//TODO generate the player id and put it in playerConnecting variable
+			playerConnecting.setUsername(username);
+			playerConnecting.hashCode();
+			playerConnecting.setId();
 			
 			if (players.containsKey(playerConnecting.getId())) {
-				if (players.get(playerConnecting.getId()).getUsername().equals(playerConnecting.getUsername())) {
+				if (players.get(playerConnecting.getId()).getUsername().equals(username)) {
 					//la condition vérifie si le nom d'utilisateur donnée est
 					//le même que celui trouvé dans la liste des joueurs
-					if (players.get(playerConnecting.getId()).getPassword().equals(playerConnecting.getPassword())) {
+					if (players.get(playerConnecting.getId()).getPassword().equals(password)) {
 						//la condition vérifie si le nom mot de pass donnée est
 						//le même que celui trouvé dans la liste des joueurs
 						playerConnecting = players.get(playerConnecting.getId());
 					}
-				}//TODO  le cas ou le nom d'utilisateur ne correspond pas 
+				}//le cas ou le nom d'utilisateur ne correspond pas n'est pas
+				 //possible car on vérifie toujours que l'id n'existe pas avant
+				 //ajoute d'un nouveau joueur et on ajoute jamais un username
+				 //directement.
 			}
 		} while(playerConnecting.getFirstName().equals(""));
 		
 		return playerConnecting;
+	}
+	
+	/**
+	 * <p>
+	 *	Lie le Nom, Prénom, date de naissance, un nom d'utilisateur puis crée
+	 *	un id et vérifie qu'il n'existe pas dans la liste des joueurs puis lie
+	 *	un mot de passe et demande de le confirmer, cette méthode vérifie que
+	 *	les entrées sont conforme au norme utilisé dans le code voir la
+	 *	documentation de Joueur pour plus de détailles. une fois que les donnés
+	 *	initialisé le joueur est ajouté a la liste des joueurs puis on appelle
+	 *	la méthode connection pour le connecter et lui proposer de commencer une
+	 *	partie voir la documentation de MainApp.connection
+	 * </p>
+	 * @return
+	 * 
+	 * @see Joueur
+	 * @see MainApp#connection
+	 * 
+	 * @see Joueur#hashCode()
+	 * @see Joueur#setId()
+	 */
+	private static Joueur inscription( ) {
+		Joueur newPlayer= new Joueur();
+		do {
+			//TODO read the first name and put it in the newPlayer variable
+			//TODO read the last name and put it in the newPlayer variable
+			//TODO read the birth Day and put it in the newPlayer variable
+			//TODO read the user name and put it in the newPlayer variable
+		} while (players.containsKey(newPlayer.hashCode()));
+			//TODO read the password and put it in the newPlayer variable
+			//TODO read it again to check the password and put it in the newPlayer variable
+		
+		return MainApp.connection(newPlayer.getUsername(), newPlayer.getPassword());
 	}
 
 	/**

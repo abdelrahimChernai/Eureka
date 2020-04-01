@@ -5,6 +5,9 @@ package com.usthb.modeles;
 
 import java.util.Date;
 import java.util.LinkedList;
+import java.util.Objects;
+
+import com.usthb.MainApp;
 
 /**
  * @author Abdelrahim Chernai
@@ -39,6 +42,7 @@ public class Joueur {
 		
 		this.firstName = "";//On utilise ce parameter pour verifier que le
 							//joueur n'est pas initialisé
+		this.playerGames = null;
 	}
 	
 	/**
@@ -47,6 +51,34 @@ public class Joueur {
 	 */
 	public int getId() {
 		return this.id;
+	}
+	
+	/**
+	 * Initialise le numéro séquentiel du joueur a un entier
+	 * <p>
+	 * 	Note : l'unisité du id dans la liste des en joueurs avant d'utiliser
+	 *  cette méthode 
+	 * </p>
+	 */
+	public void setId() {
+		this.id = this.hashCode();
+	}
+	
+	/**
+	 * <p>
+	 * Utilise la fonction de Objects pour créer un Numéro séquentiel et
+	 * utilise la fonction Math.Abs pour s'asuere que id >= 0 vu qu'il est
+	 * utilisé pour accéder à la liste des joueurs voir les méthodes connection
+	 * et inscription
+	 * </p>
+	 * 
+	 * @return an id that identifies the player
+	 * 
+	 * @see com.usthb.MainApp#connection()
+	 * @see com.usthb.MainApp#inscription()
+	 */
+	public int hashCode() {
+		return Math.abs(Objects.hash(this.username));
 	}
 
 	/**
@@ -64,6 +96,23 @@ public class Joueur {
 	 */
 	public String getUsername() {
 		return this.username;
+	}
+	
+	/**
+	 * <p>
+	 * Initialise le nom d'utilisateur au nom donnée, ce username doit être
+	 * unique et son unicité est verifier a travers l'inicité du id généré voir
+	 * les méthodes Joueur.setId() et Joueur.hashCode
+	 * </p>
+	 * @param username le nom d'utilisateur qu'on veut affecter
+	 * 
+	 * @see Joueur
+	 * 
+	 * @see Joueur#hashCode()
+	 * @see Joueur#setId()
+	 */
+	public void setUsername(String username) {
+		this.username = username;
 	}
 	
 	/**
