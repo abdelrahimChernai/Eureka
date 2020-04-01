@@ -69,7 +69,7 @@ public class PartieJeu {
 				*/
 				
 				/*
-				 * TODO open a popup window to tell the player that the answer
+				 * TODO open a pop-up window to tell the player that the answer
 				 * is correct and give his the next question if any is
 				 * available else tell him that he wont this game 
 				*/
