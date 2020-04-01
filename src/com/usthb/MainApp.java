@@ -1,17 +1,14 @@
 package com.usthb;
 
 /**
- * <b>MainApp est la classe contenant le point d'entrée du programme donc elle représente l'application</b>
+ * <b>
+ * 	MainApp est la classe contenant le point d'entrée du programme donc elle
+ * 	représente l'application
+ * </b>
  * <p>
- * 	Dans la MainApp on a :
- * 	<ul>
- * 		<li>Une list des joueurs.</li>
- * 		<li>Une list de thèmes.</li>
- * 	</ul>
+ *	S'ocupe l'orientation de l'enchainements des évènements pour qu'ils soit
+ *	traiter en envoyant chaque évènements a la class qui s'occupe de le gérer
  * </p>
- * 
- * @see Joueur
- * @see ThemJeu
  * 
  * @author Abdelrahim Chernai
  * @version 1.0
@@ -19,7 +16,7 @@ package com.usthb;
 public class MainApp {
 
 	/**
-	 * @param args - unused.
+	 * @param args - non utilisé.
 	 */
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
