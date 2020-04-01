@@ -11,10 +11,9 @@ public class PartieJeu {
 	protected ThemeJeu theme;										//Thème sélectionné.
 	protected StringBuffer currentAnswer;							//Réponse actuelle Saisie par le joueur.
 	
-	
 	/**
 	 * <b>
-	 * 	Cette méthode vérifie si le caractère entrée par le joueur est dans la
+	 * 	Cette fonction vérifie si le caractère entrée par le joueur est dans le
 	 *  réponse de la question  puis effectue des traitements selon le résultat
 	 * </b>
 	 * <p>
@@ -63,16 +62,16 @@ public class PartieJeu {
 			}
 			
 			if (answer.equals(this.currentAnswer.toString())) {//convertie
-				//Convertir currentAnswer en String puis compare avec answer
+				//currentAnswer en String puis compare avec answer
 				/*
 				 * TODO set the instance variable of Potence fondAnswer to
 				 * true
 				*/
 				
 				/*
-				 * TODO open a pop-up window to tell the player that the answer
-				 * is correct and give him the next question if any is
-				 * available else tell him that he won this game
+				 * TODO open a popup window to tell the player that the answer
+				 * is correct and give his the next question if any is
+				 * available else tell him that he wont this game 
 				*/
 			}
 		}

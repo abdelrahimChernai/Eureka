@@ -1,82 +1,12 @@
+/**
+ * 
+ */
 package com.usthb.dessin;
-
-import java.awt.Component;
-import java.awt.Dimension;
-import java.awt.Graphics;
 
 /**
  * @author Abdelrahim Chernai
  *
  */
-@SuppressWarnings("serial") //ignore this line
-public class Potence extends Component{
-	
-	/**
-	 * <p>
-	 * 	Représente l'etat de la potence qui peut être entre 1 et 8 cet état
-	 * 	correspond au nombre de tentative effectué par le joueur lors ce que
-	 * 	cet état est égale a 8 ou une fausse réponse est donnée un traitement
-	 *  sera effectuer dans la méthode PartieJeu.checkChar voir ça
-	 *  documentation pour plus de détailles.
-	 * </p> 
-	 * 
-	 * @see com.usthb.modeles.PartieJeu
-	 * 
-	 * @see com.usthb.modeles.PartieJeu#checkChar(char)
-	 */
-	private int state;
-	
-	/**
-	 * <p>
-	 * 	Représente si la réponse en cours est égale a la réponse de la question
-	 * 	des traitement seront effectuer dans la méthode PartieJeu.checkChar pour
-	 * 	alterer l'etat de cette variable.
-	 * </p>
-	 * 
-	 * @see com.usthb.modeles.Question
-	 * @see com.usthb.modeles.PartieJeu
-	 * 
-	 * @see com.usthb.modeles.Question#answer
-	 * @see com.usthb.modeles.PartieJeu#checkChar(char)
-	 */
-	private boolean foundAnswer;
-	
-	/**
-	 * <p>
-	 * 	Représente les dimensions de la fenêtre (hauteur et largeur en pixels)
-	 * 	qui est la surface sur la quelle le dessin sera posée sera utiliser afin
-	 * 	de dessiner le pendu au bonne emplacement dans la fenêtre. voir la
-	 * 	documentation de Potence.paint pour plus de détailles.
-	 * </p>
-	 * 
-	 * TODO add a link to Potence.paint
-	 */
-	private Dimension windowDimension;
-	
-	/**
-	 * <p>
-	 * 	Ajoute un à la variable state qui ne doit pas dépasser 8 la 
-	 * 	verification et l'incrémentation se fait dans la méthode
-	 * 	PartieJeu.checkCher voir sa documentation pour plus de détailles
-	 * </p>
-	 * 
-	 * @see Potence#state
-	 */
-	public void incrementState() {
-		this.state++;
-	}
-	
-	/**
-	 * <p>
-	 * 	Cette méthode s'occupe de dessiner le pendu selon la variable sate elle
-	 * 	est utilisé dans la méthode PartieJeu.checkChar
-	 * </p>
-	 * TODO add more details on the working of the methode
-	 * 
-	 * @param
-	 */
-	public void paint(Graphics hamgmanDrawManager) {
-		
-	}
+public class Potence {
 	
 }
