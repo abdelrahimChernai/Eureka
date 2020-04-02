@@ -9,11 +9,11 @@ import com.usthb.modeles.ThemeJeu;
 /**
  * <b>
  *  MainApp est la classe contenant le point d'entrée du programme donc elle
- * 	représente l'application
+ *  représente l'application
  * </b>
  * <p>
- *	S'ocupe l'orientation de l'enchainements des évènements pour qu'ils soit
- *	traiter en envoyant chaque événements a la class qui s'occupe de le gérer
+ *	S'ocupe d'orienter l'enchainements des évènements pour qu'ils soit traités
+ *	en envoyant chaque événements a la class qui s'occupe de le gérer
  * </p>
  * 
  * @author Abdelrahim Chernai
@@ -46,7 +46,7 @@ public class MainApp {
 	
 	/**
 	 * <p>
-	 * 	Se lance dés le lancement du jeu pour preparer les éléments et données
+	 * 	Se lance dès le lancement du jeu pour preparer les éléments et données
 	 * 	nécessaire en faisant ce qui suit :
 	 * </p>
 	 * <ol>
@@ -86,9 +86,9 @@ public class MainApp {
 	 * 	utilisant la méthode Joueur.setId puis en utilisant cet id comme clé
 	 *  accede au donnée du joueurs versifie que le user name concorde avec
 	 *  celui donnée puis si c'est le cas verifies que le mot de pass est
-	 *  correct si c'est le cas accede Ã  la page pour lancer une partie sinon
+	 *  correct si c'est le cas accede à la page pour lancer une partie sinon
 	 *  dis que le mot de passe est faux
-	 *  TODO gérer le cas si le nom d'utilisateur donné et celui trouvé ne sont pas les méme
+	 *  TODO gérer le cas si le nom d'utilisateur donné et celui trouvé ne sont pas les même
 	 * </p>
 	 * @return les données du joueur sous forme de Joueur, voir la documentation
 	 * de la class Joueur pour plus de détailles
