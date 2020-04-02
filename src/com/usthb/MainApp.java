@@ -8,7 +8,7 @@ import com.usthb.modeles.ThemeJeu;
 
 /**
  * <b>
- * 	MainApp est la classe contenant le point d'entrée du programme donc elle
+ *  MainApp est la classe contenant le point d'entrée du programme donc elle
  * 	représente l'application
  * </b>
  * <p>
@@ -22,7 +22,7 @@ import com.usthb.modeles.ThemeJeu;
 public class MainApp {
 	/**
 	 * <p>
-	 * 	Contient tout les joueurs inscrit auparavant, sera initialisé Ã  partir
+	 * 	Contient tout les joueurs inscrit auparavant, sera initialisé à partir
 	 *  d'un ficher contenant ces dernier voir la documentation de 
 	 *  initialisation pour plus de détailles.
 	 * </p>
@@ -34,7 +34,7 @@ public class MainApp {
 	
 	/**
 	 * <p>
-	 * 	Contient tout les themes disponibles, sera initialisé Ã  partir de deux
+	 * 	Contient tout les themes disponibles, sera initialisé à partir de deux
 	 * 	fichier différant un contenant les themes l'autes les questions voir la
 	 * 	méthode initialisation pour plus de détailles
 	 * </p>
@@ -147,7 +147,7 @@ public class MainApp {
 	 * @see Joueur#hashCode()
 	 * @see Joueur#setId()
 	 */
-	private static Joueur inscription( ) {
+	private static Joueur inscription() {
 		Joueur newPlayer= new Joueur();
 		do {
 			//TODO read the first name and put it in the newPlayer variable
@@ -157,8 +157,8 @@ public class MainApp {
 		} while (players.containsKey(newPlayer.hashCode()));
 			//TODO read the password and put it in the newPlayer variable
 			//TODO read it again to check the password and put it in the newPlayer variable
-		
-		return MainApp.connection(newPlayer.getUsername(), newPlayer.getPassword());
+
+			return MainApp.connection(newPlayer.getUsername(), newPlayer.getPassword());
 	}
 
 	/**

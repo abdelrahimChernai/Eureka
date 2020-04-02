@@ -15,7 +15,7 @@ public class Joueur {
   
   /**
 	 * <p>
-	 * 	Numéro séquentiel automatique unique caractérisant le joueur et utilisé
+	 *  Numéro séquentiel automatique unique caractérisant le joueur et utilisé
 	 *  comme clé pour accéder au information du joueur dans la list des 
 	 *  joueurs.
 	 * </p>
