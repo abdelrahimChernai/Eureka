@@ -1,33 +1,82 @@
-/**
- * 
- */
 package com.usthb.modeles;
 
 import java.util.Date;
 import java.util.LinkedList;
 import java.util.Objects;
 
-import com.usthb.MainApp;
-
 /**
+ * <b>Joueur est la class représentant un joueur.</b>
+ * 
  * @author Abdelrahim Chernai
  * @version 2.0
+ * @see ParieJeu
  */
 public class Joueur {
-	protected int id;					//Numéro séquentiel automatique.
+  
+  /**
+	 * <p>
+	 *  Numéro séquentiel automatique unique caractérisant le joueur et utilisé
+	 *  comme clé pour accéder au information du joueur dans la list des 
+	 *  joueurs.
+	 * </p>
+	 * <p>
+	 * 	Pour plus d'information sur la list des joueur voir la documentation de
+	 *  la class MainApp.players
+	 * </p>
+	 * 
+	 * @see com.usthb.MainApp#players
+	 */
+	protected int id;
 	
 	/**
-	 * Le niveau le plus ressent du joueur atteint lors de dernière partie joué.
+   * <p>
+	 *  Le niveau le plus ressent du joueur atteint lors de dernière partie joué
+   *  chaque niveau passé donne un certain nombre de point et permet au joueur
+   *  de reprendre Ã§a partie au même niveau.
+	 * </p>
 	 * 
 	 * @see Levels
 	 * @since 2.0
 	 */
 	protected Levels currentLvl;
-	protected String lastName;			//Nom du joueur.
-	protected String firstName;			//Prénom du joueur.
-	protected String username;			//Nom d'utilisateur.
-	protected String password;			//Mot de passe.
-	protected Date birthDate;			//Date de naissance.
+  
+	/**
+	 * <p>
+	 * 	Représente le Nom du joueur, est demandé lors de son inscription
+	 * </p>
+	 */
+	protected String lastName;
+  
+	/**
+	 * <p>
+	 * 	Représente le Prénom du joueur, est demandé lors de son inscription
+	 * </p>
+	 */
+	protected String firstName;
+  
+	/**
+	 * <p>
+	 * 	Le nom d'utilisateur Ã  partir du quel on génère un id unique cette
+	 * 	unicité est assuré car lors de la récupération de ce nom d'utilisateur
+	 * 	une génère un id et on vérifie qu'il n'existe pas, si c'est le cas on
+	 *  demande au joueur de donner un autre, est aussi utilisé lors de la
+	 *  connection de joueur.
+	 * </p>
+	 */
+	protected String username;
+  
+  /**
+	 * <p>
+	 * 	On l'utilise lors de la connection du joueur pour s'assurer de son
+	 * 	identité.
+	 * </p>
+	 */
+	protected String password;
+  
+  /**
+	 * La date de naissance du joueur.
+	 */
+	protected Date birthDate;
 	
 	/**
 	 * A list of games played by the player since his inscription.
@@ -68,11 +117,11 @@ public class Joueur {
 	 * <p>
 	 * Utilise la fonction de Objects pour créer un Numéro séquentiel et
 	 * utilise la fonction Math.Abs pour s'asuere que id >= 0 vu qu'il est
-	 * utilisé pour accéder à la liste des joueurs voir les méthodes connection
+	 * utilisé pour accéder Ã  la liste des joueurs voir les méthodes connection
 	 * et inscription
 	 * </p>
 	 * 
-	 * @return an id that identifies the player
+	 * @return un numéro séquentielle qui identifie le joueur
 	 * 
 	 * @see com.usthb.MainApp#connection()
 	 * @see com.usthb.MainApp#inscription()
@@ -101,7 +150,7 @@ public class Joueur {
 	/**
 	 * <p>
 	 * Initialise le nom d'utilisateur au nom donnée, ce username doit être
-	 * unique et son unicité est verifier a travers l'inicité du id généré voir
+	 * unique et son unicité est verifier a travers l'unicité du id généré voir
 	 * les méthodes Joueur.setId() et Joueur.hashCode
 	 * </p>
 	 * @param username le nom d'utilisateur qu'on veut affecter
@@ -125,7 +174,7 @@ public class Joueur {
 	
 	/**
 	 * Donne le nombre de points du joueur depuis son inscription 
-	 * @return le score totale de la list partie joué.
+	 * @return le score totale de la list des parties jouées.
 	 * 
 	 * @see PartieJeu
 	 * 

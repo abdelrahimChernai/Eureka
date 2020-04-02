@@ -1,15 +1,32 @@
 package com.usthb.modeles;
 
 /**
+ * <b>Représente une Parte du jeu et contient toutes ses données</b>
+ * 
  * @author Abdelrahim Chernai
- *
+ * @version 1.0
  */
 public class PartieJeu {
-	protected int number;											//Numéro associé.
-	protected int score;											//Score actuelle.
+	protected int number;
+	
+	/**
+	 * <p>
+	 * 	Le score collecté par le joueur durant la partie, est calculer en
+	 * 	utilisant le score du niveau de chaque question multiplié par le
+	 * 	coefficient de son thème.
+	 * </p>
+	 * 
+	 * @see Question#lvl
+	 * @see ThemeJeu#coefficent
+	 */
+	protected int score;
 	//TODO add question number or question id when clarified.
 	protected ThemeJeu theme;										//Thème sélectionné.
-	protected StringBuffer currentAnswer;							//Réponse actuelle Saisie par le joueur.
+  
+  /**
+	 * Réponse actuelle saisie par le joueur.
+	 */
+	protected StringBuffer currentAnswer;
 	
 	/**
 	 * <b>
@@ -36,7 +53,7 @@ public class PartieJeu {
 	 * 		</li>
 	 * 		<li>
 	 * 			si le caractère n'est pas un des caractères de la question
-	 * 			l’état de la potence est incrémenté puis la potence est 
+	 * 			l'état de la potence est incrémenté puis la potence est 
 	 * 			re-dessinée voir la documentation de la class Potence Pour plus
 	 *			de détailles
 	 * 		</li>

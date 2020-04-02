@@ -1,4 +1,3 @@
-
 package com.usthb;
 
 import java.util.HashMap;
@@ -8,8 +7,17 @@ import com.usthb.modeles.Joueur;
 import com.usthb.modeles.ThemeJeu;
 
 /**
+ * <b>
+ *  MainApp est la classe contenant le point d'entrée du programme donc elle
+ *  représente l'application
+ * </b>
+ * <p>
+ *	S'ocupe d'orienter l'enchainements des évènements pour qu'ils soit traités
+ *	en envoyant chaque événements a la class qui s'occupe de le gérer
+ * </p>
+ * 
  * @author Abdelrahim Chernai
- *
+ * @version 1.0
  */
 public class MainApp {
 	/**
@@ -139,8 +147,8 @@ public class MainApp {
 	 * @see Joueur#hashCode()
 	 * @see Joueur#setId()
 	 */
-	private static Joueur inscription( ) {
-		Joueur newPlayer= new Joueur();
+	private static Joueur inscription() {
+		Joueur newPlayer = new Joueur();
 		do {
 			//TODO read the first name and put it in the newPlayer variable
 			//TODO read the last name and put it in the newPlayer variable
@@ -149,12 +157,12 @@ public class MainApp {
 		} while (players.containsKey(newPlayer.hashCode()));
 			//TODO read the password and put it in the newPlayer variable
 			//TODO read it again to check the password and put it in the newPlayer variable
-		
-		return MainApp.connection(newPlayer.getUsername(), newPlayer.getPassword());
+
+			return MainApp.connection(newPlayer.getUsername(), newPlayer.getPassword());
 	}
 
 	/**
-	 * @param args
+	 * @param args - non utilisé.
 	 */
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
