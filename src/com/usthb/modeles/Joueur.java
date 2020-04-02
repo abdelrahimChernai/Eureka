@@ -21,10 +21,10 @@ public class Joueur {
 	 * </p>
 	 * <p>
 	 * 	Pour plus d'information sur la list des joueur voir la documentation de
-	 *  la class MainApp.
+	 *  la class MainApp.players
 	 * </p>
 	 * 
-	 * @see com.usthb.MainApp
+	 * @see com.usthb.MainApp#players
 	 */
 	protected int id;
 	
@@ -121,7 +121,7 @@ public class Joueur {
 	 * et inscription
 	 * </p>
 	 * 
-	 * @return an id that identifies the player
+	 * @return un numéro séquentielle qui identifie le joueur
 	 * 
 	 * @see com.usthb.MainApp#connection()
 	 * @see com.usthb.MainApp#inscription()
@@ -150,7 +150,7 @@ public class Joueur {
 	/**
 	 * <p>
 	 * Initialise le nom d'utilisateur au nom donnée, ce username doit être
-	 * unique et son unicité est verifier a travers l'inicité du id généré voir
+	 * unique et son unicité est verifier a travers l'unicité du id généré voir
 	 * les méthodes Joueur.setId() et Joueur.hashCode
 	 * </p>
 	 * @param username le nom d'utilisateur qu'on veut affecter
@@ -174,7 +174,7 @@ public class Joueur {
 	
 	/**
 	 * Donne le nombre de points du joueur depuis son inscription 
-	 * @return le score totale de la list partie joué.
+	 * @return le score totale de la list des parties jouées.
 	 * 
 	 * @see PartieJeu
 	 * 

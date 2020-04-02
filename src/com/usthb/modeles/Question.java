@@ -33,13 +33,13 @@ public class Question {
 	/**
 	 * <p>
 	 * 	Un chemin vers une image contenant la question, dans le cas ou celle-ci
-	 * 	le libellé pourra la remplacé.
+	 * 	ne s'affiche pas le libellé pourra la remplacé.
 	 * </p>
 	 */
 	protected String imagePath;						//Lien vers l'image associée.
 
 	/**
-	 * donne le nombre de points associé a une bonne repose Ã  la question
+	 * donne le nombre de points associé a une bonne repose à la question
 	 * @return les point associé au niveau voir documentation de Levels pour
 	 *  les valeurs exactes
 	 *  

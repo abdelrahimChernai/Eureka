@@ -18,7 +18,6 @@ import java.awt.Graphics;
  * 
  * @see com.usthb.modeles.PartieJeu
  */
-
 public class Potence extends Component{
 	
 	/**
@@ -65,8 +64,8 @@ public class Potence extends Component{
 	
 	/**
 	 * <p>
-	 * 	Ajoute un à la variable state qui ne doit pas dépasser 8 la 
-	 * 	verification et l'incrémentation se fait dans la méthode
+	 * 	Incrémente à la variable state qui ne doit pas dépasser 8 la 
+	 * 	verification et l'incrémentation se font dans la méthode
 	 * 	PartieJeu.checkCher voir sa documentation pour plus de détailles
 	 * </p>
 	 * 

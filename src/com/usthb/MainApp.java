@@ -148,7 +148,7 @@ public class MainApp {
 	 * @see Joueur#setId()
 	 */
 	private static Joueur inscription() {
-		Joueur newPlayer= new Joueur();
+		Joueur newPlayer = new Joueur();
 		do {
 			//TODO read the first name and put it in the newPlayer variable
 			//TODO read the last name and put it in the newPlayer variable
