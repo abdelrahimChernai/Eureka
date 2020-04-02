@@ -7,9 +7,22 @@ package com.usthb.modeles;
  * @version 2.0
  */
 public class Question {
-	protected int id;								//Numéro séquentiel automatique.
-	//TODO add question number when clarified.
-
+	/**
+	 * <p>
+	 * 	Identifie les question de manière unique, composé en concaténant une
+	 * 	suit de 3 caractère représentant le type de thème + un numéro généré à
+	 * 	partir du libellé du thème et un indice représentant le nombre de cette
+	 * 	question dans son thème.
+	 * </p>
+	 * 
+	 * @see ThemeType
+	 * @see Theme
+	 * 
+	 * @see ThemeJeu#lable
+	 * @since 2.0
+	 */
+	protected String id;								//Numéro séquentiel automatique.
+	
 	/**
 	 * Le niveaux de la question, ce dernier est associé a un nombre de points
 	 * 
