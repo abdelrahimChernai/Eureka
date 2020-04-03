@@ -88,10 +88,10 @@ public class MainApp {
 	 * 	Prends un nom d'utilisateur et un mot de passe, génère un id unique en
 	 * 	utilisant la méthode Joueur.setId puis en utilisant cet id comme clé
 	 *  accède aux données du joueur, vérifie que le user name concorde avec
-	 *  celui donné. Si c'est le cas, verifie que le mot de passe est
+	 *  celui donné. Si c'est le cas, vérifie que le mot de passe est
 	 *  correct. Si c'est le cas, accède à la page pour lancer une partie sinon
 	 *  dit que le mot de passe est faux
-	 *  TODO gérer le cas si le nom d'utilisateur donné et celui trouvé ne sont pas les mÃªmes
+	 *  TODO gérer le cas si le nom d'utilisateur donné et celui trouvé ne sont pas les mêmes
 	 * </p>
 	 * @return les données du joueur sous forme de Joueur, voir la documentation
 	 * de la class Joueur pour plus de détails
