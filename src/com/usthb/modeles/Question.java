@@ -1,9 +1,10 @@
 package com.usthb.modeles;
 
 /**
- * <b>Représente une question ainsi que toutes les données associée</b>
+ * <b>Représente une question ainsi que toutes les données associées</b>
  * 
  * @author Abdelrahim Chernai
+ * @author Yasmine Bouamra
  * @version 2.0
  */
 public class Question {
@@ -24,7 +25,7 @@ public class Question {
 	protected String id;
 	
 	/**
-	 * Le niveaux de la question, ce dernier est associé a un nombre de points
+	 * Le niveau de la question, ce dernier est associé à un nombre de points
 	 * 
 	 * @see Levels
 	 * @since 2.0
@@ -46,14 +47,14 @@ public class Question {
 	/**
 	 * <p>
 	 * 	Un chemin vers une image contenant la question, dans le cas ou celle-ci
-	 * 	ne s'affiche pas le libellé pourra la remplacé.
+	 * 	ne s'affiche pas le libellé pourra la remplacer.
 	 * </p>
 	 */
 	protected String imagePath;						//Lien vers l'image associée.
 
 	/**
-	 * donne le nombre de points associé a une bonne repose à la question
-	 * @return les point associé au niveau voir documentation de Levels pour
+	 * donne le nombre de points associé a une bonne réponse à la question
+	 * @return le nombre de point associé au niveau, voir documentation de Levels pour
 	 *  les valeurs exactes
 	 *  
 	 *  @see Levels
