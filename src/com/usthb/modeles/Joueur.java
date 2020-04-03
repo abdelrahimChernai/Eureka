@@ -173,6 +173,14 @@ public class Joueur {
 	}
 	
 	/**
+	 * Initialise le mot de passe a la valeur donnée
+	 * @param password mot de passe du joueur
+	 */
+	public void setPassword(String password) {
+		this.password = password;
+	}
+	
+	/**
 	 * Donne le nombre de points du joueur depuis son inscription 
 	 * @return le score totale de la list des parties jouées.
 	 * 

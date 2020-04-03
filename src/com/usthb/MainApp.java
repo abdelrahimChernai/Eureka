@@ -24,10 +24,10 @@ public class MainApp {
 	 * <p>
 	 * 	Contient tout les joueurs inscrit auparavant, sera initialisé à partir
 	 *  d'un ficher contenant ces dernier voir la documentation de 
-	 *  initialisation pour plus de détailles.
+	 *  initialization pour plus de détailles.
 	 * </p>
 	 * 
-	 * TODO add a link to initialisation
+	 * @see MainApp#initialization()
 	 * @see com.usthb.modeles.Joueur
 	 */
 	private static HashMap<Integer, Joueur> players;
@@ -36,11 +36,13 @@ public class MainApp {
 	 * <p>
 	 * 	Contient tout les themes disponibles, sera initialisé à partir de deux
 	 * 	fichier différant un contenant les themes l'autes les questions voir la
-	 * 	méthode initialisation pour plus de détailles
+	 * 	méthode initialization pour plus de détailles
 	 * </p>
 	 * 
 	 * @see com.usthb.modeles.ThemeJeu
 	 * @see com.usthb.modeles.Question
+	 * 
+	 * @see MainApp#initialization()
 	 */
 	private static HashSet<ThemeJeu> themes;
 	
@@ -106,7 +108,6 @@ public class MainApp {
 			//TODO read the player's user name
 			playerConnecting.setUsername(username);
 			//TODO read the player password and put it in playerConnecting variable
-			playerConnecting.hashCode();
 			playerConnecting.setId();
 			
 			if (players.containsKey(playerConnecting.getId())) {
