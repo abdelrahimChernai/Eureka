@@ -107,7 +107,8 @@ public class MainApp {
 		do {
 			//TODO read the player's user name
 			playerConnecting.setUsername(username);
-			//TODO read the player password and put it in playerConnecting variable
+			//TODO read the player password
+			playerConnecting.setPassword(password);
 			playerConnecting.setId();
 			
 			if (players.containsKey(playerConnecting.getId())) {
