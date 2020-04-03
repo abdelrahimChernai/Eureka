@@ -4,6 +4,7 @@ package com.usthb.modeles;
  * <b>Représente une Parte du jeu et contient toutes ses données</b>
  * 
  * @author Abdelrahim Chernai
+ * @author Yasmine Bouamra
  * @version 1.0
  */
 public class PartieJeu {
@@ -11,7 +12,7 @@ public class PartieJeu {
 	
 	/**
 	 * <p>
-	 * 	Le score collecté par le joueur durant la partie, est calculer en
+	 * 	Le score collecté par le joueur durant la partie, est calculé en
 	 * 	utilisant le score du niveau de chaque question multiplié par le
 	 * 	coefficient de son thème.
 	 * </p>
@@ -30,7 +31,7 @@ public class PartieJeu {
 	
 	/**
 	 * <b>
-	 * 	Cette fonction vérifie si le caractère entrée par le joueur est dans le
+	 * 	Cette fonction vérifie si le caractère entré par le joueur est dans la
 	 *  réponse de la question  puis effectue des traitements selon le résultat
 	 * </b>
 	 * <p>
@@ -40,22 +41,22 @@ public class PartieJeu {
 	 * 			si le caractère est un des caractères de la question :
 	 * 			<ol>
 	 * 				<li>
-	 * 					Remplace les '*' dans la réponse en coure au positions
-	 * 					trouvées par le caractère donné.
+	 * 					Remplace les '*' dans la réponse en coure aux positions
+	 * 					correspondantes au caractère donné.
 	 * 				</li>
 	 *				<li>
-	 *					Vérifie si la réponse en cours et égale a la réponse de
+	 *					Vérifie si la réponse en cours et égale à la réponse de
 	 *					la question si c'est le cas on considère la réponse
-	 *					comme trouvé voir la documentation de la class Potence
-	 *					Pour plus de détailles, sinon ne fait rein.
+	 *					comme trouvéé, voir la documentation de la classe Potence
+	 *					pour plus de détails, sinon ne fait rien.
 	 *				</li>
 	 * 			</ol>
 	 * 		</li>
 	 * 		<li>
 	 * 			si le caractère n'est pas un des caractères de la question
 	 * 			l'état de la potence est incrémenté puis la potence est 
-	 * 			re-dessinée voir la documentation de la class Potence Pour plus
-	 *			de détailles
+	 * 			re-dessinée, voir la documentation de la classe Potence pour plus
+	 *			de détails
 	 * 		</li>
 	 * </ul>
 	 * </p>

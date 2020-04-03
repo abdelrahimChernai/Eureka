@@ -6,6 +6,7 @@ package com.usthb.modeles;
  *@see ThemeJeu
  *
  * @author Abdelrahim Chernai
+ * @author Yasmine Bouamra
  * @version 1.0
  */
 public enum ThemeType {
