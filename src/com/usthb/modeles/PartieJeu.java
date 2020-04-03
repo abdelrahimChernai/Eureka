@@ -1,5 +1,7 @@
 package com.usthb.modeles;
 
+import com.usthb.dessin.Potence;
+
 /**
  * <b>Représente une Parte du jeu et contient toutes ses données</b>
  * 
@@ -21,13 +23,40 @@ public class PartieJeu {
 	 * @see ThemeJeu#coefficent
 	 */
 	protected int score;
-	//TODO add question number or question id when clarified.
+
+	/**
+	 * <p>
+	 * 	L'identificateure de la question actuelle de la partie, sera utilisé
+	 * 	pour récupérer la réponse à la question à partir de la listes des
+	 * 	questions du thème afin de verifier si la réponse en cours est correcte
+	 * 	dans la méthode PartieJeu.checkChar()
+	 * </p> 
+	 * 
+	 * @see ThemeJeu#questions
+	 * @see PartieJeu#theme
+	 * @see PartieJeu#checkChar(char)
+	 */
+	private String questionId;
+	
 	protected ThemeJeu theme;										//Thème sélectionné.
   
   /**
 	 * Réponse actuelle saisie par le joueur.
 	 */
 	protected StringBuffer currentAnswer;
+	
+	/**
+	 * <p>
+	 * 	Le pendu de cette partie, garde ces données et s'occupes de le dessiner
+	 *	Ses données dont altéré dans la méthode PartieJeu.checkCher selon si la
+	 *	réponse du joueur est correcte ou fausse.
+	 * </p>
+	 * 
+	 * @see com.usthb.dessin.Potence
+	 * 
+	 * @see PartieJeu#checkChar(char)
+	 */
+	private Potence hangman;
 	
 	/**
 	 * <b>
@@ -65,12 +94,17 @@ public class PartieJeu {
 	 * @see Question
 	 * @see PartieJeu#currentAnswer
 	 * @see PartieJeu#theme
-	 * TODO add a link to QuestionID
+	 * @see PartieJeu#questionId
 	 * @see com#usthb#dessin#Potence
 	 */
 	public void checkChar(char inputChar) {
 		String answer = "";
-		//TODO find the question in the theme using the number of the question and set answer 
+		
+		for (Question question : this.theme.questions) {
+			if (question.id == this.questionId) {
+				answer = new String(question.answer);
+			}
+		}
 		
 		if (answer.indexOf(inputChar) != -1) {//si le caractère est dans answer
 			for (int i = 0; i < answer.length(); i++) {
@@ -81,11 +115,7 @@ public class PartieJeu {
 			
 			if (answer.equals(this.currentAnswer.toString())) {//convertie
 				//currentAnswer en String puis compare avec answer
-				/*
-				 * TODO set the instance variable of Potence fondAnswer to
-				 * true
-				*/
-				
+				hangman.setFoundAnswerTrue();
 				/*
 				 * TODO open a pop-up window to tell the player that the answer
 				 * is correct and give his the next question if any is
@@ -94,7 +124,7 @@ public class PartieJeu {
 			}
 		}
 		else {
-			//TODO increment the instance variable of Potence state
+			hangman.incrementState();
 			
 			//TODO draw the next state of the Hangman (maybe animated)
 		}

@@ -4,6 +4,8 @@ import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.Graphics;
 
+import com.usthb.modeles.PartieJeu;
+
 /**
  * <b>S'occupe de la gestion du pendu</b>
  * 
@@ -62,6 +64,20 @@ public class Potence extends Component{
 	 * TODO add a link to Potence.paint
 	 */
 	private Dimension windowDimension;
+	
+	
+	/**
+	 * <p>
+	 * 	met la variable d'instance foundAnswer a vrai indiquant que la réponse
+	 * 	a été trouvée par le joueur, ce traitement ce fait dans la méthode
+	 * 	PartieJeu.checkChar(). Voir la documentation pour plus de détails.
+	 * </p>
+	 * 
+	 * @see com.usthb.modeles.PartieJeu#checkChar(char)
+	 */
+	public void setFoundAnswerTrue() {
+		this.foundAnswer = true;
+	}
 	
 	/**
 	 * <p>

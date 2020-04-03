@@ -28,7 +28,7 @@ public class MainApp {
 	 *  l'initialisation pour plus de détails.
 	 * </p>
 	 * 
-	 * TODO add a link to initialisation
+	 * @see MainApp#initialization()
 	 * @see com.usthb.modeles.Joueur
 	 */
 	private static HashMap<Integer, Joueur> players;
@@ -36,12 +36,14 @@ public class MainApp {
 	/**
 	 * <p>
 	 * 	Contient tous les thèmes disponibles, sera initialisé à partir de deux
-	 * 	fichiers différants : un contenant les thèmes, l'autre les questions. Voir la
+	 * 	fichiers différents : un contenant les thèmes, l'autre les questions. Voir la
 	 * 	méthode initialisation pour plus de détails
 	 * </p>
 	 * 
 	 * @see com.usthb.modeles.ThemeJeu
 	 * @see com.usthb.modeles.Question
+	 * 
+	 * @see MainApp#initialization()
 	 */
 	private static HashSet<ThemeJeu> themes;
 	
@@ -52,7 +54,7 @@ public class MainApp {
 	 * </p>
 	 * <ol>
 	 * 	<li>
-	 * 		Ouvre la fenêtre de chargement
+	 * 		Ouvre la fenÃªtre de chargement
 	 * 		//TODO donner plus de détailles sur ce point
 	 * 	</li>
 	 * 	<li>
@@ -66,7 +68,7 @@ public class MainApp {
 	 *		détails voir la documentation de ThemeJeu.readFile
 	 * 	</li>
 	 * 	<li>
-	 * 		ferme la fenêtre de chargement et ouvre la fenêtre principale
+	 * 		ferme la fenÃªtre de chargement et ouvre la fenÃªtre principale
 	 * 		//TODO donner plus de détailles sur ce point
 	 * 	</li>
 	 * <ol>
@@ -89,7 +91,7 @@ public class MainApp {
 	 *  celui donné. Si c'est le cas, verifie que le mot de passe est
 	 *  correct. Si c'est le cas, accède à la page pour lancer une partie sinon
 	 *  dit que le mot de passe est faux
-	 *  TODO gérer le cas si le nom d'utilisateur donné et celui trouvé ne sont pas les mêmes
+	 *  TODO gérer le cas si le nom d'utilisateur donné et celui trouvé ne sont pas les mÃªmes
 	 * </p>
 	 * @return les données du joueur sous forme de Joueur, voir la documentation
 	 * de la class Joueur pour plus de détails
@@ -106,20 +108,20 @@ public class MainApp {
 		do {
 			//TODO read the player's user name
 			playerConnecting.setUsername(username);
-			//TODO read the player password and put it in playerConnecting variable
-			playerConnecting.hashCode();
+			//TODO read the player password
+			playerConnecting.setPassword(password);
 			playerConnecting.setId();
 			
 			if (players.containsKey(playerConnecting.getId())) {
 				if (players.get(playerConnecting.getId()).getUsername().equals(username)) {
 					//la condition vérifie si le nom d'utilisateur donné est
-					//le même que celui trouvé dans la liste des joueurs
+					//le mÃªme que celui trouvé dans la liste des joueurs
 					if (players.get(playerConnecting.getId()).getPassword().equals(password)) {
 						//la condition vérifie si le nom mot de passe donné est
-						//le même que celui trouvé dans la liste des joueurs
+						//le mÃªme que celui trouvé dans la liste des joueurs
 						playerConnecting = players.get(playerConnecting.getId());
 					}
-				}//le cas où le nom d'utilisateur ne correspond pas n'est pas
+				}//le cas oÃ¹ le nom d'utilisateur ne correspond pas n'est pas
 				 //possible car on vérifie toujours que l'id n'existe pas avant
 				 //d'ajouter un nouveau joueur. On ajoute jamais un username
 				 //directement.
