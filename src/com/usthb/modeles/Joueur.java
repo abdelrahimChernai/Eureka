@@ -92,7 +92,7 @@ public class Joueur {
 		
 		this.firstName = "";//On utilise ce paramètre pour vérifier que le
 							//joueur n'est pas initialisé
-		this.playerGames = null;
+		this.playerGames = new LinkedList<PartieJeu>();
 	}
 	
 	/**
@@ -130,6 +130,10 @@ public class Joueur {
 	public int hashCode() {
 		return Math.abs(Objects.hash(this.username));
 	}
+	
+	public void setLastName(String lastName) {		// TODO add in the fix
+		this.lastName = lastName;
+	}
 
 	/**
 	 * Récupère le prénom du joueur
@@ -139,6 +143,9 @@ public class Joueur {
 		return this.firstName;
 	}
 	
+	public void setFirstName(String firstName) {	// TODO add in the fix
+		this.firstName = firstName;
+	}
 	
 	/**
 	 * Récupère le user name du joueur
@@ -151,7 +158,7 @@ public class Joueur {
 	/**
 	 * <p>
 	 * Initialise le nom d'utilisateur au nom donné, ce username doit être
-	 * unique et son unicité est verifiée à travers l'unicité de l'id généré, voir
+	 * unique et son unicité est vérifiée à travers l'unicité de l'id généré, voir
 	 * les méthodes Joueur.setId() et Joueur.hashCode
 	 * </p>
 	 * @param username le nom d'utilisateur qu'on veut affecter
@@ -173,6 +180,14 @@ public class Joueur {
 		return this.password;
 	}
 	
+	public void setPassword(String password) {		// TODO add in fix
+		this.password = password;
+	}
+	
+	public void setBirthDate(Date birthDate) {		// TODO add in fix
+		this.birthDate = birthDate;
+	}
+	
 	/**
 	 * Donne le nombre de points du joueur depuis son inscription 
 	 * @return le score totale calculé à partir de la liste des parties jouées.
@@ -189,4 +204,14 @@ public class Joueur {
 		}
 		return totalScore;
 	}
+	
+	public String toString() {
+		return "The player #" + id + ": "
+				+ firstName + " "
+				+ lastName + " aka "
+				+ username + " has "
+				+ this.getTotalScore() + " points"
+				+ birthDate;
+	}
+	
 }
