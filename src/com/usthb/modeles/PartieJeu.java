@@ -55,7 +55,7 @@ public class PartieJeu {
 	 * 
 	 * @see PartieJeu#checkChar(char)
 	 */
-	private Potence hamgman;
+	private Potence hangman;
 	
 	/**
 	 * <b>
@@ -114,11 +114,7 @@ public class PartieJeu {
 			
 			if (answer.equals(this.currentAnswer.toString())) {//convertie
 				//currentAnswer en String puis compare avec answer
-				/*
-				 * TODO set the instance variable of Potence fondAnswer to
-				 * true
-				*/
-				
+				hangman.setFoundAnswerTrue();
 				/*
 				 * TODO open a pop-up window to tell the player that the answer
 				 * is correct and give his the next question if any is
@@ -127,7 +123,7 @@ public class PartieJeu {
 			}
 		}
 		else {
-			//TODO increment the instance variable of Potence state
+			hangman.incrementState();
 			
 			//TODO draw the next state of the Hangman (maybe animated)
 		}
