@@ -83,7 +83,12 @@ public class PartieJeu {
 	 */
 	public void checkChar(char inputChar) {
 		String answer = "";
-		//TODO find the question in the theme using the number of the question and set answer 
+		
+		for (Question question : this.theme.questions) {
+			if (question.id == this.questionId) {
+				answer = new String(question.answer);
+			}
+		}
 		
 		if (answer.indexOf(inputChar) != -1) {//si le caractère est dans answer
 			for (int i = 0; i < answer.length(); i++) {
