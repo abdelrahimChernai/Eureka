@@ -1,5 +1,7 @@
 package com.usthb.modeles;
 
+import com.usthb.dessin.Potence;
+
 /**
  * <b>Représente une Parte du jeu et contient toutes ses données</b>
  * 
@@ -41,6 +43,19 @@ public class PartieJeu {
 	 * Réponse actuelle saisie par le joueur.
 	 */
 	protected StringBuffer currentAnswer;
+	
+	/**
+	 * <p>
+	 * 	Le pendu de cette partie, garde ces données et s'occupes de le dessiner
+	 *	Ses données dont altéré dans la méthode PartieJeu.checkCher selon si la
+	 *	réponse du joueur est correcte ou fausse.
+	 * </p>
+	 * 
+	 * @see com.usthb.dessin.Potence
+	 * 
+	 * @see PartieJeu#checkChar(char)
+	 */
+	private Potence hamgman;
 	
 	/**
 	 * <b>
