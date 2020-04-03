@@ -118,7 +118,7 @@ public class Joueur {
 	 * <p>
 	 * Utilise la fonction de Objects pour créer un Numéro séquentiel et
 	 * utilise la fonction Math.Abs pour s'assurer que id >= 0 vu qu'il est
-	 * utilisé pour accéder à  la liste des joueurs, voir les méthodes connexion
+	 * utilisé pour accéder à  la liste des joueurs, voir les méthodes connection
 	 * et inscription
 	 * </p>
 	 * 
@@ -175,7 +175,7 @@ public class Joueur {
 	
 	/**
 	 * Donne le nombre de points du joueur depuis son inscription 
-	 * @return le score totale de la liste des parties jouées.
+	 * @return le score totale calculé à partir de la liste des parties jouées.
 	 * 
 	 * @see PartieJeu
 	 * 
