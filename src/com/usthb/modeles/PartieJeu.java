@@ -20,7 +20,21 @@ public class PartieJeu {
 	 * @see ThemeJeu#coefficent
 	 */
 	protected int score;
-	//TODO add question number or question id when clarified.
+
+	/**
+	 * <p>
+	 * 	L'identificateure de la question actuelle de la partie, sera utilisé
+	 * 	pour récupérer la réponse à la question à partir de la listes des
+	 * 	questions du thème afin de verifier si la réponse en cours est correcte
+	 * 	dans la méthode PartieJeu.checkChar()
+	 * </p> 
+	 * 
+	 * @see ThemeJeu#questions
+	 * @see PartieJeu#theme
+	 * @see PartieJeu#checkChar(char)
+	 */
+	private String questionId;
+	
 	protected ThemeJeu theme;										//Thème sélectionné.
   
   /**
@@ -64,7 +78,7 @@ public class PartieJeu {
 	 * @see Question
 	 * @see PartieJeu#currentAnswer
 	 * @see PartieJeu#theme
-	 * TODO add a link to QuestionID
+	 * @see PartieJeu#questionId
 	 * @see com#usthb#dessin#Potence
 	 */
 	public void checkChar(char inputChar) {

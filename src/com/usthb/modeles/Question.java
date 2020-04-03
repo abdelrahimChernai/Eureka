@@ -21,7 +21,7 @@ public class Question {
 	 * @see ThemeJeu#lable
 	 * @since 2.0
 	 */
-	protected String id;								//Numéro séquentiel automatique.
+	protected String id;
 	
 	/**
 	 * Le niveaux de la question, ce dernier est associé a un nombre de points
