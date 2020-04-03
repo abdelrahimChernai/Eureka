@@ -6,9 +6,10 @@ package com.usthb.modeles;
 import java.util.LinkedList;
 
 /**
- * <b>Représente une theme du jeu et contient toutes se données</b>
+ * <b>Représente un thème du jeu et contient toutes ses données</b>
  * 
  * @author Abdelrahim Chernai
+ * @author Yasmine Bouamra
  * @version 1.0
  */
 public class ThemeJeu {
@@ -26,12 +27,12 @@ public class ThemeJeu {
 	protected int coefficent;
 	
 	/**
-	 * Le texte qui représente le theme.
+	 * Le texte qui représente le thème.
 	 */
 	protected String lable;
 	
 	/**
-	 * Une liste des question du theme.
+	 * Une liste de question du thème.
 	 * 
 	 * @see Question
 	 */
@@ -40,8 +41,8 @@ public class ThemeJeu {
 	/**
 	 * Le type du thème.
 	 * <p>
-	 * 	Pour plus d'unfirmation sur les valeurs possible voir documentation de
-	 * 	l'enumeration ThemeType
+	 * 	Pour plus d'unfirmation sur les valeurs possible, voir documentation de
+	 * 	l'énumeration ThemeType
 	 * </p>
 	 * 
 	 * @see ThemeType

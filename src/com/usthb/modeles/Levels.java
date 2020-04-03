@@ -3,8 +3,8 @@ package com.usthb.modeles;
 /**
  * <b>Represent les niveaux du jeu.</b>
  * <p>
- * 	Les niveaux, actuellement au nombre de 5, sont représenté ici et chacun 
- * 	associé aux point qu'il vaut afin, ces point seront utilisés dans la class
+ * 	Les niveaux, actuellement au nombre de 5, sont représentés ici. Chaque niveau est
+ * 	associé au nombre de points qu'il vaut, ces points seront utilisés dans la classe
  * 	Joueur et Question.
  * </p>
  * <ul>
@@ -21,6 +21,7 @@ package com.usthb.modeles;
  * @see Question#getNumberPoints()
  * 
  * @author Abdelrahim Chernai
+ * @author Yasmine Bouamra
  * @version 1.0
  */
 public enum Levels {
@@ -32,8 +33,8 @@ public enum Levels {
 	
 	/**
 	 * <p>
-	 * Represent les points que vaut le niveau voir documentation de Levels
-	 * pour valeurs exactes.
+	 * Représente les points que vaut le niveau, voir documentation de Levels
+	 * pour les valeurs exactes.
 	 * </p>
 	 * 
 	 * @see Levels
@@ -42,7 +43,7 @@ public enum Levels {
 	
 	/**
 	 * Le Constructeur d'un Levels.
-	 * @param lvlPoints les point que vaut le niveaux ces dernier sont précisés
+	 * @param lvlPoints représente le nombre de points que vaut le niveau, ce dernier est précisé
 	 * 	au début de la documentation de Levels
 	 * 
 	 * @see Lvels

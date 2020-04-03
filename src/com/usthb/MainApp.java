@@ -12,19 +12,20 @@ import com.usthb.modeles.ThemeJeu;
  *  représente l'application
  * </b>
  * <p>
- *	S'ocupe d'orienter l'enchainements des évènements pour qu'ils soit traités
- *	en envoyant chaque événements a la class qui s'occupe de le gérer
+ *	S'ocupe d'orienter l'enchainement des évènements pour qu'ils soient traités
+ *	en envoyant chaque événement à la classe qui s'occupe de le gérer
  * </p>
  * 
  * @author Abdelrahim Chernai
+ * @author Yasmine Bouamra
  * @version 1.0
  */
 public class MainApp {
 	/**
 	 * <p>
-	 * 	Contient tout les joueurs inscrit auparavant, sera initialisé à partir
-	 *  d'un ficher contenant ces dernier voir la documentation de 
-	 *  initialisation pour plus de détailles.
+	 * 	Contient tous les joueurs inscrits auparavant, sera initialisé à partir
+	 *  d'un ficher contenant ces derniers. Voir la documentation de 
+	 *  l'initialisation pour plus de détails.
 	 * </p>
 	 * 
 	 * TODO add a link to initialisation
@@ -34,9 +35,9 @@ public class MainApp {
 	
 	/**
 	 * <p>
-	 * 	Contient tout les themes disponibles, sera initialisé à partir de deux
-	 * 	fichier différant un contenant les themes l'autes les questions voir la
-	 * 	méthode initialisation pour plus de détailles
+	 * 	Contient tous les thèmes disponibles, sera initialisé à partir de deux
+	 * 	fichiers différants : un contenant les thèmes, l'autre les questions. Voir la
+	 * 	méthode initialisation pour plus de détails
 	 * </p>
 	 * 
 	 * @see com.usthb.modeles.ThemeJeu
@@ -46,8 +47,8 @@ public class MainApp {
 	
 	/**
 	 * <p>
-	 * 	Se lance dès le lancement du jeu pour preparer les éléments et données
-	 * 	nécessaire en faisant ce qui suit :
+	 * 	Se lance dès le lancement du jeu pour préparer les éléments et données
+	 * 	nécessaires en faisant ce qui suit :
 	 * </p>
 	 * <ol>
 	 * 	<li>
@@ -56,13 +57,13 @@ public class MainApp {
 	 * 	</li>
 	 * 	<li>
 	 * 		Récupère les joueurs depuis un fichier en utilisant la méthode 
-	 * 		Joueur.readFile() et les met dans la list des joueurs pour plus de
-	 * 		détailles voir la documentation de Joueur.readFile()
+	 * 		Joueur.readFile() et les met dans la liste des joueurs. Pour plus de
+	 * 		détails voir la documentation de Joueur.readFile()
 	 *	</li>
 	 * 	<li>
-	 * 		Récupère les themes depuis un ficher en utilisant la méthode
-	 * 		ThemeJeu.readFile et les met dans la list des themes pour plus de
-	 *		détailles voir la documentation de ThemeJeu.readFile
+	 * 		Récupère les thèmes depuis un ficher en utilisant la méthode
+	 * 		ThemeJeu.readFile et les mets dans la list des thèmes. Pour plus de
+	 *		détails voir la documentation de ThemeJeu.readFile
 	 * 	</li>
 	 * 	<li>
 	 * 		ferme la fenêtre de chargement et ouvre la fenêtre principale
@@ -82,16 +83,16 @@ public class MainApp {
 	
 	/**
 	 * <p>
-	 * 	Prends un nom d'utilisateur et un mot de pass, génère un id unique en
+	 * 	Prends un nom d'utilisateur et un mot de passe, génère un id unique en
 	 * 	utilisant la méthode Joueur.setId puis en utilisant cet id comme clé
-	 *  accede au donnée du joueurs versifie que le user name concorde avec
-	 *  celui donnée puis si c'est le cas verifies que le mot de pass est
-	 *  correct si c'est le cas accede à la page pour lancer une partie sinon
-	 *  dis que le mot de passe est faux
-	 *  TODO gérer le cas si le nom d'utilisateur donné et celui trouvé ne sont pas les même
+	 *  accède aux données du joueur, vérifie que le user name concorde avec
+	 *  celui donné. Si c'est le cas, verifie que le mot de passe est
+	 *  correct. Si c'est le cas, accède à la page pour lancer une partie sinon
+	 *  dit que le mot de passe est faux
+	 *  TODO gérer le cas si le nom d'utilisateur donné et celui trouvé ne sont pas les mêmes
 	 * </p>
 	 * @return les données du joueur sous forme de Joueur, voir la documentation
-	 * de la class Joueur pour plus de détailles
+	 * de la class Joueur pour plus de détails
 	 * 
 	 * @see com.usthb.modeles.Joueur
 	 * 
@@ -111,16 +112,16 @@ public class MainApp {
 			
 			if (players.containsKey(playerConnecting.getId())) {
 				if (players.get(playerConnecting.getId()).getUsername().equals(username)) {
-					//la condition vérifie si le nom d'utilisateur donnée est
+					//la condition vérifie si le nom d'utilisateur donné est
 					//le même que celui trouvé dans la liste des joueurs
 					if (players.get(playerConnecting.getId()).getPassword().equals(password)) {
-						//la condition vérifie si le nom mot de pass donnée est
+						//la condition vérifie si le nom mot de passe donné est
 						//le même que celui trouvé dans la liste des joueurs
 						playerConnecting = players.get(playerConnecting.getId());
 					}
-				}//le cas ou le nom d'utilisateur ne correspond pas n'est pas
+				}//le cas où le nom d'utilisateur ne correspond pas n'est pas
 				 //possible car on vérifie toujours que l'id n'existe pas avant
-				 //ajoute d'un nouveau joueur et on ajoute jamais un username
+				 //d'ajouter un nouveau joueur. On ajoute jamais un username
 				 //directement.
 			}
 		} while(playerConnecting.getFirstName().equals(""));
@@ -133,11 +134,11 @@ public class MainApp {
 	 *	Lie le Nom, Prénom, date de naissance, un nom d'utilisateur puis crée
 	 *	un id et vérifie qu'il n'existe pas dans la liste des joueurs puis lie
 	 *	un mot de passe et demande de le confirmer, cette méthode vérifie que
-	 *	les entrées sont conforme au norme utilisé dans le code voir la
-	 *	documentation de Joueur pour plus de détailles. une fois que les donnés
-	 *	initialisé le joueur est ajouté a la liste des joueurs puis on appelle
-	 *	la méthode connection pour le connecter et lui proposer de commencer une
-	 *	partie voir la documentation de MainApp.connection
+	 *	les entrées sont conforme aux normes utilisées dans le code. Voir la
+	 *	documentation de Joueur pour plus de détails. Une fois que les données
+	 *	initialisées, le joueur est ajouté a la liste des joueurs puis on appelle
+	 *	la méthode connexion pour le connecter et lui propose de commencer une
+	 *	partie. Voir la documentation de MainApp.connection
 	 * </p>
 	 * @return
 	 * 
