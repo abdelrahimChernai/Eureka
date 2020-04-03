@@ -8,12 +8,12 @@ import com.usthb.modeles.ThemeJeu;
 
 /**
  * <b>
- *  MainApp est la classe contenant le point d'entrÃ©e du programme donc elle
- *  reprÃ©sente l'application
+ *  MainApp est la classe contenant le point d'entrée du programme donc elle
+ *  représente l'application
  * </b>
  * <p>
- *	S'ocupe d'orienter l'enchainement des Ã©vÃ¨nements pour qu'ils soient traitÃ©s
- *	en envoyant chaque Ã©vÃ©nement Ã  la classe qui s'occupe de le gÃ©rer
+ *	S'ocupe d'orienter l'enchainement des évènements pour qu'ils soient traités
+ *	en envoyant chaque événement à la classe qui s'occupe de le gérer
  * </p>
  * 
  * @author Abdelrahim Chernai
@@ -23,9 +23,9 @@ import com.usthb.modeles.ThemeJeu;
 public class MainApp {
 	/**
 	 * <p>
-	 * 	Contient tous les joueurs inscrits auparavant, sera initialisÃ© Ã  partir
+	 * 	Contient tous les joueurs inscrits auparavant, sera initialisé à partir
 	 *  d'un ficher contenant ces derniers. Voir la documentation de 
-	 *  l'initialisation pour plus de dÃ©tails.
+	 *  l'initialisation pour plus de détails.
 	 * </p>
 	 * 
 	 * @see MainApp#initialization()
@@ -35,9 +35,9 @@ public class MainApp {
 	
 	/**
 	 * <p>
-	 * 	Contient tous les thÃ¨mes disponibles, sera initialisÃ© Ã  partir de deux
-	 * 	fichiers diffÃ©rants : un contenant les thÃ¨mes, l'autre les questions. Voir la
-	 * 	mÃ©thode initialisation pour plus de dÃ©tails
+	 * 	Contient tous les thèmes disponibles, sera initialisé à partir de deux
+	 * 	fichiers différents : un contenant les thèmes, l'autre les questions. Voir la
+	 * 	méthode initialisation pour plus de détails
 	 * </p>
 	 * 
 	 * @see com.usthb.modeles.ThemeJeu
@@ -49,27 +49,27 @@ public class MainApp {
 	
 	/**
 	 * <p>
-	 * 	Se lance dÃ¨s le lancement du jeu pour prÃ©parer les Ã©lÃ©ments et donnÃ©es
-	 * 	nÃ©cessaires en faisant ce qui suit :
+	 * 	Se lance dès le lancement du jeu pour préparer les éléments et données
+	 * 	nécessaires en faisant ce qui suit :
 	 * </p>
 	 * <ol>
 	 * 	<li>
 	 * 		Ouvre la fenÃªtre de chargement
-	 * 		//TODO donner plus de dÃ©tailles sur ce point
+	 * 		//TODO donner plus de détailles sur ce point
 	 * 	</li>
 	 * 	<li>
-	 * 		RÃ©cupÃ¨re les joueurs depuis un fichier en utilisant la mÃ©thode 
+	 * 		Récupère les joueurs depuis un fichier en utilisant la méthode 
 	 * 		Joueur.readFile() et les met dans la liste des joueurs. Pour plus de
-	 * 		dÃ©tails voir la documentation de Joueur.readFile()
+	 * 		détails voir la documentation de Joueur.readFile()
 	 *	</li>
 	 * 	<li>
-	 * 		RÃ©cupÃ¨re les thÃ¨mes depuis un ficher en utilisant la mÃ©thode
-	 * 		ThemeJeu.readFile et les mets dans la list des thÃ¨mes. Pour plus de
-	 *		dÃ©tails voir la documentation de ThemeJeu.readFile
+	 * 		Récupère les thèmes depuis un ficher en utilisant la méthode
+	 * 		ThemeJeu.readFile et les mets dans la list des thèmes. Pour plus de
+	 *		détails voir la documentation de ThemeJeu.readFile
 	 * 	</li>
 	 * 	<li>
 	 * 		ferme la fenÃªtre de chargement et ouvre la fenÃªtre principale
-	 * 		//TODO donner plus de dÃ©tailles sur ce point
+	 * 		//TODO donner plus de détailles sur ce point
 	 * 	</li>
 	 * <ol>
 	 * 
@@ -85,16 +85,16 @@ public class MainApp {
 	
 	/**
 	 * <p>
-	 * 	Prends un nom d'utilisateur et un mot de passe, gÃ©nÃ¨re un id unique en
-	 * 	utilisant la mÃ©thode Joueur.setId puis en utilisant cet id comme clÃ©
-	 *  accÃ¨de aux donnÃ©es du joueur, vÃ©rifie que le user name concorde avec
-	 *  celui donnÃ©. Si c'est le cas, verifie que le mot de passe est
-	 *  correct. Si c'est le cas, accÃ¨de Ã  la page pour lancer une partie sinon
+	 * 	Prends un nom d'utilisateur et un mot de passe, génère un id unique en
+	 * 	utilisant la méthode Joueur.setId puis en utilisant cet id comme clé
+	 *  accède aux données du joueur, vérifie que le user name concorde avec
+	 *  celui donné. Si c'est le cas, verifie que le mot de passe est
+	 *  correct. Si c'est le cas, accède à la page pour lancer une partie sinon
 	 *  dit que le mot de passe est faux
-	 *  TODO gÃ©rer le cas si le nom d'utilisateur donnÃ© et celui trouvÃ© ne sont pas les mÃªmes
+	 *  TODO gérer le cas si le nom d'utilisateur donné et celui trouvé ne sont pas les mÃªmes
 	 * </p>
-	 * @return les donnÃ©es du joueur sous forme de Joueur, voir la documentation
-	 * de la class Joueur pour plus de dÃ©tails
+	 * @return les données du joueur sous forme de Joueur, voir la documentation
+	 * de la class Joueur pour plus de détails
 	 * 
 	 * @see com.usthb.modeles.Joueur
 	 * 
@@ -114,15 +114,15 @@ public class MainApp {
 			
 			if (players.containsKey(playerConnecting.getId())) {
 				if (players.get(playerConnecting.getId()).getUsername().equals(username)) {
-					//la condition vÃ©rifie si le nom d'utilisateur donnÃ© est
-					//le mÃªme que celui trouvÃ© dans la liste des joueurs
+					//la condition vérifie si le nom d'utilisateur donné est
+					//le mÃªme que celui trouvé dans la liste des joueurs
 					if (players.get(playerConnecting.getId()).getPassword().equals(password)) {
-						//la condition vÃ©rifie si le nom mot de passe donnÃ© est
-						//le mÃªme que celui trouvÃ© dans la liste des joueurs
+						//la condition vérifie si le nom mot de passe donné est
+						//le mÃªme que celui trouvé dans la liste des joueurs
 						playerConnecting = players.get(playerConnecting.getId());
 					}
 				}//le cas oÃ¹ le nom d'utilisateur ne correspond pas n'est pas
-				 //possible car on vÃ©rifie toujours que l'id n'existe pas avant
+				 //possible car on vérifie toujours que l'id n'existe pas avant
 				 //d'ajouter un nouveau joueur. On ajoute jamais un username
 				 //directement.
 			}
@@ -133,13 +133,13 @@ public class MainApp {
 	
 	/**
 	 * <p>
-	 *	Lie le Nom, PrÃ©nom, date de naissance, un nom d'utilisateur puis crÃ©e
-	 *	un id et vÃ©rifie qu'il n'existe pas dans la liste des joueurs puis lie
-	 *	un mot de passe et demande de le confirmer, cette mÃ©thode vÃ©rifie que
-	 *	les entrÃ©es sont conforme aux normes utilisÃ©es dans le code. Voir la
-	 *	documentation de Joueur pour plus de dÃ©tails. Une fois que les donnÃ©es
-	 *	initialisÃ©es, le joueur est ajoutÃ© a la liste des joueurs puis on appelle
-	 *	la mÃ©thode connexion pour le connecter et lui propose de commencer une
+	 *	Lie le Nom, Prénom, date de naissance, un nom d'utilisateur puis crée
+	 *	un id et vérifie qu'il n'existe pas dans la liste des joueurs puis lie
+	 *	un mot de passe et demande de le confirmer, cette méthode vérifie que
+	 *	les entrées sont conforme aux normes utilisées dans le code. Voir la
+	 *	documentation de Joueur pour plus de détails. Une fois que les données
+	 *	initialisées, le joueur est ajouté a la liste des joueurs puis on appelle
+	 *	la méthode connexion pour le connecter et lui propose de commencer une
 	 *	partie. Voir la documentation de MainApp.connection
 	 * </p>
 	 * @return
@@ -165,7 +165,7 @@ public class MainApp {
 	}
 
 	/**
-	 * @param args - non utilisÃ©.
+	 * @param args - non utilisé.
 	 */
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
