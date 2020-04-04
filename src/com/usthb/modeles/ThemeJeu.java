@@ -3,7 +3,11 @@
  */
 package com.usthb.modeles;
 
+import java.time.chrono.MinguoChronology;
 import java.util.LinkedList;
+import java.util.Objects;
+
+import com.usthb.MainApp;
 
 /**
  * <b>Représente un thème du jeu et contient toutes ses données</b>
@@ -36,7 +40,7 @@ public class ThemeJeu {
 	 * 
 	 * @see Question
 	 */
-	protected LinkedList <Question> questions;		//Liste des questions.
+	protected LinkedList <Question> questions = new LinkedList<Question>();		//Liste des questions.
 	
 	/**
 	 * Le type du thème.
@@ -50,14 +54,37 @@ public class ThemeJeu {
 	protected ThemeType type;
 	
 	public ThemeJeu(int coefficent, String lable, ThemeType type) {
+		char c = 'y';
+		
 		this.coefficent = coefficent;
 		this.lable = lable;
 		this.type = type;
+		
+		do {
+			String questionLable;
+			String questionAnswer;
+			
+			System.out.println("lable");
+			questionLable = new String(MainApp.consol.nextLine());
+			
+			System.out.println("answe");
+			questionAnswer = new String(MainApp.consol.nextLine());
+			
+			this.questions.add(new Question("His" + this.hashCode() + "" + 1, Levels.LEVEL_3, questionLable, questionAnswer));
+			
+			System.out.println("More ? y/n");
+			c = MainApp.consol.nextLine().charAt(0);
+		} while (c == 'y');
+	}
+	
+	public int hashCode() {
+		return Math.abs(Objects.hash(this.lable));
 	}
 	
 	public String toString() {
 		return "" + type + ": "
 				+ lable + ", coefficient "
-				+ coefficent;
+				+ coefficent + " question:"
+				+ questions;
 	}
 }

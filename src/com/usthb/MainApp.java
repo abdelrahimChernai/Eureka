@@ -2,6 +2,7 @@ package com.usthb;
 
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Scanner;
 
 import com.usthb.modeles.Joueur;
 import com.usthb.modeles.ThemeJeu;
@@ -22,6 +23,8 @@ import com.usthb.modeles.ThemeType;
  * @version 1.0
  */
 public class MainApp {
+	public static Scanner consol = new Scanner(System.in);
+	
 	/**
 	 * <p>
 	 * 	Contient tous les joueurs inscrits auparavant, sera initialisé à partir
