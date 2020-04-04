@@ -49,4 +49,15 @@ public class ThemeJeu {
 	 */
 	protected ThemeType type;
 	
+	public ThemeJeu(int coefficent, String lable, ThemeType type) {
+		this.coefficent = coefficent;
+		this.lable = lable;
+		this.type = type;
+	}
+	
+	public String toString() {
+		return "" + type + ": "
+				+ lable + ", coefficient "
+				+ coefficent;
+	}
 }

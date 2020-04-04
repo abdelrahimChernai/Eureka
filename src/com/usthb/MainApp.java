@@ -5,6 +5,7 @@ import java.util.HashSet;
 
 import com.usthb.modeles.Joueur;
 import com.usthb.modeles.ThemeJeu;
+import com.usthb.modeles.ThemeType;
 
 /**
  * <b>
@@ -168,8 +169,10 @@ public class MainApp {
 	 * @param args - non utilisé.
 	 */
 	public static void main(String[] args) {
-		// TODO Auto-generated method stub
-
+		ThemeJeu theme = new ThemeJeu(2, "cold war", ThemeType.HISTOIRE);
+		
+		System.out.println(theme);
 	}
+	
 
 }
