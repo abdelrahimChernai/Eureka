@@ -20,7 +20,7 @@ import com.usthb.modeles.ThemeJeu;
  * 
  * @author Abdelrahim Chernai
  * @author Yasmine Bouamra
- * @version 1.0
+ * @version 1.1.0
  */
 public class MainApp {
 	static Scanner console = new Scanner(System.in);		// TEST
@@ -87,13 +87,11 @@ public class MainApp {
 	
 	/**
 	 * <p>
-	 * 	Prends un nom d'utilisateur et un mot de passe, génère un id unique en
-	 * 	utilisant la méthode Joueur.setId puis en utilisant cet id comme clé
-	 *  accède aux données du joueur, vérifie que le user name concorde avec
-	 *  celui donné. Si c'est le cas, vérifie que le mot de passe est
-	 *  correct. Si c'est le cas, accède à la page pour lancer une partie sinon
-	 *  dit que le mot de passe est faux
-	 *  TODO gérer le cas si le nom d'utilisateur donné et celui trouvé ne sont pas les mêmes
+	 * 	Demande un nom d'utilisateur vérifie si l'id généré par ce dernier
+	 * 	existe sinon se répète jusau'à insertion d'un nom d'utilisateur valide
+	 * 	puis demande un mot de passe jusqu'au l'insertion du mot de passe
+	 * 	correspondant au profile représenté par le nom d'utilisateur, puis, une
+	 * 	fois que le bon mot de passe est inséré, retourne les données du joueur.
 	 * </p>
 	 * @return les données du joueur sous forme de Joueur, voir la documentation
 	 * de la class Joueur pour plus de détails
@@ -103,31 +101,37 @@ public class MainApp {
 	 * @see com.usthb.modeles.Joueur#hashCode()
 	 * @see com.usthb.modeles.Joueur#id
 	 * @see com.usthb.modeles.Joueur#setId()
+	 * 
+	 * @since 1.1.0
 	 */
-	private static Joueur connection(String username, String password) {
+	private static Joueur connection() {
 		Joueur playerConnecting = new Joueur();
-		
-	
-		playerConnecting.setUsername(username);
-		playerConnecting.setPassword(password);
-		playerConnecting.setId();
+
+		do {
+			System.out.println("username");
+			playerConnecting.setUsername(console.nextLine());
+			playerConnecting.setId();
 			
-		if (players.containsKey(playerConnecting.getId())) {
-			if (players.get(playerConnecting.getId()).getUsername().equals(username)) {
-				//la condition vérifie si le nom d'utilisateur donné est
-				//le même que celui trouvé dans la liste des joueurs
-				if (players.get(playerConnecting.getId()).getPassword().equals(password)) {
-					//la condition vérifie si le nom mot de passe donné est
-					//le même que celui trouvé dans la liste des joueurs
-					playerConnecting = players.get(playerConnecting.getId());
-				}
-			}//le cas où le nom d'utilisateur ne correspond pas n'est pas
-			 //possible car on vérifie toujours que l'id n'existe pas avant
-			 //d'ajouter un nouveau joueur. On ajoute jamais un username
-			 //directement.
+			if (players.containsKey(playerConnecting.getId())) {
+				System.out.println("Hello " + playerConnecting.getUsername() + "!");
+			} else {
+				System.out.println("Sure about that ?");
 			}
+			
+		} while (! players.containsKey(playerConnecting.getId()));
 		
-		return playerConnecting;
+		do {
+			System.out.println("password");
+			playerConnecting.setPassword(console.nextLine());
+			if (players.get(playerConnecting.getId()).getPassword().equals(playerConnecting.getPassword())) {
+				System.out.println("You are loged in");
+			} else {
+				System.out.println("Wrong the password is, my young padawan");
+			}
+		} while (! players.get(playerConnecting.getId()).getPassword().equals(playerConnecting.getPassword()));
+		
+			
+		return players.get(playerConnecting.getId());
 	}
 	
 	/**
@@ -181,7 +185,7 @@ public class MainApp {
 		
 		players.put(newPlayer.getId(), newPlayer);
 
-			return MainApp.connection(newPlayer.getUsername(), newPlayer.getPassword());
+			return newPlayer;
 	}
 
 	/**
@@ -189,22 +193,12 @@ public class MainApp {
 	 */
 	public static void main(String[] args) {
 		Joueur p1, p2;
-		String username, password;
-		
-		
 		
 		p1 = inscription();
 		System.out.println(p1);
-		do {
-			System.out.println("username");
-			username = new String(console.nextLine());
-		
-			System.out.println("password");
-			password = new String(console.nextLine());
-		
-			p2 = connection(username, password);
-		} while(p2.getFirstName().equals(""));
-		
+
+		p2 = connection();
+			
 		System.out.println(p2);
 
 		console.close();
