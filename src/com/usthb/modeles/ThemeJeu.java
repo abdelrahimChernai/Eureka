@@ -73,7 +73,7 @@ public class ThemeJeu {
 			System.out.println("lable");
 			questionLable = new String(MainApp.console.nextLine());
 			
-			System.out.println("answe");
+			System.out.println("answer");
 			questionAnswer = new String(MainApp.console.nextLine());
 			
 			ThemeJeu.questionsNumber++;
