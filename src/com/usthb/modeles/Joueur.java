@@ -180,10 +180,6 @@ public class Joueur {
 		return this.password;
 	}
 	
-	public void setPassword(String password) {		// TODO add in fix
-		this.password = password;
-	}
-	
 	public void setBirthDate(Date birthDate) {		// TODO add in fix
 		this.birthDate = birthDate;
 	}

@@ -10,9 +10,19 @@ package com.usthb.modeles;
  * @version 1.0
  */
 public enum ThemeType {
-	HISTOIRE,
-	GEOGRAPHIE,
-	SANTE,
-	CULTURE_GENERALE,
-	ISLAM;
+	HISTOIRE ("HIS"),
+	GEOGRAPHIE ("GEO"),
+	SANTE ("SAN"),
+	CULTURE_GENERALE ("CUL"),
+	ISLAM ("ISL");
+	
+	private String abreviation;
+	
+	private ThemeType(String abreviation) {
+		this.abreviation = abreviation;
+	}
+	
+	public String getAbreviation() {
+		return this.abreviation;
+	}
 }

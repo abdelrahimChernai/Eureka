@@ -7,6 +7,7 @@ import java.util.Scanner;
 
 import com.usthb.modeles.Joueur;
 import com.usthb.modeles.ThemeJeu;
+import com.usthb.modeles.ThemeType;
 
 /**
  * <b>
@@ -23,7 +24,7 @@ import com.usthb.modeles.ThemeJeu;
  * @version 1.1.0
  */
 public class MainApp {
-	static Scanner console = new Scanner(System.in);		// TEST
+	public static Scanner console = new Scanner(System.in);		// TEST
 	
 	/**
 	 * <p>
@@ -89,21 +90,11 @@ public class MainApp {
 	
 	/**
 	 * <p>
-<<<<<<< HEAD
-	 * 	Prends un nom d'utilisateur et un mot de passe, génère un id unique en
-	 * 	utilisant la méthode Joueur.setId puis en utilisant cet id comme clé
-	 *  accède aux données du joueur, vérifie que le user name concorde avec
-	 *  celui donné. Si c'est le cas, vérifie que le mot de passe est
-	 *  correct. Si c'est le cas, accède à la page pour lancer une partie sinon
-	 *  dit que le mot de passe est faux
-	 *  TODO gérer le cas si le nom d'utilisateur donné et celui trouvé ne sont pas les mêmes
-=======
 	 * 	Demande un nom d'utilisateur vérifie si l'id généré par ce dernier
 	 * 	existe sinon se répète jusau'à insertion d'un nom d'utilisateur valide
 	 * 	puis demande un mot de passe jusqu'au l'insertion du mot de passe
 	 * 	correspondant au profile représenté par le nom d'utilisateur, puis, une
 	 * 	fois que le bon mot de passe est inséré, retourne les données du joueur.
->>>>>>> testJoueur
 	 * </p>
 	 * @return les données du joueur sous forme de Joueur, voir la documentation
 	 * de la class Joueur pour plus de détails
@@ -204,6 +195,9 @@ public class MainApp {
 	 */
 	public static void main(String[] args) {
 		Joueur p1, p2;
+		ThemeJeu theme = new ThemeJeu(2, "cold war", ThemeType.HISTOIRE);
+		
+		System.out.println(theme);
 		
 		p1 = inscription();
 		System.out.println(p1);
@@ -215,3 +209,4 @@ public class MainApp {
 		console.close();
 	}
 }
+
