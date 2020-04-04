@@ -71,12 +71,18 @@ public class ThemeJeu {
 			System.out.println("answe");
 			questionAnswer = new String(MainApp.consol.nextLine());
 			
-			this.questionsNumber++;
-			this.questions.add(new Question("His" + this.hashCode() + "" + this.questionsNumber, Levels.LEVEL_3, questionLable, questionAnswer));
+			ThemeJeu.questionsNumber++;
+			this.questions.add(new Question(this.generateQuestionID(), Levels.LEVEL_3, questionLable, questionAnswer));
 			
 			System.out.println("More ? y/n");
 			c = MainApp.consol.nextLine().charAt(0);
 		} while (c == 'y');
+	}
+	
+	public String generateQuestionID() {
+		return this.type.getAbreviation()
+				+ this.hashCode() + ""
+				+ ThemeJeu.questionsNumber;
 	}
 	
 	public int hashCode() {
