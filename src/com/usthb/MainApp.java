@@ -1,7 +1,9 @@
 package com.usthb;
 
+import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Scanner;
 
 import com.usthb.modeles.Joueur;
 import com.usthb.modeles.ThemeJeu;
@@ -18,9 +20,11 @@ import com.usthb.modeles.ThemeJeu;
  * 
  * @author Abdelrahim Chernai
  * @author Yasmine Bouamra
- * @version 1.0
+ * @version 1.1.0
  */
 public class MainApp {
+	static Scanner console = new Scanner(System.in);		// TEST
+	
 	/**
 	 * <p>
 	 * 	Contient tous les joueurs inscrits auparavant, sera initialisé à partir
@@ -31,12 +35,12 @@ public class MainApp {
 	 * TODO add a link to initialisation
 	 * @see com.usthb.modeles.Joueur
 	 */
-	private static HashMap<Integer, Joueur> players;
+	private static HashMap<Integer, Joueur> players = new HashMap<Integer, Joueur>();		// TODO add initialisation in fix
 	
 	/**
 	 * <p>
 	 * 	Contient tous les thèmes disponibles, sera initialisé à partir de deux
-	 * 	fichiers différants : un contenant les thèmes, l'autre les questions. Voir la
+	 * 	fichiers différents : un contenant les thèmes, l'autre les questions. Voir la
 	 * 	méthode initialisation pour plus de détails
 	 * </p>
 	 * 
@@ -83,13 +87,11 @@ public class MainApp {
 	
 	/**
 	 * <p>
-	 * 	Prends un nom d'utilisateur et un mot de passe, génère un id unique en
-	 * 	utilisant la méthode Joueur.setId puis en utilisant cet id comme clé
-	 *  accède aux données du joueur, vérifie que le user name concorde avec
-	 *  celui donné. Si c'est le cas, verifie que le mot de passe est
-	 *  correct. Si c'est le cas, accède à la page pour lancer une partie sinon
-	 *  dit que le mot de passe est faux
-	 *  TODO gérer le cas si le nom d'utilisateur donné et celui trouvé ne sont pas les mêmes
+	 * 	Demande un nom d'utilisateur vérifie si l'id généré par ce dernier
+	 * 	existe sinon se répète jusau'à insertion d'un nom d'utilisateur valide
+	 * 	puis demande un mot de passe jusqu'au l'insertion du mot de passe
+	 * 	correspondant au profile représenté par le nom d'utilisateur, puis, une
+	 * 	fois que le bon mot de passe est inséré, retourne les données du joueur.
 	 * </p>
 	 * @return les données du joueur sous forme de Joueur, voir la documentation
 	 * de la class Joueur pour plus de détails
@@ -99,34 +101,37 @@ public class MainApp {
 	 * @see com.usthb.modeles.Joueur#hashCode()
 	 * @see com.usthb.modeles.Joueur#id
 	 * @see com.usthb.modeles.Joueur#setId()
+	 * 
+	 * @since 1.1.0
 	 */
-	private static Joueur connection(String username, String password) {
+	private static Joueur connection() {
 		Joueur playerConnecting = new Joueur();
-		
+
 		do {
-			//TODO read the player's user name
-			playerConnecting.setUsername(username);
-			//TODO read the player password and put it in playerConnecting variable
-			playerConnecting.hashCode();
+			System.out.println("username");
+			playerConnecting.setUsername(console.nextLine());
 			playerConnecting.setId();
 			
 			if (players.containsKey(playerConnecting.getId())) {
-				if (players.get(playerConnecting.getId()).getUsername().equals(username)) {
-					//la condition vérifie si le nom d'utilisateur donné est
-					//le même que celui trouvé dans la liste des joueurs
-					if (players.get(playerConnecting.getId()).getPassword().equals(password)) {
-						//la condition vérifie si le nom mot de passe donné est
-						//le même que celui trouvé dans la liste des joueurs
-						playerConnecting = players.get(playerConnecting.getId());
-					}
-				}//le cas où le nom d'utilisateur ne correspond pas n'est pas
-				 //possible car on vérifie toujours que l'id n'existe pas avant
-				 //d'ajouter un nouveau joueur. On ajoute jamais un username
-				 //directement.
+				System.out.println("Hello " + playerConnecting.getUsername() + "!");
+			} else {
+				System.out.println("Sure about that ?");
 			}
-		} while(playerConnecting.getFirstName().equals(""));
+			
+		} while (! players.containsKey(playerConnecting.getId()));
 		
-		return playerConnecting;
+		do {
+			System.out.println("password");
+			playerConnecting.setPassword(console.nextLine());
+			if (players.get(playerConnecting.getId()).getPassword().equals(playerConnecting.getPassword())) {
+				System.out.println("You are loged in");
+			} else {
+				System.out.println("Wrong the password is, my young padawan");
+			}
+		} while (! players.get(playerConnecting.getId()).getPassword().equals(playerConnecting.getPassword()));
+		
+			
+		return players.get(playerConnecting.getId());
 	}
 	
 	/**
@@ -150,24 +155,51 @@ public class MainApp {
 	 */
 	private static Joueur inscription() {
 		Joueur newPlayer = new Joueur();
-		do {
-			//TODO read the first name and put it in the newPlayer variable
-			//TODO read the last name and put it in the newPlayer variable
-			//TODO read the birth Day and put it in the newPlayer variable
-			//TODO read the user name and put it in the newPlayer variable
-		} while (players.containsKey(newPlayer.hashCode()));
-			//TODO read the password and put it in the newPlayer variable
-			//TODO read it again to check the password and put it in the newPlayer variable
+		
+		System.out.println("first name");
+		newPlayer.setFirstName(console.nextLine());
+			
+		System.out.println("last name");
+		newPlayer.setLastName(console.nextLine());
 
-			return MainApp.connection(newPlayer.getUsername(), newPlayer.getPassword());
+		System.out.println("Birth date YYYY MM DD");
+		newPlayer.setBirthDate(new Date(console.nextInt() - 1900, console.nextInt() - 1, console.nextInt()));
+		console.nextLine();
+		
+		do {
+			System.out.println("username");
+			newPlayer.setUsername(console.nextLine());
+			
+			if (players.containsKey(newPlayer.hashCode())) {
+				System.out.println("this one is not avalable, try somthing else");
+			} else {
+				System.out.println("Alright " + newPlayer.getUsername() + " it is !");
+				newPlayer.setId();
+			}
+		} while (players.containsKey(newPlayer.hashCode()));
+		
+		System.out.println("password");
+		newPlayer.setPassword(console.nextLine());
+		//TODO read it again to check the password and put it in the newPlayer variable
+		
+		players.put(newPlayer.getId(), newPlayer);
+
+			return newPlayer;
 	}
 
 	/**
 	 * @param args - non utilisé.
 	 */
 	public static void main(String[] args) {
-		// TODO Auto-generated method stub
+		Joueur p1, p2;
+		
+		p1 = inscription();
+		System.out.println(p1);
 
+		p2 = connection();
+			
+		System.out.println(p2);
+
+		console.close();
 	}
-
 }
