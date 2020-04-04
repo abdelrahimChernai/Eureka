@@ -65,7 +65,11 @@ public enum Levels {
 		this.lvlNumber = lvlNumber;
 	}
 	
-	public Levels getlvl() {
-		return levelNumberCorespendance.get(this.lvlNumber);
+	public static Levels  getLvl(int lvlNumber) {
+		return Levels.levelNumberCorespendance.get(lvlNumber);
+	}
+	
+	public int getLvlNumber() {
+		return this.lvlNumber;
 	}
 }

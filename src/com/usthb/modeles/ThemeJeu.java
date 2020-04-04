@@ -62,12 +62,12 @@ public class ThemeJeu {
 		this.type = type;
 
 		do {
-			int questionlvl;
+			Levels questionLvl;
 			String questionLable;
 			String questionAnswer;
 			
 			System.out.println("lvl 1, 2, 3, 4, 5");
-			questionlvl = MainApp.consol.nextInt();
+			questionLvl = Levels.getLvl(MainApp.consol.nextInt());
 			MainApp.consol.nextLine();
 			
 			System.out.println("lable");
@@ -77,7 +77,7 @@ public class ThemeJeu {
 			questionAnswer = new String(MainApp.consol.nextLine());
 			
 			ThemeJeu.questionsNumber++;
-			this.questions.add(new Question(this.generateQuestionID(), Levels.LEVEL_3, questionLable, questionAnswer));
+			this.questions.add(new Question(this.generateQuestionID(), questionLvl, questionLable, questionAnswer));
 			
 			System.out.println("More ? y/n");
 			c = MainApp.consol.nextLine().charAt(0);

@@ -73,6 +73,7 @@ public class Question {
 	
 	public String toString() {
 		return "" + id + ": "
-				+ lable;
+				+ lable + " level "
+				+ lvl.getLvlNumber();
 	}
 }
