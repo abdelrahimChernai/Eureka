@@ -62,8 +62,13 @@ public class ThemeJeu {
 		this.type = type;
 
 		do {
+			int questionlvl;
 			String questionLable;
 			String questionAnswer;
+			
+			System.out.println("lvl 1, 2, 3, 4, 5");
+			questionlvl = MainApp.consol.nextInt();
+			MainApp.consol.nextLine();
 			
 			System.out.println("lable");
 			questionLable = new String(MainApp.consol.nextLine());
