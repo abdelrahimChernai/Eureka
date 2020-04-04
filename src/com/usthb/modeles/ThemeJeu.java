@@ -3,7 +3,6 @@
  */
 package com.usthb.modeles;
 
-import java.time.chrono.MinguoChronology;
 import java.util.LinkedList;
 import java.util.Objects;
 
@@ -17,6 +16,8 @@ import com.usthb.MainApp;
  * @version 1.0
  */
 public class ThemeJeu {
+	
+	private static int questionsNumber = 0;
 	
 	/**
 	 * <p>
@@ -59,7 +60,7 @@ public class ThemeJeu {
 		this.coefficent = coefficent;
 		this.lable = lable;
 		this.type = type;
-		
+
 		do {
 			String questionLable;
 			String questionAnswer;
@@ -70,7 +71,8 @@ public class ThemeJeu {
 			System.out.println("answe");
 			questionAnswer = new String(MainApp.consol.nextLine());
 			
-			this.questions.add(new Question("His" + this.hashCode() + "" + 1, Levels.LEVEL_3, questionLable, questionAnswer));
+			this.questionsNumber++;
+			this.questions.add(new Question("His" + this.hashCode() + "" + this.questionsNumber, Levels.LEVEL_3, questionLable, questionAnswer));
 			
 			System.out.println("More ? y/n");
 			c = MainApp.consol.nextLine().charAt(0);
