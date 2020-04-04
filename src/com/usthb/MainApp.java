@@ -161,8 +161,7 @@ public class MainApp {
 			
 		System.out.println("last name");
 		newPlayer.setLastName(console.nextLine());
-			
-		//TODO read the birth Day and put it in the newPlayer variable
+
 		System.out.println("Birth date YYYY MM DD");
 		newPlayer.setBirthDate(new Date(console.nextInt() - 1900, console.nextInt() - 1, console.nextInt()));
 		console.nextLine();

@@ -210,8 +210,7 @@ public class Joueur {
 				+ firstName + " "
 				+ lastName + " aka "
 				+ username + " has "
-				+ this.getTotalScore() + " points"
-				+ birthDate;
+				+ this.getTotalScore() + " points";
 	}
 	
 }
