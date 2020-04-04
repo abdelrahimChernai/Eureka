@@ -101,7 +101,7 @@ public class PartieJeu {
 		String answer = "";
 		
 		for (Question question : this.theme.questions) {
-			if (question.id == this.questionId) {
+			if (question.id.equals(this.questionId)) {
 				answer = new String(question.answer);
 			}
 		}
