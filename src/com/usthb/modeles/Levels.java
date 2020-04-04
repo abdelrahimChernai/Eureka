@@ -24,7 +24,7 @@ import java.util.HashMap;
  * 
  * @author Abdelrahim Chernai
  * @author Yasmine Bouamra
- * @version 1.0
+ * @version 1.1.0
  */
 public enum Levels {
 	LEVEL_1 (5, 1),
@@ -62,13 +62,23 @@ public enum Levels {
 	 */
 	private Levels(int lvlPoints, int lvlNumber) {
 		this.lvlPoints = lvlPoints;
+		
+		/**
+		 * @since 1.1.0
+		 */
 		this.lvlNumber = lvlNumber;
 	}
 	
+	/**
+	 * @since 1.1.0
+	 */
 	public static Levels  getLvl(int lvlNumber) {
 		return Levels.levelNumberCorespendance.get(lvlNumber);
 	}
 	
+	/**
+	 * @since 1.1.0
+	 */
 	public int getLvlNumber() {
 		return this.lvlNumber;
 	}

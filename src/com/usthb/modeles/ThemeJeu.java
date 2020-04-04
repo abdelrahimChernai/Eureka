@@ -13,7 +13,7 @@ import com.usthb.MainApp;
  * 
  * @author Abdelrahim Chernai
  * @author Yasmine Bouamra
- * @version 1.0
+ * @version 1.1.0
  */
 public class ThemeJeu {
 	
@@ -84,16 +84,28 @@ public class ThemeJeu {
 		} while (c == 'y');
 	}
 	
+	/**
+	 * 
+	 * @return
+	 * 
+	 * @since 1.1.0
+	 */
 	public String generateQuestionID() {
 		return this.type.getAbreviation()
 				+ this.hashCode() + ""
 				+ ThemeJeu.questionsNumber;
 	}
 	
+	/**
+	 * @since 1.1.0
+	 */
 	public int hashCode() {
 		return Math.abs(Objects.hash(this.lable));
 	}
 	
+	/**
+	 * @since 1.1.0
+	 */
 	public String toString() {
 		return "" + type + ": "
 				+ lable + ", coefficient "

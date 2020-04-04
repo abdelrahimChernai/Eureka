@@ -9,7 +9,7 @@ import java.util.Objects;
  * 
  * @author Abdelrahim Chernai
  * @author Yasmine Bouamra
- * @version 2.0
+ * @version 2.1.0
  * @see ParieJeu
  */
 public class Joueur {
@@ -66,7 +66,7 @@ public class Joueur {
 	 */
 	protected String username;
   
-  /**
+	/**
 	 * <p>
 	 * 	On l'utilise lors de la connexion du joueur pour s'assurer de son
 	 * 	identité.
@@ -74,7 +74,7 @@ public class Joueur {
 	 */
 	protected String password;
   
-  /**
+	/**
 	 * La date de naissance du joueur.
 	 */
 	protected Date birthDate;
@@ -131,6 +131,11 @@ public class Joueur {
 		return Math.abs(Objects.hash(this.username));
 	}
 	
+	/**
+	 * 
+	 * @param lastName
+	 * @since 2.1.0
+	 */
 	public void setLastName(String lastName) {		// TODO add in the fix
 		this.lastName = lastName;
 	}
@@ -143,6 +148,12 @@ public class Joueur {
 		return this.firstName;
 	}
 	
+	/**
+	 * 
+	 * @param firstName
+	 * 
+	 * @since 2.1.0
+	 */
 	public void setFirstName(String firstName) {	// TODO add in the fix
 		this.firstName = firstName;
 	}
@@ -180,8 +191,18 @@ public class Joueur {
 		return this.password;
 	}
 	
+	/**
+	 * 
+	 * @param birthDate
+	 * 
+	 * @since 2.1.0
+	 */
 	public void setBirthDate(Date birthDate) {		// TODO add in fix
 		this.birthDate = birthDate;
+	}
+	
+	public int getPlayedGamesNumber() {
+		return this.playerGames.size();
 	}
 	
 	/**
@@ -209,6 +230,9 @@ public class Joueur {
 		return totalScore;
 	}
 	
+	/**
+	 * @since 2.1.0
+	 */
 	public String toString() {
 		return "The player #" + id + ": "
 				+ firstName + " "

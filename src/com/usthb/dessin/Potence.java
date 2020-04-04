@@ -4,6 +4,7 @@ import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.Graphics;
 
+
 /**
  * <b>S'occupe de la gestion du pendu</b>
  * 

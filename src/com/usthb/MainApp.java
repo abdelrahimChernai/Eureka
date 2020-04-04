@@ -6,6 +6,7 @@ import java.util.HashSet;
 import java.util.Scanner;
 
 import com.usthb.modeles.Joueur;
+import com.usthb.modeles.PartieJeu;
 import com.usthb.modeles.ThemeJeu;
 import com.usthb.modeles.ThemeType;
 
@@ -50,7 +51,7 @@ public class MainApp {
 	 * 
 	 * @see MainApp#initialization()
 	 */
-	private static HashSet<ThemeJeu> themes;
+	private static HashSet<ThemeJeu> themes = new HashSet<ThemeJeu>();
 	
 	/**
 	 * <p>
@@ -156,7 +157,7 @@ public class MainApp {
 	 * @see Joueur#hashCode()
 	 * @see Joueur#setId()
 	 */
-	private static Joueur inscription() {
+	private static void inscription() {
 		Joueur newPlayer = new Joueur();
 		
 		System.out.println("first name");
@@ -186,26 +187,23 @@ public class MainApp {
 		//TODO read it again to check the password and put it in the newPlayer variable
 		
 		players.put(newPlayer.getId(), newPlayer);
-
-			return newPlayer;
 	}
 
 	/**
 	 * @param args - non utilisé.
 	 */
 	public static void main(String[] args) {
-		Joueur p1, p2;
+		Joueur currentPlayer;
 		ThemeJeu theme = new ThemeJeu(2, "cold war", ThemeType.HISTOIRE);
-		
-		System.out.println(theme);
-		
-		p1 = inscription();
-		System.out.println(p1);
+		PartieJeu newGame;
 
-		p2 = connection();
-			
-		System.out.println(p2);
-
+		inscription();
+		currentPlayer = connection();
+		System.out.println(currentPlayer);
+		
+		newGame = new PartieJeu(currentPlayer.getPlayedGamesNumber() + 1,"HIS" + theme.hashCode() + "1", theme);
+		System.out.println(newGame);
+		
 		console.close();
 	}
 }

@@ -5,7 +5,7 @@ package com.usthb.modeles;
  * 
  * @author Abdelrahim Chernai
  * @author Yasmine Bouamra
- * @version 2.0
+ * @version 2.1.0
  */
 public class Question {
 	/**
@@ -71,6 +71,9 @@ public class Question {
 		return lvl.lvlPoints;
 	}
 	
+	/**
+	 * @since 2.1.0
+	 */
 	public String toString() {
 		return "" + id + ": "
 				+ lable + " level "
