@@ -27,7 +27,7 @@ public class Joueur {
 	 * 
 	 * @see com.usthb.MainApp#players
 	 */
-	protected int id;
+	private int id;
 	
 	/**
    * <p>
@@ -39,21 +39,21 @@ public class Joueur {
 	 * @see Levels
 	 * @since 1.1.0
 	 */
-	protected Levels currentLvl;
+	private Levels currentLvl;
   
 	/**
 	 * <p>
 	 * 	Représente le Nom du joueur, est demandé lors de son inscription
 	 * </p>
 	 */
-	protected String lastName;
+	private String lastName;
   
 	/**
 	 * <p>
 	 * 	Représente le Prénom du joueur, est demandé lors de son inscription
 	 * </p>
 	 */
-	protected String firstName;
+	private String firstName;
   
 	/**
 	 * <p>
@@ -64,7 +64,7 @@ public class Joueur {
 	 *  connection de joueur.
 	 * </p>
 	 */
-	protected String username;
+	private String username;
   
   /**
 	 * <p>
@@ -72,19 +72,19 @@ public class Joueur {
 	 * 	identité.
 	 * </p>
 	 */
-	protected String password;
+	private String password;
   
-  /**
+	/**
 	 * La date de naissance du joueur.
 	 */
-	protected Date birthDate;
+	private Date birthDate;
 	
 	/**
 	 * Historique des parties jouées par le joueur depuis qu'il s'est inscrit
 	 * 
 	 * @see PartieJeu
 	 */
-	protected LinkedList<PartieJeu> playerGames;
+	private LinkedList<PartieJeu> playerGames;
 	
 	public Joueur(String firstName, String lastName, String username, String password, Date birthDate) {
 		this.id = hashCode(username);
@@ -102,17 +102,6 @@ public class Joueur {
 	 */
 	public int getId() {
 		return this.id;
-	}
-	
-	/**
-	 * Initialise le numéro séquentiel du joueur à un entier
-	 * <p>
-	 * 	Note : l'unicité de l'id dans la liste des joueurs avant d'utiliser
-	 *  cette méthode 
-	 * </p>
-	 */
-	public void setId() {
-		this.id = this.hashCode();
 	}
 	
 	/**
@@ -137,7 +126,7 @@ public class Joueur {
 	 * Initialise le nom du joueur
 	 * @param lastName
 	 */
-	public void setLastName(String lastName) {		// TODO add in the fix
+	public void setLastName(String lastName) {
 		this.lastName = lastName;
 	}
 
@@ -149,7 +138,7 @@ public class Joueur {
 		return this.firstName;
 	}
 	
-	public void setFirstName(String firstName) {	// TODO add in the fix
+	public void setFirstName(String firstName) {
 		this.firstName = firstName;
 	}
 	
@@ -162,38 +151,13 @@ public class Joueur {
 	}
 	
 	/**
-	 * <p>
-	 * Initialise le nom d'utilisateur au nom donné, ce username doit être
-	 * unique et son unicité est vérifiée à travers l'unicité de l'id généré, voir
-	 * les méthodes Joueur.setId() et Joueur.hashCode
-	 * </p>
-	 * @param username le nom d'utilisateur qu'on veut affecter
-	 * 
-	 * @see Joueur
-	 * 
-	 * @see Joueur#hashCode()
-	 * @see Joueur#setId()
-	 */
-	public void setUsername(String username) {
-		this.username = username;
-	}
-	
-	/**
 	 * Récupère le mot de passe du joueur
 	 * @return
 	 */
 	public String getPassword() {
 		return this.password;
 	}
-	
-	public void setPassword(String password) {		// TODO add in fix
-		this.password = password;
-	}
-	
-	public void setBirthDate(Date birthDate) {		// TODO add in fix
-		this.birthDate = birthDate;
-	}
-	
+		
 	/**
 	 * <p>
 	 * 	Versifie si une date est correcte selon les normes du calendrier
@@ -278,10 +242,10 @@ public class Joueur {
 	}
 	
 	public String toString() {
-		return "The player #" + id + ": "
+		return "Player #" + id + ": "
 				+ firstName + " "
-				+ lastName + " aka "
-				+ username + " has "
+				+ lastName + " Username: "
+				+ username + "  "
 				+ this.getTotalScore() + " points";
 	}
 	
