@@ -9,7 +9,7 @@ import java.util.Objects;
  * 
  * @author Abdelrahim Chernai
  * @author Yasmine Bouamra
- * @version 2.0
+ * @version 1.2.0
  * @see ParieJeu
  */
 public class Joueur {
@@ -37,7 +37,7 @@ public class Joueur {
 	 * </p>
 	 * 
 	 * @see Levels
-	 * @since 2.0
+	 * @since 1.1.0
 	 */
 	protected Levels currentLvl;
   
@@ -86,12 +86,13 @@ public class Joueur {
 	 */
 	protected LinkedList<PartieJeu> playerGames;
 	
-	public Joueur() {
-		this.id = -1;		//Pour ne pas accéder à un joueur si on initialise
-							//pas cette variable d'instance
-		
-		this.firstName = "";//On utilise ce paramètre pour vérifier que le
-							//joueur n'est pas initialisé
+	public Joueur(String firstName, String lastName, String username, String password, Date birthDate) {
+		this.id = hashCode(username);
+		this.firstName = firstName;
+		this.lastName = lastName;
+		this.username = username;
+		this.password = password;
+		this.birthDate = birthDate;
 		this.playerGames = new LinkedList<PartieJeu>();
 	}
 	
@@ -127,10 +128,15 @@ public class Joueur {
 	 * @see com.usthb.MainApp#connection()
 	 * @see com.usthb.MainApp#inscription()
 	 */
-	public int hashCode() {
-		return Math.abs(Objects.hash(this.username));
+	public static int hashCode(String username) {
+		return Math.abs(Objects.hash(username));
 	}
 	
+	
+	/**
+	 * Initialise le nom du joueur
+	 * @param lastName
+	 */
 	public void setLastName(String lastName) {		// TODO add in the fix
 		this.lastName = lastName;
 	}
@@ -186,6 +192,72 @@ public class Joueur {
 	
 	public void setBirthDate(Date birthDate) {		// TODO add in fix
 		this.birthDate = birthDate;
+	}
+	
+	/**
+	 * <p>
+	 * 	Versifie si une date est correcte selon les normes du calendrier
+	 * 	grégorien en vérifiant la valeur des jours selon les mois et si l'année
+	 * 	est bissextile ou pas.
+	 * </p>
+	 * @param date une date a verifier
+	 * @return	true si cette date est une date du calendrier grégorien
+	 */
+	public static boolean isDateValide(Date date) {
+		if (date.getYear() >= 0
+				&& date.getMonth() <= 12
+				&& date.getMonth() >= 1
+				&& date.getDate() >= 1) {
+			
+			switch (date.getMonth() + 1) {
+				case 1 :
+				case 3 :
+				case 5 :
+				case 7 :
+				case 8 :
+				case 10 :
+				case 12 : 
+					if (date.getDate() <= 31) {
+						return true;
+					} else {
+						return false;
+					}
+
+				case 4 :
+				case 6 :
+				case 9 :
+				case 11 :
+					if (date.getDate() <= 30) {
+						return true;
+					} else {
+						return false;
+					}
+
+				case 2 :
+					if (((date.getYear() % 4 == 0) && (date.getYear() % 100 != 0))
+							|| (date.getYear() % 400 == 0)) {
+						
+						if(date.getDate() <= 29) {
+							return true;
+						} else {
+							return false;
+						}
+							
+					} else {
+						if(date.getDate() <= 28) {
+							return true;
+						} else {
+							return false;
+						}
+					}
+				
+				default :
+					return false;
+			}
+			
+		} else {
+			return false;
+		}
 	}
 	
 	/**

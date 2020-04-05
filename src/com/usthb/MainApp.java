@@ -4,6 +4,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Scanner;
+import java.util.jar.JarOutputStream;
 
 import com.usthb.modeles.Joueur;
 import com.usthb.modeles.ThemeJeu;
@@ -20,7 +21,7 @@ import com.usthb.modeles.ThemeJeu;
  * 
  * @author Abdelrahim Chernai
  * @author Yasmine Bouamra
- * @version 1.1.0
+ * @version 1.1.1
  */
 public class MainApp {
 	static Scanner console = new Scanner(System.in);		// TEST
@@ -102,36 +103,37 @@ public class MainApp {
 	 * @see com.usthb.modeles.Joueur#id
 	 * @see com.usthb.modeles.Joueur#setId()
 	 * 
-	 * @since 1.1.0
+	 * @since 1.1.1
 	 */
 	private static Joueur connection() {
-		Joueur playerConnecting = new Joueur();
-
+		String username;
+		String password;
+		
 		do {
 			System.out.println("username");
-			playerConnecting.setUsername(console.nextLine());
-			playerConnecting.setId();
+			username = console.nextLine();
 			
-			if (players.containsKey(playerConnecting.getId())) {
-				System.out.println("Hello " + playerConnecting.getUsername() + "!");
+			if (players.containsKey(Joueur.hashCode(username))) {
+				System.out.println("Hello " + username + "!");
 			} else {
 				System.out.println("Sure about that ?");
 			}
 			
-		} while (! players.containsKey(playerConnecting.getId()));
+		} while (! players.containsKey(Joueur.hashCode(username)));
 		
 		do {
 			System.out.println("password");
-			playerConnecting.setPassword(console.nextLine());
-			if (players.get(playerConnecting.getId()).getPassword().equals(playerConnecting.getPassword())) {
+			password = console.nextLine();
+			
+			if (players.get(Joueur.hashCode(username)).getPassword().equals(password)) {
 				System.out.println("You are loged in");
 			} else {
 				System.out.println("Wrong the password is, my young padawan");
 			}
-		} while (! players.get(playerConnecting.getId()).getPassword().equals(playerConnecting.getPassword()));
+		} while (! players.get(Joueur.hashCode(username)).getPassword().equals(password));
 		
 			
-		return players.get(playerConnecting.getId());
+		return players.get(Joueur.hashCode(username));
 	}
 	
 	/**
@@ -152,53 +154,66 @@ public class MainApp {
 	 * 
 	 * @see Joueur#hashCode()
 	 * @see Joueur#setId()
+	 * 
+	 * @since 1.1.1
 	 */
-	private static Joueur inscription() {
-		Joueur newPlayer = new Joueur();
+	private static void inscription() {
+		Joueur newPlayer;
+		String firstName;
+		String lastName;
+		String username;
+		String password;
+		Date birthDate;
+		int day, mounth, year;
 		
 		System.out.println("first name");
-		newPlayer.setFirstName(console.nextLine());
+		firstName = console.nextLine();
 			
 		System.out.println("last name");
-		newPlayer.setLastName(console.nextLine());
+		lastName = console.nextLine();
 
-		System.out.println("Birth date YYYY MM DD");
-		newPlayer.setBirthDate(new Date(console.nextInt() - 1900, console.nextInt() - 1, console.nextInt()));
+		do {
+			System.out.println("Birth date dd mm yyyy");
+			day = console.nextInt();
+			mounth = console.nextInt() - 1;
+			year = console.nextInt() - 1900;
+			birthDate = new Date(year, mounth, day);
+		} while (! Joueur.isDateValide(birthDate));
+			
 		console.nextLine();
 		
 		do {
 			System.out.println("username");
-			newPlayer.setUsername(console.nextLine());
+			username = console.nextLine();
 			
-			if (players.containsKey(newPlayer.hashCode())) {
+			if (players.containsKey(Joueur.hashCode(username))) {
 				System.out.println("this one is not avalable, try somthing else");
 			} else {
-				System.out.println("Alright " + newPlayer.getUsername() + " it is !");
-				newPlayer.setId();
+				System.out.println("Alright " + username + " it is !");
 			}
-		} while (players.containsKey(newPlayer.hashCode()));
+		} while (players.containsKey(Joueur.hashCode(username)));
 		
 		System.out.println("password");
-		newPlayer.setPassword(console.nextLine());
-		//TODO read it again to check the password and put it in the newPlayer variable
+		password = (console.nextLine());
+		System.out.println("confirm password");
 		
+		while(! console.nextLine().contentEquals(password)) {
+			System.out.println("password doesn't match");
+		}
+		
+		newPlayer = new Joueur(firstName, lastName, username, password, birthDate);
 		players.put(newPlayer.getId(), newPlayer);
-
-			return newPlayer;
 	}
 
 	/**
 	 * @param args - non utilisé.
 	 */
 	public static void main(String[] args) {
-		Joueur p1, p2;
+		Joueur currentPlayer;
 		
-		p1 = inscription();
-		System.out.println(p1);
-
-		p2 = connection();
-			
-		System.out.println(p2);
+		inscription();
+		currentPlayer = connection();
+		System.out.println(currentPlayer);
 
 		console.close();
 	}
