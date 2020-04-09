@@ -105,7 +105,7 @@ public class MainApp {
 	 * 
 	 * @since 1.1.1
 	 */
-	private static Joueur connection() {
+	public static Joueur connection() {
 		String username;
 		String password;
 		
@@ -157,7 +157,7 @@ public class MainApp {
 	 * 
 	 * @since 1.1.1
 	 */
-	private static void inscription() {
+	public static void inscription() {
 		Joueur newPlayer;
 		String firstName;
 		String lastName;
