@@ -6,9 +6,7 @@ import java.util.HashSet;
 import java.util.Scanner;
 
 import com.usthb.modeles.Joueur;
-import com.usthb.modeles.PartieJeu;
 import com.usthb.modeles.ThemeJeu;
-import com.usthb.modeles.ThemeType;
 
 /**
  * <b>
@@ -22,7 +20,7 @@ import com.usthb.modeles.ThemeType;
  * 
  * @author Abdelrahim Chernai
  * @author Yasmine Bouamra
- * @version 1.1.0
+ * @version 1.1.1
  */
 public class MainApp {
 	public static Scanner console = new Scanner(System.in);		// TEST
@@ -34,24 +32,24 @@ public class MainApp {
 	 *  l'initialisation pour plus de détails.
 	 * </p>
 	 * 
-	 * @see MainApp#initialization()
 	 * @see com.usthb.modeles.Joueur
+	 * 
+	 * @see MainApp#initialization()
 	 */
-	private static HashMap<Integer, Joueur> players = new HashMap<Integer, Joueur>();		// TODO add initialisation in fix
+	private static HashMap<Integer, Joueur> players =
+		new HashMap<Integer, Joueur>();
 	
 	/**
 	 * <p>
 	 * 	Contient tous les thèmes disponibles, sera initialisé à partir de deux
-	 * 	fichiers différents : un contenant les thèmes, l'autre les questions. Voir la
-	 * 	méthode initialisation pour plus de détails
+	 * 	fichiers différents : un contenant les thèmes, l'autre les questions.
+	 * 	Voir la méthode initialisation pour plus de détails.
 	 * </p>
 	 * 
 	 * @see com.usthb.modeles.ThemeJeu
 	 * @see com.usthb.modeles.Question
-	 * 
-	 * @see MainApp#initialization()
 	 */
-	private static HashSet<ThemeJeu> themes = new HashSet<ThemeJeu>();
+	private static HashSet<ThemeJeu> themes;
 	
 	/**
 	 * <p>
@@ -60,13 +58,13 @@ public class MainApp {
 	 * </p>
 	 * <ol>
 	 * 	<li>
-	 * 		Ouvre la fenÃªtre de chargement
+	 * 		Ouvre la fenêtre de chargement
 	 * 		//TODO donner plus de détailles sur ce point
 	 * 	</li>
 	 * 	<li>
 	 * 		Récupère les joueurs depuis un fichier en utilisant la méthode 
-	 * 		Joueur.readFile() et les met dans la liste des joueurs. Pour plus de
-	 * 		détails voir la documentation de Joueur.readFile()
+	 * 		Joueur.readFile() et les met dans la liste des joueurs. Pour plus
+	 * 		de détails voir la documentation de Joueur.readFile().
 	 *	</li>
 	 * 	<li>
 	 * 		Récupère les thèmes depuis un ficher en utilisant la méthode
@@ -74,7 +72,7 @@ public class MainApp {
 	 *		détails voir la documentation de ThemeJeu.readFile
 	 * 	</li>
 	 * 	<li>
-	 * 		ferme la fenÃªtre de chargement et ouvre la fenÃªtre principale
+	 * 		ferme la fenêtre de chargement et ouvre la fenêtre principale
 	 * 		//TODO donner plus de détailles sur ce point
 	 * 	</li>
 	 * <ol>
@@ -95,10 +93,11 @@ public class MainApp {
 	 * 	existe sinon se répète jusau'à insertion d'un nom d'utilisateur valide
 	 * 	puis demande un mot de passe jusqu'au l'insertion du mot de passe
 	 * 	correspondant au profile représenté par le nom d'utilisateur, puis, une
-	 * 	fois que le bon mot de passe est inséré, retourne les données du joueur.
+	 * 	fois que le bon mot de passe est inséré, retourne les données du
+	 * 	joueur.
 	 * </p>
-	 * @return les données du joueur sous forme de Joueur, voir la documentation
-	 * de la class Joueur pour plus de détails
+	 * @return les données du joueur sous forme de Joueur, voir la
+	 * documentation de la class Joueur pour plus de détails
 	 * 
 	 * @see com.usthb.modeles.Joueur
 	 * 
@@ -106,36 +105,37 @@ public class MainApp {
 	 * @see com.usthb.modeles.Joueur#id
 	 * @see com.usthb.modeles.Joueur#setId()
 	 * 
-	 * @since 1.1.0
+	 * @since 1.1.1
 	 */
-	private static Joueur connection() {
-		Joueur playerConnecting = new Joueur();
-
+	public static Joueur connection() {
+		String username;
+		String password;
+		
 		do {
 			System.out.println("username");
-			playerConnecting.setUsername(console.nextLine());
-			playerConnecting.setId();
+			username = console.nextLine();
 			
-			if (players.containsKey(playerConnecting.getId())) {
-				System.out.println("Hello " + playerConnecting.getUsername() + "!");
+			if (players.containsKey(Joueur.hashCode(username))) {
+				System.out.println("Hello " + username + "!");
 			} else {
 				System.out.println("Sure about that ?");
 			}
 			
-		} while (! players.containsKey(playerConnecting.getId()));
+		} while (! players.containsKey(Joueur.hashCode(username)));
 		
 		do {
 			System.out.println("password");
-			playerConnecting.setPassword(console.nextLine());
-			if (players.get(playerConnecting.getId()).getPassword().equals(playerConnecting.getPassword())) {
+			password = console.nextLine();
+			
+			if (players.get(Joueur.hashCode(username)).getPassword().equals(password)) {
 				System.out.println("You are loged in");
 			} else {
 				System.out.println("Wrong the password is, my young padawan");
 			}
-		} while (! players.get(playerConnecting.getId()).getPassword().equals(playerConnecting.getPassword()));
+		} while (! players.get(Joueur.hashCode(username)).getPassword().equals(password));
 		
 			
-		return players.get(playerConnecting.getId());
+		return players.get(Joueur.hashCode(username));
 	}
 	
 	/**
@@ -156,36 +156,54 @@ public class MainApp {
 	 * 
 	 * @see Joueur#hashCode()
 	 * @see Joueur#setId()
+	 * 
+	 * @since 1.1.1
 	 */
-	private static void inscription() {
-		Joueur newPlayer = new Joueur();
+	public static void inscription() {
+		Joueur newPlayer;
+		String firstName;
+		String lastName;
+		String username;
+		String password;
+		Date birthDate;
+		int day, mounth, year;
 		
 		System.out.println("first name");
-		newPlayer.setFirstName(console.nextLine());
+		firstName = console.nextLine();
 			
 		System.out.println("last name");
-		newPlayer.setLastName(console.nextLine());
+		lastName = console.nextLine();
 
-		System.out.println("Birth date YYYY MM DD");
-		newPlayer.setBirthDate(new Date(console.nextInt() - 1900, console.nextInt() - 1, console.nextInt()));
+		do {
+			System.out.println("Birth date dd mm yyyy");
+			day = console.nextInt();
+			mounth = console.nextInt() - 1;
+			year = console.nextInt() - 1900;
+			birthDate = new Date(year, mounth, day);
+		} while (! Joueur.isDateValide(birthDate));
+			
 		console.nextLine();
 		
 		do {
 			System.out.println("username");
-			newPlayer.setUsername(console.nextLine());
+			username = console.nextLine();
 			
-			if (players.containsKey(newPlayer.hashCode())) {
+			if (players.containsKey(Joueur.hashCode(username))) {
 				System.out.println("this one is not avalable, try somthing else");
 			} else {
-				System.out.println("Alright " + newPlayer.getUsername() + " it is !");
-				newPlayer.setId();
+				System.out.println("Alright " + username + " it is !");
 			}
-		} while (players.containsKey(newPlayer.hashCode()));
+		} while (players.containsKey(Joueur.hashCode(username)));
 		
 		System.out.println("password");
-		newPlayer.setPassword(console.nextLine());
-		//TODO read it again to check the password and put it in the newPlayer variable
+		password = (console.nextLine());
+		System.out.println("confirm password");
 		
+		while(! console.nextLine().contentEquals(password)) {
+			System.out.println("password doesn't match");
+		}
+		
+		newPlayer = new Joueur(firstName, lastName, username, password, birthDate);
 		players.put(newPlayer.getId(), newPlayer);
 	}
 
@@ -194,17 +212,11 @@ public class MainApp {
 	 */
 	public static void main(String[] args) {
 		Joueur currentPlayer;
-		ThemeJeu theme = new ThemeJeu(2, "cold war", ThemeType.HISTOIRE);
-		PartieJeu newGame;
-
+		
 		inscription();
 		currentPlayer = connection();
 		System.out.println(currentPlayer);
-		
-		newGame = new PartieJeu(currentPlayer.getPlayedGamesNumber() + 1,"HIS" + theme.hashCode() + "1", theme);
-		System.out.println(newGame);
-		
+
 		console.close();
 	}
 }
-
