@@ -17,8 +17,6 @@ import com.usthb.MainApp;
  */
 public class ThemeJeu {
 	
-//	private static int questionsNumber = 0; pour l'instant le nombre de questions est fixé à 5 par thème 
-	
 	/**
 	 * <p>
 	 * 	Utilisé pour calculer le score d'une partie, en effet le score de
@@ -59,20 +57,17 @@ public class ThemeJeu {
 	protected ThemeType type;
 	
 	public ThemeJeu(int coefficent, String lable, ThemeType type) {
-		char c = 'y';
-		
 		this.coefficent = coefficent;
 		this.lable = lable;
 		this.type = type;
 
-		do {
+		for (int i = 1; i <= 5; i++) {
 			Levels questionLvl;
 			String questionLable;
 			String questionAnswer;
 			
-			System.out.println("lvl 1, 2, 3, 4, 5");
-			questionLvl = Levels.getLvl(MainApp.consol.nextInt());
-			MainApp.consol.nextLine();
+			System.out.println("Question level " + i) ;
+			questionLvl = Levels.getLvl(i);
 			
 			System.out.println("lable");
 			questionLable = new String(MainApp.consol.nextLine());
@@ -82,21 +77,17 @@ public class ThemeJeu {
 			
 //			ThemeJeu.questionsNumber++;
 			this.questions.add(new Question(
-												this.generateQuestionID()
+												this.generateQuestionID() + i
 												, questionLvl
 												, questionLable
 												, questionAnswer
 											));
-			
-			System.out.println("More ? y/n");
-			c = MainApp.consol.nextLine().charAt(0);
-		} while (c == 'y');
+		}
 	}
 	
 	public String generateQuestionID() {
 		return this.type.getAbreviation()
-				+ this.hashCode() + ""
-				/*+ ThemeJeu.questionsNumber*/;
+				+ this.hashCode();
 	}
 	
 	public int hashCode() {
