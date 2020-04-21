@@ -4,6 +4,9 @@
 package com.usthb.modeles;
 
 import java.util.LinkedList;
+import java.util.Objects;
+
+import com.usthb.MainApp;
 
 /**
  * <b>Représente un thème du jeu et contient toutes ses données</b>
@@ -13,6 +16,8 @@ import java.util.LinkedList;
  * @version 1.0
  */
 public class ThemeJeu {
+	
+	private static int questionsNumber = 0;
 	
 	/**
 	 * <p>
@@ -36,7 +41,7 @@ public class ThemeJeu {
 	 * 
 	 * @see Question
 	 */
-	protected LinkedList <Question> questions;		//Liste des questions.
+	protected LinkedList <Question> questions = new LinkedList<Question>();		//Liste des questions.
 	
 	/**
 	 * Le type du thème.
@@ -49,4 +54,50 @@ public class ThemeJeu {
 	 */
 	protected ThemeType type;
 	
+	public ThemeJeu(int coefficent, String lable, ThemeType type) {
+		char c = 'y';
+		
+		this.coefficent = coefficent;
+		this.lable = lable;
+		this.type = type;
+
+		do {
+			Levels questionLvl;
+			String questionLable;
+			String questionAnswer;
+			
+			System.out.println("lvl 1, 2, 3, 4, 5");
+			questionLvl = Levels.getLvl(MainApp.consol.nextInt());
+			MainApp.consol.nextLine();
+			
+			System.out.println("lable");
+			questionLable = new String(MainApp.consol.nextLine());
+			
+			System.out.println("answe");
+			questionAnswer = new String(MainApp.consol.nextLine());
+			
+			ThemeJeu.questionsNumber++;
+			this.questions.add(new Question(this.generateQuestionID(), questionLvl, questionLable, questionAnswer));
+			
+			System.out.println("More ? y/n");
+			c = MainApp.consol.nextLine().charAt(0);
+		} while (c == 'y');
+	}
+	
+	public String generateQuestionID() {
+		return this.type.getAbreviation()
+				+ this.hashCode() + ""
+				+ ThemeJeu.questionsNumber;
+	}
+	
+	public int hashCode() {
+		return Math.abs(Objects.hash(this.lable));
+	}
+	
+	public String toString() {
+		return "" + type + ": "
+				+ lable + ", coefficient "
+				+ coefficent + " question:"
+				+ questions;
+	}
 }

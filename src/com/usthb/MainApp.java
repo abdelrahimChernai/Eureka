@@ -2,9 +2,11 @@ package com.usthb;
 
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Scanner;
 
 import com.usthb.modeles.Joueur;
 import com.usthb.modeles.ThemeJeu;
+import com.usthb.modeles.ThemeType;
 
 /**
  * <b>
@@ -21,6 +23,8 @@ import com.usthb.modeles.ThemeJeu;
  * @version 1.0
  */
 public class MainApp {
+	public static Scanner consol = new Scanner(System.in);
+	
 	/**
 	 * <p>
 	 * 	Contient tous les joueurs inscrits auparavant, sera initialisé à partir
@@ -168,8 +172,10 @@ public class MainApp {
 	 * @param args - non utilisé.
 	 */
 	public static void main(String[] args) {
-		// TODO Auto-generated method stub
-
+		ThemeJeu theme = new ThemeJeu(2, "cold war", ThemeType.HISTOIRE);
+		
+		System.out.println(theme);
 	}
+	
 
 }
