@@ -17,7 +17,7 @@ import com.usthb.MainApp;
  */
 public class ThemeJeu {
 	
-	private static int questionsNumber = 0;
+//	private static int questionsNumber = 0; pour l'instant le nombre de questions est fixé à 5 par thème 
 	
 	/**
 	 * <p>
@@ -37,11 +37,15 @@ public class ThemeJeu {
 	protected String lable;
 	
 	/**
-	 * Une liste de question du thème.
+	 * <p>
+	 * 	Une liste de question du thème, chaque thème a 5 questions une
+	 * 	questions de chaque niveau.
+	 * </p>
 	 * 
 	 * @see Question
+	 * @see Levels
 	 */
-	protected LinkedList <Question> questions = new LinkedList<Question>();		//Liste des questions.
+	protected LinkedList <Question> questions = new LinkedList<Question>();
 	
 	/**
 	 * Le type du thème.
@@ -73,11 +77,16 @@ public class ThemeJeu {
 			System.out.println("lable");
 			questionLable = new String(MainApp.consol.nextLine());
 			
-			System.out.println("answe");
+			System.out.println("answer");
 			questionAnswer = new String(MainApp.consol.nextLine());
 			
-			ThemeJeu.questionsNumber++;
-			this.questions.add(new Question(this.generateQuestionID(), questionLvl, questionLable, questionAnswer));
+//			ThemeJeu.questionsNumber++;
+			this.questions.add(new Question(
+												this.generateQuestionID()
+												, questionLvl
+												, questionLable
+												, questionAnswer
+											));
 			
 			System.out.println("More ? y/n");
 			c = MainApp.consol.nextLine().charAt(0);
@@ -87,7 +96,7 @@ public class ThemeJeu {
 	public String generateQuestionID() {
 		return this.type.getAbreviation()
 				+ this.hashCode() + ""
-				+ ThemeJeu.questionsNumber;
+				/*+ ThemeJeu.questionsNumber*/;
 	}
 	
 	public int hashCode() {
