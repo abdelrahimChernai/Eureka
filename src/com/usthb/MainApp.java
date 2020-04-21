@@ -4,7 +4,6 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Scanner;
-import java.util.jar.JarOutputStream;
 
 import com.usthb.modeles.Joueur;
 import com.usthb.modeles.ThemeJeu;
@@ -33,16 +32,18 @@ public class MainApp {
 	 *  l'initialisation pour plus de détails.
 	 * </p>
 	 * 
-	 * TODO add a link to initialisation
 	 * @see com.usthb.modeles.Joueur
+	 * 
+	 * @see MainApp#initialization()
 	 */
-	private static HashMap<Integer, Joueur> players = new HashMap<Integer, Joueur>();		// TODO add initialisation in fix
+	private static HashMap<Integer, Joueur> players =
+		new HashMap<Integer, Joueur>();
 	
 	/**
 	 * <p>
 	 * 	Contient tous les thèmes disponibles, sera initialisé à partir de deux
-	 * 	fichiers différents : un contenant les thèmes, l'autre les questions. Voir la
-	 * 	méthode initialisation pour plus de détails
+	 * 	fichiers différents : un contenant les thèmes, l'autre les questions.
+	 * 	Voir la méthode initialisation pour plus de détails.
 	 * </p>
 	 * 
 	 * @see com.usthb.modeles.ThemeJeu
@@ -62,8 +63,8 @@ public class MainApp {
 	 * 	</li>
 	 * 	<li>
 	 * 		Récupère les joueurs depuis un fichier en utilisant la méthode 
-	 * 		Joueur.readFile() et les met dans la liste des joueurs. Pour plus de
-	 * 		détails voir la documentation de Joueur.readFile()
+	 * 		Joueur.readFile() et les met dans la liste des joueurs. Pour plus
+	 * 		de détails voir la documentation de Joueur.readFile().
 	 *	</li>
 	 * 	<li>
 	 * 		Récupère les thèmes depuis un ficher en utilisant la méthode
@@ -92,10 +93,11 @@ public class MainApp {
 	 * 	existe sinon se répète jusau'à insertion d'un nom d'utilisateur valide
 	 * 	puis demande un mot de passe jusqu'au l'insertion du mot de passe
 	 * 	correspondant au profile représenté par le nom d'utilisateur, puis, une
-	 * 	fois que le bon mot de passe est inséré, retourne les données du joueur.
+	 * 	fois que le bon mot de passe est inséré, retourne les données du
+	 * 	joueur.
 	 * </p>
-	 * @return les données du joueur sous forme de Joueur, voir la documentation
-	 * de la class Joueur pour plus de détails
+	 * @return les données du joueur sous forme de Joueur, voir la
+	 * documentation de la class Joueur pour plus de détails
 	 * 
 	 * @see com.usthb.modeles.Joueur
 	 * 
@@ -157,6 +159,7 @@ public class MainApp {
 	 * 
 	 * @since 1.1.1
 	 */
+	@SuppressWarnings("deprecation")
 	public static void inscription() {
 		Joueur newPlayer;
 		String firstName;
