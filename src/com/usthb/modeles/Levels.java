@@ -1,5 +1,7 @@
 package com.usthb.modeles;
 
+import java.util.HashMap;
+
 /**
  * <b>Represent les niveaux du jeu.</b>
  * <p>
@@ -22,14 +24,14 @@ package com.usthb.modeles;
  * 
  * @author Abdelrahim Chernai
  * @author Yasmine Bouamra
- * @version 1.0
+ * @version 1.1.0
  */
 public enum Levels {
-	LEVEL_1 (5),
-	LEVEL_2 (10),
-	LEVEL_3 (18),
-	LEVEL_4 (28),
-	LEVEL_5 (40);
+	LEVEL_1 (5, 1),
+	LEVEL_2 (10, 2),
+	LEVEL_3 (18, 3),
+	LEVEL_4 (28, 4),
+	LEVEL_5 (40, 5);
 	
 	/**
 	 * <p>
@@ -40,6 +42,14 @@ public enum Levels {
 	 * @see Levels
 	 */
 	public int lvlPoints;
+	private int lvlNumber;
+	private static final HashMap<Integer, Levels> levelNumberCorespendance = new HashMap<Integer, Levels>();
+	
+	static {
+		for (Levels level : Levels.values()) {
+			levelNumberCorespendance.put(level.lvlNumber, level);
+		}
+	}
 	
 	/**
 	 * Le Constructeur d'un Levels.
@@ -50,7 +60,26 @@ public enum Levels {
 	 * 
 	 * @see Levels#lvlPoints()
 	 */
-	Levels(int lvlPoints) {
+	private Levels(int lvlPoints, int lvlNumber) {
 		this.lvlPoints = lvlPoints;
+		
+		/**
+		 * @since 1.1.0
+		 */
+		this.lvlNumber = lvlNumber;
+	}
+	
+	/**
+	 * @since 1.1.0
+	 */
+	public static Levels  getLvl(int lvlNumber) {
+		return Levels.levelNumberCorespendance.get(lvlNumber);
+	}
+	
+	/**
+	 * @since 1.1.0
+	 */
+	public int getLvlNumber() {
+		return this.lvlNumber;
 	}
 }

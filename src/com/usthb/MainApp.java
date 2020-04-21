@@ -23,7 +23,7 @@ import com.usthb.modeles.ThemeJeu;
  * @version 1.1.1
  */
 public class MainApp {
-	static Scanner console = new Scanner(System.in);		// TEST
+	public static Scanner console = new Scanner(System.in);		// TEST
 	
 	/**
 	 * <p>
@@ -159,7 +159,6 @@ public class MainApp {
 	 * 
 	 * @since 1.1.1
 	 */
-	@SuppressWarnings("deprecation")
 	public static void inscription() {
 		Joueur newPlayer;
 		String firstName;
