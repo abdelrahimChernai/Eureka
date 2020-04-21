@@ -5,9 +5,9 @@ import java.util.HashMap;
 /**
  * <b>Represent les niveaux du jeu.</b>
  * <p>
- * 	Les niveaux, actuellement au nombre de 5, sont représentés ici. Chaque niveau est
- * 	associé au nombre de points qu'il vaut, ces points seront utilisés dans la classe
- * 	Joueur et Question.
+ * 	Les niveaux, actuellement au nombre de 5, sont représentés ici. Chaque
+ * 	niveau est associé au nombre de points qu'il vaut, ces points seront
+ * 	utilisés dans la classe Joueur et Question.
  * </p>
  * <ul>
  * 	<li>Le niveau 1 donne 5 points</li>
@@ -43,7 +43,8 @@ public enum Levels {
 	 */
 	public int lvlPoints;
 	private int lvlNumber;
-	private static final HashMap<Integer, Levels> levelNumberCorespendance = new HashMap<Integer, Levels>();
+	private static final HashMap<Integer, Levels> levelNumberCorespendance =
+			new HashMap<Integer, Levels>();
 	
 	static {
 		for (Levels level : Levels.values()) {
@@ -53,8 +54,8 @@ public enum Levels {
 	
 	/**
 	 * Le Constructeur d'un Levels.
-	 * @param lvlPoints représente le nombre de points que vaut le niveau, ce dernier est précisé
-	 * 	au début de la documentation de Levels
+	 * @param lvlPoints représente le nombre de points que vaut le niveau, ce
+	 * 	dernier est précisé au début de la documentation de Levels
 	 * 
 	 * @see Lvels
 	 * 

@@ -17,8 +17,6 @@ import com.usthb.MainApp;
  */
 public class ThemeJeu {
 	
-	private static int questionsNumber = 0;
-	
 	/**
 	 * <p>
 	 * 	Utilisé pour calculer le score d'une partie, en effet le score de
@@ -37,11 +35,15 @@ public class ThemeJeu {
 	protected String lable;
 	
 	/**
-	 * Une liste de question du thème.
+	 * <p>
+	 * 	Une liste de question du thème, chaque thème a 5 questions une
+	 * 	questions de chaque niveau.
+	 * </p>
 	 * 
 	 * @see Question
+	 * @see Levels
 	 */
-	protected LinkedList <Question> questions = new LinkedList<Question>();		//Liste des questions.
+	protected LinkedList <Question> questions = new LinkedList<Question>();
 	
 	/**
 	 * Le type du thème.
@@ -55,33 +57,32 @@ public class ThemeJeu {
 	protected ThemeType type;
 	
 	public ThemeJeu(int coefficent, String lable, ThemeType type) {
-		char c = 'y';
-		
 		this.coefficent = coefficent;
 		this.lable = lable;
 		this.type = type;
 
-		do {
+		for (int i = 1; i <= 5; i++) {
 			Levels questionLvl;
 			String questionLable;
 			String questionAnswer;
-			
-			System.out.println("lvl 1, 2, 3, 4, 5");
-			questionLvl = Levels.getLvl(MainApp.console.nextInt());
-			MainApp.console.nextLine();
-			
+
+			System.out.println("Question level " + i) ;
+			questionLvl = Levels.getLvl(i);
+
 			System.out.println("lable");
 			questionLable = new String(MainApp.console.nextLine());
 			
 			System.out.println("answer");
 			questionAnswer = new String(MainApp.console.nextLine());
 			
-			ThemeJeu.questionsNumber++;
-			this.questions.add(new Question(this.generateQuestionID(), questionLvl, questionLable, questionAnswer));
-			
-			System.out.println("More ? y/n");
-			c = MainApp.console.nextLine().charAt(0);
-		} while (c == 'y');
+			this.questions.add(new Question(
+												this.generateQuestionID() + i
+												, questionLvl
+												, questionLable
+												, questionAnswer
+											));
+		}
+
 	}
 	
 	/**
@@ -92,8 +93,7 @@ public class ThemeJeu {
 	 */
 	public String generateQuestionID() {
 		return this.type.getAbreviation()
-				+ this.hashCode() + ""
-				+ ThemeJeu.questionsNumber;
+				+ this.hashCode();
 	}
 	
 	/**
