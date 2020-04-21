@@ -7,7 +7,7 @@ import com.usthb.dessin.Potence;
  * 
  * @author Abdelrahim Chernai
  * @author Yasmine Bouamra
- * @version 1.0
+ * @version 1.1.0
  */
 public class PartieJeu {
 	protected int number;
@@ -58,6 +58,26 @@ public class PartieJeu {
 	 */
 	private Potence hangman;
 	
+	public PartieJeu(int number,String questionId, ThemeJeu theme) {
+		
+		this.number = number;
+		this.score = 0;
+		this.questionId = questionId;
+		this.theme = theme;
+		
+		int i = 0;
+		System.out.println("just befor the loop");
+		while (i < theme.questions.size() 
+				&& ! theme.questions.get(i).id.equals(this.questionId)) {
+			i++;
+		}
+		
+		this.currentAnswer = new StringBuffer(theme.questions.get(i).answer.length());
+		for (i = 0; i < this.currentAnswer.capacity(); i++) {
+			this.currentAnswer.insert(i, '*');
+		}
+	}
+	
 	/**
 	 * <b>
 	 * 	Cette fonction vérifie si le caractère entré par le joueur est dans la
@@ -76,7 +96,7 @@ public class PartieJeu {
 	 *				<li>
 	 *					Vérifie si la réponse en cours et égale à la réponse de
 	 *					la question si c'est le cas on considère la réponse
-	 *					comme trouvéé, voir la documentation de la classe Potence
+	 *					comme trouvée, voir la documentation de la classe Potence
 	 *					pour plus de détails, sinon ne fait rien.
 	 *				</li>
 	 * 			</ol>
@@ -128,6 +148,13 @@ public class PartieJeu {
 			
 			//TODO draw the next state of the Hangman (maybe animated)
 		}
+	}
+	
+	public String toString() {
+		return "Game number: " + number + " question id: "
+				+ questionId + "score = "
+				+ score + " currnet answe: "
+				+ currentAnswer;
 	}
 }
  

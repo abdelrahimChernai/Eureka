@@ -4,7 +4,6 @@ import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.Graphics;
 
-import com.usthb.modeles.PartieJeu;
 
 /**
  * <b>S'occupe de la gestion du pendu</b>

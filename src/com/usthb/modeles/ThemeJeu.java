@@ -13,7 +13,7 @@ import com.usthb.MainApp;
  * 
  * @author Abdelrahim Chernai
  * @author Yasmine Bouamra
- * @version 1.0
+ * @version 1.1.0
  */
 public class ThemeJeu {
 	
@@ -65,17 +65,16 @@ public class ThemeJeu {
 			Levels questionLvl;
 			String questionLable;
 			String questionAnswer;
-			
+
 			System.out.println("Question level " + i) ;
 			questionLvl = Levels.getLvl(i);
-			
+
 			System.out.println("lable");
-			questionLable = new String(MainApp.consol.nextLine());
+			questionLable = new String(MainApp.console.nextLine());
 			
 			System.out.println("answer");
-			questionAnswer = new String(MainApp.consol.nextLine());
+			questionAnswer = new String(MainApp.console.nextLine());
 			
-//			ThemeJeu.questionsNumber++;
 			this.questions.add(new Question(
 												this.generateQuestionID() + i
 												, questionLvl
@@ -83,17 +82,30 @@ public class ThemeJeu {
 												, questionAnswer
 											));
 		}
+
 	}
 	
+	/**
+	 * 
+	 * @return
+	 * 
+	 * @since 1.1.0
+	 */
 	public String generateQuestionID() {
 		return this.type.getAbreviation()
 				+ this.hashCode();
 	}
 	
+	/**
+	 * @since 1.1.0
+	 */
 	public int hashCode() {
 		return Math.abs(Objects.hash(this.lable));
 	}
 	
+	/**
+	 * @since 1.1.0
+	 */
 	public String toString() {
 		return "" + type + ": "
 				+ lable + ", coefficient "

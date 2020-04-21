@@ -7,7 +7,7 @@ package com.usthb.modeles;
  *
  * @author Abdelrahim Chernai
  * @author Yasmine Bouamra
- * @version 1.0
+ * @version 1.1.0
  */
 public enum ThemeType {
 	HISTOIRE ("HIS"),
@@ -22,6 +22,12 @@ public enum ThemeType {
 		this.abreviation = abreviation;
 	}
 	
+	/**
+	 * 
+	 * @return
+	 * 
+	 * @since 1.1.0
+	 */
 	public String getAbreviation() {
 		return this.abreviation;
 	}
