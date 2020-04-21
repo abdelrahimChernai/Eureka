@@ -286,7 +286,7 @@ public class Joueur {
 		int totalScore = 0;
 		
 		for (PartieJeu game : this.playerGames) {
-			totalScore += game.score;
+			totalScore += game.getScore();
 		}
 		return totalScore;
 	}

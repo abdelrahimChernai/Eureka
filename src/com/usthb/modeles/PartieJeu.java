@@ -10,7 +10,7 @@ import com.usthb.dessin.Potence;
  * @version 1.1.0
  */
 public class PartieJeu {
-	protected int number;
+	private int number;
 	
 	/**
 	 * <p>
@@ -22,7 +22,7 @@ public class PartieJeu {
 	 * @see Question#lvl
 	 * @see ThemeJeu#coefficent
 	 */
-	protected int score;
+	private int score;
 
 	/**
 	 * <p>
@@ -38,12 +38,20 @@ public class PartieJeu {
 	 */
 	private String questionId;
 	
-	protected ThemeJeu theme;										//Thème sélectionné.
-  
-  /**
-	 * Réponse actuelle saisie par le joueur.
+	/**
+	 * Thème de la partie en cours
+	 * 
+	 * @see ThemeJeu
 	 */
-	protected StringBuffer currentAnswer;
+	private ThemeJeu theme;
+  
+	/**
+	 * <p>
+	 * 	Réponse actuelle saisie par le joueur, mis à jours à chaque fois que le
+	 * 	joueur entre une lettre
+	 * </p>
+	 */
+	private StringBuffer currentAnswer;
 	
 	/**
 	 * <p>
@@ -56,28 +64,36 @@ public class PartieJeu {
 	 * 
 	 * @see PartieJeu#checkChar(char)
 	 */
-	private Potence hangman;
+	private Potence hangman = new Potence();
 	
-	public PartieJeu(int number,String questionId, ThemeJeu theme) {
+	public PartieJeu(int number, ThemeJeu theme) {
 		
 		this.number = number;
 		this.score = 0;
-		this.questionId = questionId;
 		this.theme = theme;
+		this.questionId = theme.generateQuestionID() + 1;
 		
 		int i = 0;
-		System.out.println("just befor the loop");
 		while (i < theme.questions.size() 
 				&& ! theme.questions.get(i).id.equals(this.questionId)) {
 			i++;
 		}
 		
-		this.currentAnswer = new StringBuffer(theme.questions.get(i).answer.length());
+		this.currentAnswer =
+				new StringBuffer(theme.questions.get(i).answer.length());
 		for (i = 0; i < this.currentAnswer.capacity(); i++) {
 			this.currentAnswer.insert(i, '*');
 		}
 	}
 	
+	public int getScore() {
+		return score;
+	}
+
+	public Potence getHangman() {
+		return hangman;
+	}
+
 	/**
 	 * <b>
 	 * 	Cette fonction vérifie si le caractère entré par le joueur est dans la
@@ -96,16 +112,16 @@ public class PartieJeu {
 	 *				<li>
 	 *					Vérifie si la réponse en cours et égale à la réponse de
 	 *					la question si c'est le cas on considère la réponse
-	 *					comme trouvée, voir la documentation de la classe Potence
-	 *					pour plus de détails, sinon ne fait rien.
+	 *					comme trouvée, voir la documentation de la classe
+	 *					Potence pour plus de détails, sinon ne fait rien.
 	 *				</li>
 	 * 			</ol>
 	 * 		</li>
 	 * 		<li>
-	 * 			si le caractère n'est pas un des caractères de la question
+	 * 			si le caractère n'est pas un des caractères de la réponse
 	 * 			l'état de la potence est incrémenté puis la potence est 
-	 * 			re-dessinée, voir la documentation de la classe Potence pour plus
-	 *			de détails
+	 * 			re-dessinée, voir la documentation de la classe Potence pour
+	 * 			plus de détails
 	 * 		</li>
 	 * </ul>
 	 * </p>
@@ -123,12 +139,14 @@ public class PartieJeu {
 		for (Question question : this.theme.questions) {
 			if (question.id.equals(this.questionId)) {
 				answer = new String(question.answer);
+				System.out.println(question.lable);
 			}
 		}
 		
-		if (answer.indexOf(inputChar) != -1) {//si le caractère est dans answer
+		if (answer.indexOf(inputChar) != -1 && currentAnswer.indexOf(Character.toString(inputChar)) == -1) {//si le caractère est dans answer
 			for (int i = 0; i < answer.length(); i++) {
-				if (this.currentAnswer.charAt(i) == inputChar) { 
+				if (answer.charAt(i) == inputChar) { 
+					System.out.println(this.currentAnswer);
 					this.currentAnswer.insert(i, inputChar);
 				}
 			}
@@ -136,16 +154,25 @@ public class PartieJeu {
 			if (answer.equals(this.currentAnswer.toString())) {//convertie
 				//currentAnswer en String puis compare avec answer
 				hangman.setFoundAnswerTrue();
+				
+				if (this.questionId.charAt(questionId.length()) == 5) {
+					System.out.println("You Won!");
+				} else {
+					System.out.println("level "
+							+ this.questionId.charAt(questionId.length()));
+					this.questionId =
+							this.theme.generateQuestionID()
+							+ (Integer.valueOf(this.questionId.charAt(questionId.length())) + 1);
+ 				}
 				/*
 				 * TODO open a pop-up window to tell the player that the answer
 				 * is correct and give his the next question if any is
 				 * available else tell him that he wont this game 
 				*/
 			}
-		}
-		else {
+		} else {
 			hangman.incrementState();
-			
+			System.out.println("nah...");
 			//TODO draw the next state of the Hangman (maybe animated)
 		}
 	}

@@ -35,7 +35,7 @@ public class Potence extends Component{
 	 * 
 	 * @see com.usthb.modeles.PartieJeu#checkChar(char)
 	 */
-	private int state;
+	private int state = 0;
 	
 	/**
 	 * <p>
@@ -50,7 +50,7 @@ public class Potence extends Component{
 	 * @see com.usthb.modeles.Question#answer
 	 * @see com.usthb.modeles.PartieJeu#checkChar(char)
 	 */
-	private boolean foundAnswer;
+	private boolean foundAnswer = false;
 	
 	/**
 	 * <p>
@@ -64,7 +64,10 @@ public class Potence extends Component{
 	 */
 	private Dimension windowDimension;
 	
-	
+	public int getState() {
+		return state;
+	}
+
 	/**
 	 * <p>
 	 * 	met la variable d'instance foundAnswer a vrai indiquant que la réponse
@@ -78,6 +81,10 @@ public class Potence extends Component{
 		this.foundAnswer = true;
 	}
 	
+	public boolean isFoundAnswer() {
+		return foundAnswer;
+	}
+
 	/**
 	 * <p>
 	 * 	Incrémente la variable state qui ne doit pas dépasser 8, la 

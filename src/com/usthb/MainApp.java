@@ -6,7 +6,9 @@ import java.util.HashSet;
 import java.util.Scanner;
 
 import com.usthb.modeles.Joueur;
+import com.usthb.modeles.PartieJeu;
 import com.usthb.modeles.ThemeJeu;
+import com.usthb.modeles.ThemeType;
 
 /**
  * <b>
@@ -49,7 +51,7 @@ public class MainApp {
 	 * @see com.usthb.modeles.ThemeJeu
 	 * @see com.usthb.modeles.Question
 	 */
-	private static HashSet<ThemeJeu> themes;
+	private static HashSet<ThemeJeu> themes = new HashSet<ThemeJeu>();
 	
 	/**
 	 * <p>
@@ -215,7 +217,15 @@ public class MainApp {
 		
 		inscription();
 		currentPlayer = connection();
-		System.out.println(currentPlayer);
+		System.out.println(currentPlayer.getUsername() + "loged in");
+		
+		themes.add(new ThemeJeu(2, "Cold Ware", ThemeType.HISTOIRE));
+		
+		PartieJeu partie = new PartieJeu(1, themes.iterator().next());
+		while (! partie.getHangman().isFoundAnswer() && partie.getHangman().getState() < 8) {
+			partie.checkChar(console.next().charAt(0));
+			
+		}
 
 		console.close();
 	}
