@@ -3,6 +3,7 @@
  */
 package com.usthb.modeles;
 
+import java.io.Serializable;
 import java.util.LinkedList;
 import java.util.Objects;
 
@@ -15,7 +16,7 @@ import com.usthb.MainApp;
  * @author Yasmine Bouamra
  * @version 1.1.0
  */
-public class ThemeJeu {
+public class ThemeJeu implements Serializable {
 	
 	/**
 	 * <p>

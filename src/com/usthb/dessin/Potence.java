@@ -3,6 +3,7 @@ package com.usthb.dessin;
 import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.Graphics;
+import java.io.Serializable;
 
 
 /**
@@ -20,7 +21,7 @@ import java.awt.Graphics;
  * 
  * @see com.usthb.modeles.PartieJeu
  */
-public class Potence extends Component{
+public class Potence extends Component implements Serializable{
 	
 	/**
 	 * <p>

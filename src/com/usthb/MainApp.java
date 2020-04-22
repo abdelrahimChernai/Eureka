@@ -1,5 +1,11 @@
 package com.usthb;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -64,28 +70,67 @@ public class MainApp {
 	 * 		//TODO donner plus de détailles sur ce point
 	 * 	</li>
 	 * 	<li>
-	 * 		Récupère les joueurs depuis un fichier en utilisant la méthode 
-	 * 		Joueur.readFile() et les met dans la liste des joueurs. Pour plus
-	 * 		de détails voir la documentation de Joueur.readFile().
+	 * 		Récupère la liste des joueurs depuis un fichier et la list des 
+	 * 		thèmes.
 	 *	</li>
-	 * 	<li>
-	 * 		Récupère les thèmes depuis un ficher en utilisant la méthode
-	 * 		ThemeJeu.readFile et les mets dans la list des thèmes. Pour plus de
-	 *		détails voir la documentation de ThemeJeu.readFile
-	 * 	</li>
 	 * 	<li>
 	 * 		ferme la fenêtre de chargement et ouvre la fenêtre principale
 	 * 		//TODO donner plus de détailles sur ce point
 	 * 	</li>
 	 * <ol>
-	 * 
-	 * //TODO add a link to Joueur.readFile
-	 * //TODO add a link to Theme.readFile
+	 *
 	 * @see MainApp#themes
 	 * @see MainApp#players
 	 */
 	private static void initialization() {
+		File playerFile = new File("player.sve");
+		File themeFile = new File("themes.sve");
 		
+		if (playerFile.exists()) {
+			try {
+				ObjectInputStream playerFileIn =
+						new ObjectInputStream(new FileInputStream(playerFile));
+			
+				players = (HashMap<Integer, Joueur>) playerFileIn.readObject();
+			
+				try {
+					playerFileIn.close();
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+			} catch (IOException | ClassNotFoundException e) {
+				e.printStackTrace();
+			}
+		} else {
+			try {
+				playerFile.createNewFile();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
+		
+		if (themeFile.exists()) {
+			try {
+				ObjectInputStream themeFileIn =
+						new ObjectInputStream(new FileInputStream(themeFile));
+			
+				themes = (HashSet<ThemeJeu>) themeFileIn.readObject();
+			
+				try {
+					themeFileIn.close();
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+			} catch (IOException | ClassNotFoundException e) {
+				e.printStackTrace();
+			}
+		} else {
+			try {
+				themeFile.createNewFile();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
 	}
 	
 	
@@ -147,9 +192,9 @@ public class MainApp {
 	 *	un mot de passe et demande de le confirmer, cette méthode vérifie que
 	 *	les entrées sont conforme aux normes utilisées dans le code. Voir la
 	 *	documentation de Joueur pour plus de détails. Une fois que les données
-	 *	initialisées, le joueur est ajouté a la liste des joueurs puis on appelle
-	 *	la méthode connexion pour le connecter et lui propose de commencer une
-	 *	partie. Voir la documentation de MainApp.connection
+	 *	initialisées, le joueur est ajouté a la liste des joueurs puis on
+	 *	appelle la méthode connexion pour le connecter et lui propose de
+	 *	commencer une partie. Voir la documentation de MainApp.connection
 	 * </p>
 	 * @return
 	 * 
@@ -205,8 +250,70 @@ public class MainApp {
 			System.out.println("password doesn't match");
 		}
 		
-		newPlayer = new Joueur(firstName, lastName, username, password, birthDate);
+		newPlayer =
+				new Joueur(firstName, lastName, username, password, birthDate);
 		players.put(newPlayer.getId(), newPlayer);
+	}
+	
+	/**
+	 * <p>
+	 * 	Vérifie que tout c'est bien passé et enregistres les nouvelles données
+	 * 	dans les fichiers de sauvegarde.
+	 * </p>
+	 */
+	public static void terminate() {
+		File playerFile = new File("player.sve");
+		File themeFile = new File("themes.sve");
+		
+		try {
+			playerFile.createNewFile();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		
+		try {
+			themeFile.createNewFile();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		
+		
+		try {
+			ObjectOutputStream playerFileOut =
+					new ObjectOutputStream(new FileOutputStream(playerFile));
+			
+			if (playerFileOut != null) {
+				playerFileOut.writeObject(players);
+			}
+			
+			try {
+				playerFileOut.close();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+			
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		
+		
+		try {
+			ObjectOutputStream themeFileOut =
+					new ObjectOutputStream(new FileOutputStream(themeFile));
+			
+			if (themeFileOut != null) {
+				themeFileOut.writeObject(themes);
+			}
+			
+			try {
+				themeFileOut.close();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+			
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
 
 	/**
@@ -214,19 +321,18 @@ public class MainApp {
 	 */
 	public static void main(String[] args) {
 		Joueur currentPlayer;
-		
-		inscription();
+
+		initialization();
 		currentPlayer = connection();
-		System.out.println(currentPlayer.getUsername() + "loged in");
-		
-		themes.add(new ThemeJeu(2, "Cold Ware", ThemeType.HISTOIRE));
+		System.out.println(currentPlayer.getUsername() + " loged in");
 		
 		PartieJeu partie = new PartieJeu(1, themes.iterator().next());
-		while (! partie.getHangman().isFoundAnswer() && partie.getHangman().getState() < 8) {
+		 
+		while (!partie.getHangman().isFoundAnswer() && partie.getHangman().getState() < 8) {
 			partie.checkChar(console.next().charAt(0));
-			
 		}
-
+		
 		console.close();
+		terminate();
 	}
 }

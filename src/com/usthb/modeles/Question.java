@@ -1,5 +1,7 @@
 package com.usthb.modeles;
 
+import java.io.Serializable;
+
 /**
  * <b>Représente une question ainsi que toutes les données associées</b>
  * 
@@ -7,7 +9,7 @@ package com.usthb.modeles;
  * @author Yasmine Bouamra
  * @version 2.1.0
  */
-public class Question {
+public class Question implements Serializable {
 	/**
 	 * <p>
 	 * 	Identifie les question de manière unique, composé en concaténant une

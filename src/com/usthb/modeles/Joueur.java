@@ -1,5 +1,6 @@
 package com.usthb.modeles;
 
+import java.io.Serializable;
 import java.util.Date;
 import java.util.LinkedList;
 import java.util.Objects;
@@ -14,7 +15,7 @@ import com.usthb.MainApp;
  * @version 1.2.0
  * @see ParieJeu
  */
-public class Joueur {
+public class Joueur implements Serializable{
   
   /**
 	 * <p>

@@ -1,5 +1,6 @@
 package com.usthb.modeles;
 
+import java.io.Serializable;
 import java.util.HashMap;
 
 /**
@@ -26,7 +27,7 @@ import java.util.HashMap;
  * @author Yasmine Bouamra
  * @version 1.1.0
  */
-public enum Levels {
+public enum Levels implements Serializable {
 	LEVEL_1 (5, 1),
 	LEVEL_2 (10, 2),
 	LEVEL_3 (18, 3),

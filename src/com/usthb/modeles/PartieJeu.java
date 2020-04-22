@@ -1,6 +1,9 @@
 package com.usthb.modeles;
 
+import java.io.Serializable;
+
 import com.usthb.dessin.Potence;
+
 
 /**
  * <b>Représente une Parte du jeu et contient toutes ses données</b>
@@ -9,7 +12,7 @@ import com.usthb.dessin.Potence;
  * @author Yasmine Bouamra
  * @version 1.1.0
  */
-public class PartieJeu {
+public class PartieJeu implements Serializable {
 	private int number;
 	
 	/**
@@ -71,19 +74,8 @@ public class PartieJeu {
 		this.number = number;
 		this.score = 0;
 		this.theme = theme;
-		this.questionId = theme.generateQuestionID() + 1;
-		
-		int i = 0;
-		while (i < theme.questions.size() 
-				&& ! theme.questions.get(i).id.equals(this.questionId)) {
-			i++;
-		}
-		
-		this.currentAnswer =
-				new StringBuffer(theme.questions.get(i).answer.length());
-		for (i = 0; i < this.currentAnswer.capacity(); i++) {
-			this.currentAnswer.insert(i, '*');
-		}
+		this.questionId = theme.generateQuestionID() + 1;		
+		setupCurrnetAnswer(getQuestion().answer);
 	}
 	
 	public int getScore() {
@@ -92,6 +84,49 @@ public class PartieJeu {
 
 	public Potence getHangman() {
 		return hangman;
+	}
+		
+	private Question getQuestion() {
+		int i = 0;
+		
+		while (
+				i < theme.questions.size() 
+				&& ! theme.questions.get(i).id.equals(this.questionId)
+			) {
+			
+			i++;
+		}
+		
+		return theme.questions.get(i);
+	}
+	
+	
+	/**
+	 * <p>
+	 * 	Génère l'id de la question suivante et initialise la réponse courante a 
+	 * 	des '*'
+	 * </p> 
+	 */
+	private void setNextQuestionId() {
+		this.questionId =
+				this.theme.generateQuestionID()
+				+ (Integer.valueOf(
+						this.questionId.substring(
+								this.questionId.length() - 1)
+						)
+						+ 1);
+	}
+	
+	private void setupCurrnetAnswer(String answer) {
+		this.currentAnswer = new StringBuffer(answer.length());
+		
+		for (int i = 0; i < this.currentAnswer.capacity(); i++) {
+			if (answer.charAt(i) != ' ') {
+				this.currentAnswer.insert(i, '*');
+			} else {
+				this.currentAnswer.insert(i, ' ');
+			}
+		}
 	}
 
 	/**
@@ -134,35 +169,33 @@ public class PartieJeu {
 	 * @see com#usthb#dessin#Potence
 	 */
 	public void checkChar(char inputChar) {
-		String answer = "";
+		String answer = getQuestion().answer;
 		
-		for (Question question : this.theme.questions) {
-			if (question.id.equals(this.questionId)) {
-				answer = new String(question.answer);
-				System.out.println(question.lable);
-			}
-		}
-		
-		if (answer.indexOf(inputChar) != -1 && currentAnswer.indexOf(Character.toString(inputChar)) == -1) {//si le caractère est dans answer
+		if (
+				answer.indexOf(inputChar) != -1
+				&& currentAnswer.indexOf(Character.toString(inputChar)) == -1
+			) {//si le caractère est dans answer
+			
 			for (int i = 0; i < answer.length(); i++) {
-				if (answer.charAt(i) == inputChar) { 
-					System.out.println(this.currentAnswer);
+
+				if (answer.charAt(i) == inputChar) {
+					this.currentAnswer.deleteCharAt(i);
 					this.currentAnswer.insert(i, inputChar);
 				}
 			}
 			
+			System.out.println(this.currentAnswer);
+			
 			if (answer.equals(this.currentAnswer.toString())) {//convertie
 				//currentAnswer en String puis compare avec answer
-				hangman.setFoundAnswerTrue();
 				
-				if (this.questionId.charAt(questionId.length()) == 5) {
+				if (Integer.valueOf(this.questionId.substring(questionId.length() - 1)) == 5) {
+//					hangman.setFoundAnswerTrue();
 					System.out.println("You Won!");
 				} else {
-					System.out.println("level "
-							+ this.questionId.charAt(questionId.length()));
-					this.questionId =
-							this.theme.generateQuestionID()
-							+ (Integer.valueOf(this.questionId.charAt(questionId.length())) + 1);
+					setNextQuestionId();
+					setupCurrnetAnswer(getQuestion().answer);
+					System.out.println("Level " + this.questionId.charAt(questionId.length() - 1));
  				}
 				/*
 				 * TODO open a pop-up window to tell the player that the answer
@@ -172,7 +205,7 @@ public class PartieJeu {
 			}
 		} else {
 			hangman.incrementState();
-			System.out.println("nah...");
+			System.out.println("nah..." + hangman.getState());
 			//TODO draw the next state of the Hangman (maybe animated)
 		}
 	}
