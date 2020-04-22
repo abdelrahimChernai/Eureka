@@ -1,13 +1,15 @@
 package com.usthb.modeles;
 
+import java.io.Serializable;
+
 /**
  * <b>Représente une question ainsi que toutes les données associées</b>
  * 
  * @author Abdelrahim Chernai
  * @author Yasmine Bouamra
- * @version 2.0
+ * @version 2.1.0
  */
-public class Question {
+public class Question implements Serializable {
 	/**
 	 * <p>
 	 * 	Identifie les question de manière unique, composé en concaténant une
@@ -43,14 +45,21 @@ public class Question {
 	 * La réponse que le Joueur doit trouver 
 	 */
 	protected String answer;
-  
+
 	/**
 	 * <p>
 	 * 	Un chemin vers une image contenant la question, dans le cas ou celle-ci
 	 * 	ne s'affiche pas le libellé pourra la remplacer.
 	 * </p>
 	 */
-	protected String imagePath;						//Lien vers l'image associée.
+	protected String imagePath;
+	
+	public Question(String id, Levels lvl, String lable, String answer) {
+		this.id = id;
+		this.lvl = lvl;
+		this.lable = lable;
+		this.answer = answer;
+	}
 
 	/**
 	 * donne le nombre de points associé a une bonne réponse à la question
@@ -62,5 +71,14 @@ public class Question {
 	 */
 	public int getNumberPoints() {
 		return lvl.lvlPoints;
+	}
+	
+	/**
+	 * @since 2.1.0
+	 */
+	public String toString() {
+		return "" + id + ": "
+				+ lable + " level "
+				+ lvl.getLvlNumber();
 	}
 }

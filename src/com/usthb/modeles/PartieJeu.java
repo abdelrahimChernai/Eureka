@@ -1,16 +1,21 @@
 package com.usthb.modeles;
 
+import java.io.Serializable;
+
 import com.usthb.dessin.Potence;
+
 
 /**
  * <b>Représente une Parte du jeu et contient toutes ses données</b>
  * 
  * @author Abdelrahim Chernai
  * @author Yasmine Bouamra
- * @version 1.0
+ * @version 1.1.0
  */
-public class PartieJeu {
-	protected int number;
+public class PartieJeu implements Serializable {
+	private static int gamesNumber = 1;
+	
+	private final int number = PartieJeu.gamesNumber;
 	
 	/**
 	 * <p>
@@ -22,7 +27,7 @@ public class PartieJeu {
 	 * @see Question#lvl
 	 * @see ThemeJeu#coefficent
 	 */
-	protected int score;
+	private int score = 0;
 
 	/**
 	 * <p>
@@ -38,12 +43,20 @@ public class PartieJeu {
 	 */
 	private String questionId;
 	
-	protected ThemeJeu theme;										//Thème sélectionné.
-  
-  /**
-	 * Réponse actuelle saisie par le joueur.
+	/**
+	 * Thème de la partie en cours
+	 * 
+	 * @see ThemeJeu
 	 */
-	protected StringBuffer currentAnswer;
+	private ThemeJeu theme;
+  
+	/**
+	 * <p>
+	 * 	Réponse actuelle saisie par le joueur, mis à jours à chaque fois que le
+	 * 	joueur entre une lettre
+	 * </p>
+	 */
+	private StringBuffer currentAnswer;
 	
 	/**
 	 * <p>
@@ -56,8 +69,87 @@ public class PartieJeu {
 	 * 
 	 * @see PartieJeu#checkChar(char)
 	 */
-	private Potence hangman;
+	private Potence hangman = new Potence();
 	
+	public PartieJeu(ThemeJeu theme) {
+		gamesNumber++;
+		this.theme = theme;
+	}
+	
+	public int getScore() {
+		return score;
+	}
+
+	public Potence getHangman() {
+		return hangman;
+	}
+		
+	private Question getQuestion() {
+		int i = 0;
+		
+		while (
+				i < theme.questions.size() 
+				&& ! theme.questions.get(i).id.equals(this.questionId)
+			) {
+			
+			i++;
+		}
+		
+		return theme.questions.get(i);
+	}
+	
+	/**
+	 * <p>
+	 * 	Génère l'id de la question suivante et initialise la réponse courante a 
+	 * 	des '*'
+	 * </p> 
+	 */
+	private void setNextQuestionId() {
+		questionId =
+				theme.generateQuestionID()
+				+ (Integer.valueOf(
+						questionId.substring(
+								questionId.length() - 1)
+						)
+						+ 1);
+	}
+	
+	private void setupCurrnetAnswer(String answer) {
+		currentAnswer = new StringBuffer(answer.length());
+		
+		for (int i = 0; i < this.currentAnswer.capacity(); i++) {
+			if (answer.charAt(i) != ' ') {
+				currentAnswer.insert(i, '*');
+			} else {
+				currentAnswer.insert(i, ' ');
+			}
+		}
+	}
+	
+	public void startGame() {
+		this.questionId = theme.generateQuestionID() + 1;		
+		setupCurrnetAnswer(getQuestion().answer);
+		System.out.println(getQuestion().lable);
+		System.out.println(currentAnswer);
+	}
+	
+	private void nextLevel() {
+		hangman.clearState();
+		setNextQuestionId();
+		setupCurrnetAnswer(getQuestion().answer);
+		System.out.println("Level " + questionId.charAt(questionId.length() - 1));
+		System.out.println(getQuestion().lable);
+		System.out.println(currentAnswer);
+	}
+	
+	private void finishGame(boolean win) {
+		if (win) {
+			
+		} else {
+			
+		}
+	}
+
 	/**
 	 * <b>
 	 * 	Cette fonction vérifie si le caractère entré par le joueur est dans la
@@ -76,16 +168,16 @@ public class PartieJeu {
 	 *				<li>
 	 *					Vérifie si la réponse en cours et égale à la réponse de
 	 *					la question si c'est le cas on considère la réponse
-	 *					comme trouvéé, voir la documentation de la classe Potence
-	 *					pour plus de détails, sinon ne fait rien.
+	 *					comme trouvée, voir la documentation de la classe
+	 *					Potence pour plus de détails, sinon ne fait rien.
 	 *				</li>
 	 * 			</ol>
 	 * 		</li>
 	 * 		<li>
-	 * 			si le caractère n'est pas un des caractères de la question
+	 * 			si le caractère n'est pas un des caractères de la réponse
 	 * 			l'état de la potence est incrémenté puis la potence est 
-	 * 			re-dessinée, voir la documentation de la classe Potence pour plus
-	 *			de détails
+	 * 			re-dessinée, voir la documentation de la classe Potence pour
+	 * 			plus de détails
 	 * 		</li>
 	 * </ul>
 	 * </p>
@@ -98,36 +190,51 @@ public class PartieJeu {
 	 * @see com#usthb#dessin#Potence
 	 */
 	public void checkChar(char inputChar) {
-		String answer = "";
+		String answer = getQuestion().answer;
+		System.out.println(getQuestion().lable);
 		
-		for (Question question : this.theme.questions) {
-			if (question.id.equals(this.questionId)) {
-				answer = new String(question.answer);
-			}
-		}
-		
-		if (answer.indexOf(inputChar) != -1) {//si le caractère est dans answer
+		if (
+				answer.indexOf(inputChar) != -1
+				&& currentAnswer.indexOf(Character.toString(inputChar)) == -1
+			) {//si le caractère est dans answer et n'est pas dans la réponse
+			
 			for (int i = 0; i < answer.length(); i++) {
-				if (this.currentAnswer.charAt(i) == inputChar) { 
-					this.currentAnswer.insert(i, inputChar);
+
+				if (answer.charAt(i) == inputChar) {
+					currentAnswer.deleteCharAt(i);
+					currentAnswer.insert(i, inputChar);
 				}
 			}
 			
-			if (answer.equals(this.currentAnswer.toString())) {//convertie
+			System.out.println(currentAnswer);
+			
+			if (answer.equals(currentAnswer.toString())) {//convertie
 				//currentAnswer en String puis compare avec answer
-				hangman.setFoundAnswerTrue();
+				
+				if (Integer.valueOf(questionId.substring(questionId.length() - 1)) == 5) {
+//					hangman.setFoundAnswerTrue();
+					System.out.println("You Won!");
+				} else {
+					nextLevel();
+ 				}
 				/*
 				 * TODO open a pop-up window to tell the player that the answer
 				 * is correct and give his the next question if any is
 				 * available else tell him that he wont this game 
 				*/
 			}
-		}
-		else {
+		} else {
 			hangman.incrementState();
-			
+			System.out.println("nah..." + hangman.getState());
 			//TODO draw the next state of the Hangman (maybe animated)
 		}
+	}
+	
+	public String toString() {
+		return "Game number: " + number + " question id: "
+				+ questionId + "score = "
+				+ score + " currnet answe: "
+				+ currentAnswer;
 	}
 }
  

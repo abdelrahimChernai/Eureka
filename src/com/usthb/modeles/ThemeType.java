@@ -7,12 +7,28 @@ package com.usthb.modeles;
  *
  * @author Abdelrahim Chernai
  * @author Yasmine Bouamra
- * @version 1.0
+ * @version 1.1.0
  */
 public enum ThemeType {
-	HISTOIRE,
-	GEOGRAPHIE,
-	SANTE,
-	CULTURE_GENERALE,
-	ISLAM;
+	HISTOIRE ("HIS"),
+	GEOGRAPHIE ("GEO"),
+	SANTE ("SAN"),
+	CULTURE_GENERALE ("CUL"),
+	ISLAM ("ISL");
+	
+	private String abreviation;
+	
+	private ThemeType(String abreviation) {
+		this.abreviation = abreviation;
+	}
+	
+	/**
+	 * 
+	 * @return
+	 * 
+	 * @since 1.1.0
+	 */
+	public String getAbreviation() {
+		return this.abreviation;
+	}
 }
