@@ -68,6 +68,10 @@ public class Potence extends Component implements Serializable{
 	public int getState() {
 		return state;
 	}
+	
+	public void clearState() {
+		this.state = 0;
+	}
 
 	/**
 	 * <p>

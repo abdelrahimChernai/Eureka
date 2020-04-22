@@ -326,8 +326,8 @@ public class MainApp {
 		currentPlayer = connection();
 		System.out.println(currentPlayer.getUsername() + " loged in");
 		
-		PartieJeu partie = new PartieJeu(1, themes.iterator().next());
-		 
+		PartieJeu partie = new PartieJeu(themes.iterator().next());
+		partie.startGame();
 		while (!partie.getHangman().isFoundAnswer() && partie.getHangman().getState() < 8) {
 			partie.checkChar(console.next().charAt(0));
 		}

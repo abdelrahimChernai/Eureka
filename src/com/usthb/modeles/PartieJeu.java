@@ -13,7 +13,9 @@ import com.usthb.dessin.Potence;
  * @version 1.1.0
  */
 public class PartieJeu implements Serializable {
-	private int number;
+	private static int gamesNumber = 1;
+	
+	private final int number = PartieJeu.gamesNumber;
 	
 	/**
 	 * <p>
@@ -25,7 +27,7 @@ public class PartieJeu implements Serializable {
 	 * @see Question#lvl
 	 * @see ThemeJeu#coefficent
 	 */
-	private int score;
+	private int score = 0;
 
 	/**
 	 * <p>
@@ -69,13 +71,9 @@ public class PartieJeu implements Serializable {
 	 */
 	private Potence hangman = new Potence();
 	
-	public PartieJeu(int number, ThemeJeu theme) {
-		
-		this.number = number;
-		this.score = 0;
+	public PartieJeu(ThemeJeu theme) {
+		gamesNumber++;
 		this.theme = theme;
-		this.questionId = theme.generateQuestionID() + 1;		
-		setupCurrnetAnswer(getQuestion().answer);
 	}
 	
 	public int getScore() {
@@ -100,7 +98,6 @@ public class PartieJeu implements Serializable {
 		return theme.questions.get(i);
 	}
 	
-	
 	/**
 	 * <p>
 	 * 	Génère l'id de la question suivante et initialise la réponse courante a 
@@ -108,24 +105,48 @@ public class PartieJeu implements Serializable {
 	 * </p> 
 	 */
 	private void setNextQuestionId() {
-		this.questionId =
-				this.theme.generateQuestionID()
+		questionId =
+				theme.generateQuestionID()
 				+ (Integer.valueOf(
-						this.questionId.substring(
-								this.questionId.length() - 1)
+						questionId.substring(
+								questionId.length() - 1)
 						)
 						+ 1);
 	}
 	
 	private void setupCurrnetAnswer(String answer) {
-		this.currentAnswer = new StringBuffer(answer.length());
+		currentAnswer = new StringBuffer(answer.length());
 		
 		for (int i = 0; i < this.currentAnswer.capacity(); i++) {
 			if (answer.charAt(i) != ' ') {
-				this.currentAnswer.insert(i, '*');
+				currentAnswer.insert(i, '*');
 			} else {
-				this.currentAnswer.insert(i, ' ');
+				currentAnswer.insert(i, ' ');
 			}
+		}
+	}
+	
+	public void startGame() {
+		this.questionId = theme.generateQuestionID() + 1;		
+		setupCurrnetAnswer(getQuestion().answer);
+		System.out.println(getQuestion().lable);
+		System.out.println(currentAnswer);
+	}
+	
+	private void nextLevel() {
+		hangman.clearState();
+		setNextQuestionId();
+		setupCurrnetAnswer(getQuestion().answer);
+		System.out.println("Level " + questionId.charAt(questionId.length() - 1));
+		System.out.println(getQuestion().lable);
+		System.out.println(currentAnswer);
+	}
+	
+	private void finishGame(boolean win) {
+		if (win) {
+			
+		} else {
+			
 		}
 	}
 
@@ -170,32 +191,31 @@ public class PartieJeu implements Serializable {
 	 */
 	public void checkChar(char inputChar) {
 		String answer = getQuestion().answer;
+		System.out.println(getQuestion().lable);
 		
 		if (
 				answer.indexOf(inputChar) != -1
 				&& currentAnswer.indexOf(Character.toString(inputChar)) == -1
-			) {//si le caractère est dans answer
+			) {//si le caractère est dans answer et n'est pas dans la réponse
 			
 			for (int i = 0; i < answer.length(); i++) {
 
 				if (answer.charAt(i) == inputChar) {
-					this.currentAnswer.deleteCharAt(i);
-					this.currentAnswer.insert(i, inputChar);
+					currentAnswer.deleteCharAt(i);
+					currentAnswer.insert(i, inputChar);
 				}
 			}
 			
-			System.out.println(this.currentAnswer);
+			System.out.println(currentAnswer);
 			
-			if (answer.equals(this.currentAnswer.toString())) {//convertie
+			if (answer.equals(currentAnswer.toString())) {//convertie
 				//currentAnswer en String puis compare avec answer
 				
-				if (Integer.valueOf(this.questionId.substring(questionId.length() - 1)) == 5) {
+				if (Integer.valueOf(questionId.substring(questionId.length() - 1)) == 5) {
 //					hangman.setFoundAnswerTrue();
 					System.out.println("You Won!");
 				} else {
-					setNextQuestionId();
-					setupCurrnetAnswer(getQuestion().answer);
-					System.out.println("Level " + this.questionId.charAt(questionId.length() - 1));
+					nextLevel();
  				}
 				/*
 				 * TODO open a pop-up window to tell the player that the answer
