@@ -1,6 +1,5 @@
 package com.usthb.controler;
 
-import java.awt.Component;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -53,17 +52,11 @@ public class AppControler implements ActionListener{
 	}
 	
 	public static String getConnectionUsername() {
-		JTextField input =
-				(JTextField) gameFrame.getConnectionPage().getComponent(1);
-		
-		return input.getText();
+		return gameFrame.getConnectionPage().getUsernameInput().getText();
 	}
 	
 	public static String getConnectionPassword() {
-		JTextField input =
-				(JTextField) gameFrame.getConnectionPage().getComponent(3);
-		
-		return input.getText();
+		return gameFrame.getConnectionPage().getPasswordInput().getText();
 	}
 	
 
