@@ -11,6 +11,7 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Scanner;
 
+import com.usthb.controler.AppControler;
 import com.usthb.modeles.Joueur;
 import com.usthb.modeles.PartieJeu;
 import com.usthb.modeles.ThemeJeu;
@@ -44,8 +45,7 @@ public class MainApp {
 	 * 
 	 * @see MainApp#initialization()
 	 */
-	private static HashMap<Integer, Joueur> players =
-		new HashMap<Integer, Joueur>();
+	private HashMap<Integer, Joueur> players;
 	
 	/**
 	 * <p>
@@ -57,8 +57,16 @@ public class MainApp {
 	 * @see com.usthb.modeles.ThemeJeu
 	 * @see com.usthb.modeles.Question
 	 */
-	private static HashSet<ThemeJeu> themes = new HashSet<ThemeJeu>();
+	private HashSet<ThemeJeu> themes;
 	
+	
+	
+	public MainApp() {
+		this.players = new HashMap<Integer, Joueur>();
+		this.themes = new HashSet<ThemeJeu>();
+	}
+
+
 	/**
 	 * <p>
 	 * 	Se lance dès le lancement du jeu pour préparer les éléments et données
@@ -82,7 +90,7 @@ public class MainApp {
 	 * @see MainApp#themes
 	 * @see MainApp#players
 	 */
-	private static void initialization() {
+	public void initialization() {
 		File playerFile = new File("player.sve");
 		File themeFile = new File("themes.sve");
 		
@@ -115,7 +123,6 @@ public class MainApp {
 						new ObjectInputStream(new FileInputStream(themeFile));
 			
 				themes = (HashSet<ThemeJeu>) themeFileIn.readObject();
-			
 				try {
 					themeFileIn.close();
 				} catch (IOException e) {
@@ -154,32 +161,25 @@ public class MainApp {
 	 * 
 	 * @since 1.1.1
 	 */
-	public static Joueur connection() {
+	public Joueur connection() {
 		String username;
 		String password;
 		
-		do {
-			System.out.println("username");
-			username = console.nextLine();
-			
-			if (players.containsKey(Joueur.hashCode(username))) {
-				System.out.println("Hello " + username + "!");
-			} else {
-				System.out.println("Sure about that ?");
-			}
-			
-		} while (! players.containsKey(Joueur.hashCode(username)));
-		
-		do {
-			System.out.println("password");
-			password = console.nextLine();
-			
-			if (players.get(Joueur.hashCode(username)).getPassword().equals(password)) {
-				System.out.println("You are loged in");
-			} else {
-				System.out.println("Wrong the password is, my young padawan");
-			}
-		} while (! players.get(Joueur.hashCode(username)).getPassword().equals(password));
+		username = AppControler.getConnectionUsername();
+
+		if (players.containsKey(Joueur.hashCode(username))) {
+			System.out.println("Hello " + username + "!");
+		} else {
+			System.out.println("Sure about that ?");
+		}
+
+		password = AppControler.getConnectionPassword();
+
+		if (players.get(Joueur.hashCode(username)).getPassword().equals(password)) {
+			System.out.println("You are loged in");
+		} else {
+			System.out.println("Wrong the password is, my young padawan");
+		}
 		
 			
 		return players.get(Joueur.hashCode(username));
@@ -206,7 +206,8 @@ public class MainApp {
 	 * 
 	 * @since 1.1.1
 	 */
-	public static void inscription() {
+	@SuppressWarnings("deprecation")
+	public void inscription() {
 		Joueur newPlayer;
 		String firstName;
 		String lastName;
@@ -261,7 +262,7 @@ public class MainApp {
 	 * 	dans les fichiers de sauvegarde.
 	 * </p>
 	 */
-	public static void terminate() {
+	public void terminate() {
 		File playerFile = new File("player.sve");
 		File themeFile = new File("themes.sve");
 		
@@ -320,19 +321,6 @@ public class MainApp {
 	 * @param args - non utilisé.
 	 */
 	public static void main(String[] args) {
-		Joueur currentPlayer;
-
-		initialization();
-		currentPlayer = connection();
-		System.out.println(currentPlayer.getUsername() + " loged in");
-		
-		PartieJeu partie = new PartieJeu(themes.iterator().next());
-		partie.startGame();
-		while (!partie.getHangman().isFoundAnswer() && partie.getHangman().getState() < 8) {
-			partie.checkChar(console.next().charAt(0));
-		}
-		
-		console.close();
-		terminate();
+		AppControler.start();
 	}
 }
