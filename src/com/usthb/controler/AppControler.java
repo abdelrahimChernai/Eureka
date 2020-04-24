@@ -4,7 +4,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import javax.swing.JPanel;
-import javax.swing.JTextField;
 
 import com.usthb.ErrorCode;
 import com.usthb.MainApp;
@@ -36,9 +35,11 @@ public class AppControler implements ActionListener{
 			ErrorCode error = eurekaRuner.connection();
 			
 			if (error == ErrorCode.WRONG_USERNAME) {
-				System.out.println(error.getErrorMessage());
+				gameFrame.getConnectionPage().setUsernameError(
+						error.getErrorMessage());
 			} else if (error == ErrorCode.WRONG_PASSWORD) {
-				System.out.println(error.getErrorMessage());
+				gameFrame.getConnectionPage().setPasswordError(
+						error.getErrorMessage());
 			} else {
 				System.out.println(eurekaRuner.getCurrnetPlayer());
 			}

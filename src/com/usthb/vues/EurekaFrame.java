@@ -1,14 +1,10 @@
 package com.usthb.vues;
 
 import java.awt.Color;
-import java.awt.Font;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
-import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.JTextField;
-import javax.swing.border.LineBorder;
 
 
 import com.usthb.controler.AppControler;
@@ -42,7 +38,7 @@ import com.usthb.controler.AppControler;
 		closeButton.setBorderPainted(false);
 		closeButton.setFocusPainted(false);
 		closeButton.setBounds(WIDTH - 46, 1, 45, 28);
-		closeButton.setBackground(Color.decode("#e81123"));
+		closeButton.setBackground(Color.decode("#E81123"));
 		closeButton.addActionListener(new AppControler());
 		
 	
