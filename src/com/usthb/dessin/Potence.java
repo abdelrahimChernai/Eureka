@@ -3,8 +3,8 @@ package com.usthb.dessin;
 import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.Graphics;
+import java.io.Serializable;
 
-import com.usthb.modeles.PartieJeu;
 
 /**
  * <b>S'occupe de la gestion du pendu</b>
@@ -21,7 +21,7 @@ import com.usthb.modeles.PartieJeu;
  * 
  * @see com.usthb.modeles.PartieJeu
  */
-public class Potence extends Component{
+public class Potence extends Component implements Serializable{
 	
 	/**
 	 * <p>
@@ -36,7 +36,7 @@ public class Potence extends Component{
 	 * 
 	 * @see com.usthb.modeles.PartieJeu#checkChar(char)
 	 */
-	private int state;
+	private int state = 0;
 	
 	/**
 	 * <p>
@@ -51,7 +51,7 @@ public class Potence extends Component{
 	 * @see com.usthb.modeles.Question#answer
 	 * @see com.usthb.modeles.PartieJeu#checkChar(char)
 	 */
-	private boolean foundAnswer;
+	private boolean foundAnswer = false;
 	
 	/**
 	 * <p>
@@ -65,7 +65,14 @@ public class Potence extends Component{
 	 */
 	private Dimension windowDimension;
 	
+	public int getState() {
+		return state;
+	}
 	
+	public void clearState() {
+		this.state = 0;
+	}
+
 	/**
 	 * <p>
 	 * 	met la variable d'instance foundAnswer a vrai indiquant que la réponse
@@ -79,6 +86,10 @@ public class Potence extends Component{
 		this.foundAnswer = true;
 	}
 	
+	public boolean isFoundAnswer() {
+		return foundAnswer;
+	}
+
 	/**
 	 * <p>
 	 * 	Incrémente la variable state qui ne doit pas dépasser 8, la 
