@@ -7,6 +7,7 @@ import java.awt.event.ActionListener;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
+import com.usthb.ErrorCode;
 import com.usthb.MainApp;
 import com.usthb.vues.EurekaFrame;
 
@@ -33,7 +34,15 @@ public class AppControler implements ActionListener{
 						, gameFrame.getConnectionPage()
 					);
 		} else if (triger.contentEquals("Confirm")) {
-			eurekaRuner.connection();
+			ErrorCode error = eurekaRuner.connection();
+			
+			if (error == ErrorCode.WRONG_USERNAME) {
+				System.out.println(error.getErrorMessage());
+			} else if (error == ErrorCode.WRONG_PASSWORD) {
+				System.out.println(error.getErrorMessage());
+			} else {
+				System.out.println(eurekaRuner.getCurrnetPlayer());
+			}
 		}
 	}
 	

@@ -15,7 +15,6 @@ import com.usthb.controler.AppControler;
 import com.usthb.modeles.Joueur;
 import com.usthb.modeles.PartieJeu;
 import com.usthb.modeles.ThemeJeu;
-import com.usthb.modeles.ThemeType;
 
 /**
  * <b>
@@ -33,6 +32,8 @@ import com.usthb.modeles.ThemeType;
  */
 public class MainApp {
 	public static Scanner console = new Scanner(System.in);		// TEST
+	
+	private Joueur currnetPlayer;
 	
 	/**
 	 * <p>
@@ -64,6 +65,7 @@ public class MainApp {
 	public MainApp() {
 		this.players = new HashMap<Integer, Joueur>();
 		this.themes = new HashSet<ThemeJeu>();
+		this.currnetPlayer = null;
 	}
 
 
@@ -161,28 +163,25 @@ public class MainApp {
 	 * 
 	 * @since 1.1.1
 	 */
-	public Joueur connection() {
+	public ErrorCode connection() {
 		String username;
 		String password;
 		
 		username = AppControler.getConnectionUsername();
 
-		if (players.containsKey(Joueur.hashCode(username))) {
-			System.out.println("Hello " + username + "!");
-		} else {
-			System.out.println("Sure about that ?");
+		if (! players.containsKey(Joueur.hashCode(username))) {
+			return ErrorCode.WRONG_USERNAME;
 		}
 
 		password = AppControler.getConnectionPassword();
 
-		if (players.get(Joueur.hashCode(username)).getPassword().equals(password)) {
-			System.out.println("You are loged in");
-		} else {
-			System.out.println("Wrong the password is, my young padawan");
+		if (! players.get(Joueur.hashCode(username)).getPassword().equals(password)) {
+			return ErrorCode.WRONG_PASSWORD;
 		}
-		
 			
-		return players.get(Joueur.hashCode(username));
+		currnetPlayer =  players.get(Joueur.hashCode(username));
+		
+		return null;
 	}
 	
 	/**
@@ -323,4 +322,9 @@ public class MainApp {
 	public static void main(String[] args) {
 		AppControler.start();
 	}
+
+	public Joueur getCurrnetPlayer() {
+		return currnetPlayer;
+	}
+	
 }
