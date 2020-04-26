@@ -175,7 +175,7 @@ public class MainApp {
 
 		password = AppControler.getConnectionPassword();
 
-		if (! players.get(Joueur.hashCode(username)).getPassword().equals(password)) {
+		if (!players.get(Joueur.hashCode(username)).getPassword().equals(password)) {
 			return ErrorCode.WRONG_PASSWORD;
 		}
 			

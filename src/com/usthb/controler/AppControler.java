@@ -2,6 +2,8 @@ package com.usthb.controler;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 
 import javax.swing.JPanel;
 
@@ -9,18 +11,18 @@ import com.usthb.ErrorCode;
 import com.usthb.MainApp;
 import com.usthb.vues.EurekaFrame;
 
-public class AppControler implements ActionListener{
+public class AppControler implements ActionListener, MouseListener{
 	private static MainApp eurekaRuner;
 	private static EurekaFrame gameFrame;
 	
 	public static void start() {
 		eurekaRuner = new  MainApp();
 		eurekaRuner.initialization();
+		
 		gameFrame = new EurekaFrame();
 		gameFrame.setVisible(true);
 	}
 
-	@Override
 	public void actionPerformed(ActionEvent e) {
 		String triger = e.getActionCommand(); 
 		
@@ -58,6 +60,34 @@ public class AppControler implements ActionListener{
 	
 	public static String getConnectionPassword() {
 		return gameFrame.getConnectionPage().getPasswordInput().getText();
+	}
+	
+	@Override
+	public void mouseClicked(MouseEvent e) {
+		int triger = e.getButton();
+		
+		if (triger == MouseEvent.BUTTON1) {
+			switchPanel(
+					gameFrame.getHomePage()
+					, gameFrame.getConnectionPage()
+				);
+		}
+	}
+
+	public void mousePressed(MouseEvent e) {
+		
+	}
+
+	public void mouseReleased(MouseEvent e) {
+		
+	}
+
+	public void mouseEntered(MouseEvent e) {
+		
+	}
+
+	public void mouseExited(MouseEvent e) {
+		
 	}
 	
 

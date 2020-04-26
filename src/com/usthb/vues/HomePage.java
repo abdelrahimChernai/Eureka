@@ -3,16 +3,23 @@ package com.usthb.vues;
 import java.awt.Color;
 
 import javax.swing.JButton;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 import com.usthb.controler.AppControler;
 
 public class HomePage extends JPanel {
+	private JLabel logInText;
 	private JButton newGameButton;
 	private JButton continueButton;
 	
 	public HomePage() {
 		super(null, true);
+		
+		logInText = new JLabel("Log In");
+		logInText.setForeground(Color.decode("#BB86FC"));
+		logInText.setBounds(682, 93, 50, 25);
+		logInText.addMouseListener(new AppControler());
 		
 		newGameButton = new JButton("New Game");
 		newGameButton.setBorderPainted(false);
@@ -31,9 +38,8 @@ public class HomePage extends JPanel {
 		continueButton.addActionListener(new AppControler());
 		
 		this.setBackground(Color.decode("#1A1919"));
+		this.add(logInText);
 		this.add(newGameButton);
 		this.add(continueButton);
 	}
-	
-	
 }
