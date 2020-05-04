@@ -5,7 +5,9 @@ import java.awt.Color;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JPasswordField;
 import javax.swing.JTextField;
+import javax.swing.SwingConstants;
 import javax.swing.border.LineBorder;
 
 import com.usthb.controler.AppControler;
@@ -16,7 +18,7 @@ public class ConnectionPage extends JPanel {
 	private JLabel usernameError;
 	private JLabel passwordError;
 	private JTextField usernameInput;
-	private JTextField passwordInput;
+	private JPasswordField passwordInput;
 	private JButton confirmButton;
 	
 	public ConnectionPage() {
@@ -41,14 +43,16 @@ public class ConnectionPage extends JPanel {
 		
 		usernameInput = new JTextField();
 		usernameInput.setBounds(280, 211, 250, 45);
+		usernameInput.setHorizontalAlignment(SwingConstants.CENTER);
 		//	usernameInput.setFont(new Font("Comic Sans MS", Font.BOLD, 20));
 		usernameInput.setBackground(Color.decode("#1A1919"));
 		usernameInput.setForeground(Color.decode("#FFFFFF"));
 		usernameInput.setBorder(
 				new LineBorder(Color.decode("#FFFFFF"), 1, true));
 		
-		passwordInput = new JTextField();
+		passwordInput = new JPasswordField();
 		passwordInput.setBounds(280, 341, 250, 45);
+		passwordInput.setHorizontalAlignment(SwingConstants.CENTER);
 		passwordInput.setBackground(Color.decode("#1A1919"));	
 		passwordInput.setForeground(Color.decode("#FFFFFF"));
 		passwordInput.setBorder(
