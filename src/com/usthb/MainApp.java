@@ -13,8 +13,8 @@ import java.util.Scanner;
 
 import com.usthb.controler.AppControler;
 import com.usthb.modeles.Joueur;
-import com.usthb.modeles.PartieJeu;
 import com.usthb.modeles.ThemeJeu;
+import com.usthb.modeles.ThemeType;
 
 /**
  * <b>
@@ -64,7 +64,7 @@ public class MainApp {
 	
 	public MainApp() {
 		this.players = new HashMap<Integer, Joueur>();
-		this.themes = new HashSet<ThemeJeu>();
+		this.themes  = new HashSet<ThemeJeu>();
 		this.currnetPlayer = null;
 	}
 
@@ -175,7 +175,9 @@ public class MainApp {
 
 		password = AppControler.getConnectionPassword();
 
-		if (!players.get(Joueur.hashCode(username)).getPassword().equals(password)) {
+		if (!players.get(
+				Joueur.hashCode(username)).getPassword().equals(password)) {
+			
 			return ErrorCode.WRONG_PASSWORD;
 		}
 			
@@ -325,6 +327,11 @@ public class MainApp {
 
 	public Joueur getCurrnetPlayer() {
 		return currnetPlayer;
+	}
+
+
+	public HashSet<ThemeJeu> getThemes() {
+		return themes;
 	}
 	
 }

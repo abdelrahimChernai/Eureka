@@ -152,6 +152,10 @@ public class Joueur implements Serializable{
 		return this.id;
 	}
 	
+	public void setCurrentLvl(Levels currentLvl) {
+		this.currentLvl = currentLvl;
+	}
+
 	/**
 	 * <p>
 	 * 	Utilise la fonction de Objects pour créer un Numéro séquentiel et

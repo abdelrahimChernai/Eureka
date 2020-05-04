@@ -97,6 +97,10 @@ public class ThemeJeu implements Serializable {
 				+ this.hashCode();
 	}
 	
+	public String getLable() {
+		return lable;
+	}
+
 	/**
 	 * @since 1.1.0
 	 */

@@ -9,17 +9,17 @@ import javax.swing.JPanel;
 import com.usthb.controler.AppControler;
 
 public class HomePage extends JPanel {
-	private JLabel logInText;
+	private JLabel username;
 	private JButton newGameButton;
 	private JButton continueButton;
 	
 	public HomePage() {
 		super(null, true);
 		
-		logInText = new JLabel("Log In");
-		logInText.setForeground(Color.decode("#BB86FC"));
-		logInText.setBounds(682, 93, 50, 25);
-		logInText.addMouseListener(new AppControler());
+		username = new JLabel("Log In");
+		username.setForeground(Color.decode("#BB86FC"));
+		username.setBounds(682, 93, 50, 25);
+		username.addMouseListener(new AppControler());
 		
 		newGameButton = new JButton("New Game");
 		newGameButton.setBorderPainted(false);
@@ -38,8 +38,13 @@ public class HomePage extends JPanel {
 		continueButton.addActionListener(new AppControler());
 		
 		this.setBackground(Color.decode("#1A1919"));
-		this.add(logInText);
+		this.add(username);
 		this.add(newGameButton);
 		this.add(continueButton);
 	}
+
+	public void setUsername(String username) {
+		this.username.setText(username);
+	}
+	
 }

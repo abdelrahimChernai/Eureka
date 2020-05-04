@@ -1,6 +1,7 @@
 package com.usthb.vues;
 
 import java.awt.Color;
+import java.util.LinkedList;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -13,6 +14,7 @@ import com.usthb.controler.AppControler;
 	private JPanel baseFrame;
 	private JPanel homePage;
 	private JPanel connectionPage;
+	private JPanel themeSelectionPage;
 	private final int WIDTH = 810;
 	private final int HEIGHT = 620;
 	
@@ -53,13 +55,30 @@ import com.usthb.controler.AppControler;
 		return baseFrame;
 	}
 
-	public ConnectionPage getConnectionPage() {
-		return (ConnectionPage) connectionPage;
-	}
-	
 	public HomePage getHomePage() {
 		return (HomePage) homePage;
 	}
+	
+	public ConnectionPage getConnectionPage() {
+		return (ConnectionPage) connectionPage;
+	}
+
+	public JPanel getThemeSelectionPage() {
+		return themeSelectionPage;
+	}
+
+	public void setThemeSelectionPage(
+			LinkedList<String> themes
+			, String username) {
+
+		this.themeSelectionPage = new ThemeSelectionPage(themes, username);
+		this.themeSelectionPage.setBounds(0, 32, WIDTH, HEIGHT - 32);
+	}
+	
+	
+
+	
+	
 	
 	
 }
