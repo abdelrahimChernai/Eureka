@@ -13,6 +13,7 @@ import com.usthb.controler.AppControler;
  public class EurekaFrame extends JFrame {
 	private JPanel baseFrame;
 	private JPanel homePage;
+	private JPanel inscriptionPage;
 	private JPanel connectionPage;
 	private JPanel themeSelectionPage;
 	private final int WIDTH = 810;
@@ -21,6 +22,9 @@ import com.usthb.controler.AppControler;
 	public EurekaFrame() {
 		homePage = new HomePage();
 		homePage.setBounds(0, 32, WIDTH, HEIGHT - 32);
+		
+		inscriptionPage = new InscriptionPage();
+		inscriptionPage.setBounds(0, 32, WIDTH, HEIGHT - 32);
 		
 		connectionPage = new ConnectionPage();
 		connectionPage.setBounds(0, 32, WIDTH, HEIGHT - 32);
@@ -48,7 +52,7 @@ import com.usthb.controler.AppControler;
 		baseFrame.setBackground(Color.decode("#000000"));
 		baseFrame.setBounds(0, 0, WIDTH, HEIGHT);
 		baseFrame.add(closeButton);
-		baseFrame.add(homePage);
+		baseFrame.add(inscriptionPage);
 	}
 	
 	public JPanel getBaseFrame() {
@@ -59,6 +63,10 @@ import com.usthb.controler.AppControler;
 		return (HomePage) homePage;
 	}
 	
+	public InscriptionPage getInscriptionPage() {
+		return (InscriptionPage) inscriptionPage;
+	}
+
 	public ConnectionPage getConnectionPage() {
 		return (ConnectionPage) connectionPage;
 	}
