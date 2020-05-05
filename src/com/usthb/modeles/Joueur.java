@@ -211,6 +211,32 @@ public class Joueur implements Serializable{
 	}
 		
 	/**
+	 * Donne le nombre de points du joueur depuis son inscription 
+	 * @return le score totale calculé à partir de la liste des parties jouées.
+	 * 
+	 * @see PartieJeu
+	 * 
+	 * @see Joueur#playerGames
+	 */
+	public int getTotalScore() {
+		int totalScore = 0;
+		
+		for (PartieJeu game : this.playerGames) {
+			totalScore += game.getScore();
+		}
+		return totalScore;
+	}
+	
+	/**
+	 * <b>Ajoute une partie a la liste des parties du joueur</b>
+	 * 
+	 * @param partie la partie a ajouter
+	 */
+	public void addGame(PartieJeu partie) {
+		this.playerGames.add(partie);
+	}
+
+	/**
 	 * <p>
 	 * 	Versifie si une date est correcte selon les normes du calendrier
 	 * 	grégorien en vérifiant la valeur des jours selon les mois et si l'année
@@ -219,8 +245,6 @@ public class Joueur implements Serializable{
 	 * @param date une date a verifier
 	 * @return	true si cette date est une date du calendrier grégorien
 	 */
-	
-	@SuppressWarnings("deprecation")
 	public static boolean isDateValide(Date date) {
 		if (
 				date.getYear() >= 0
@@ -277,23 +301,6 @@ public class Joueur implements Serializable{
 		} else {
 			return false;
 		}
-	}
-	
-	/**
-	 * Donne le nombre de points du joueur depuis son inscription 
-	 * @return le score totale calculé à partir de la liste des parties jouées.
-	 * 
-	 * @see PartieJeu
-	 * 
-	 * @see Joueur#playerGames
-	 */
-	public int getTotalScore() {
-		int totalScore = 0;
-		
-		for (PartieJeu game : this.playerGames) {
-			totalScore += game.getScore();
-		}
-		return totalScore;
 	}
 	
 	public String toString() {

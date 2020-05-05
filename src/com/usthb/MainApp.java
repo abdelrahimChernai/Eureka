@@ -10,11 +10,11 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Scanner;
+import java.util.StringTokenizer;
 
 import com.usthb.controler.AppControler;
 import com.usthb.modeles.Joueur;
 import com.usthb.modeles.ThemeJeu;
-import com.usthb.modeles.ThemeType;
 
 /**
  * <b>
@@ -100,8 +100,8 @@ public class MainApp {
 			try {
 				ObjectInputStream playerFileIn =
 						new ObjectInputStream(new FileInputStream(playerFile));
-			
 				players = (HashMap<Integer, Joueur>) playerFileIn.readObject();
+				
 			
 				try {
 					playerFileIn.close();
@@ -207,7 +207,6 @@ public class MainApp {
 	 * 
 	 * @since 1.1.1
 	 */
-	@SuppressWarnings("deprecation")
 	public void inscription() {
 		Joueur newPlayer;
 		String firstName;
@@ -215,45 +214,35 @@ public class MainApp {
 		String username;
 		String password;
 		Date birthDate;
+		StringTokenizer birthDateString;
 		int day, mounth, year;
 		
-		System.out.println("first name");
-		firstName = console.nextLine();
+		firstName = AppControler.getInscriptionFirstname();
 			
-		System.out.println("last name");
-		lastName = console.nextLine();
+		lastName = AppControler.getInscriptionLastname();
 
-		do {
-			System.out.println("Birth date dd mm yyyy");
-			day = console.nextInt();
-			mounth = console.nextInt() - 1;
-			year = console.nextInt() - 1900;
-			birthDate = new Date(year, mounth, day);
-		} while (! Joueur.isDateValide(birthDate));
-			
-		console.nextLine();
+		birthDateString =
+				new StringTokenizer(AppControler.getInscriptionBirthDate());
+		day = Integer.parseUnsignedInt(birthDateString.nextToken());
+		mounth = Integer.parseUnsignedInt(birthDateString.nextToken());
+		year = Integer.parseUnsignedInt(birthDateString.nextToken());
+		birthDate = new Date(year, mounth, day);
 		
-		do {
-			System.out.println("username");
-			username = console.nextLine();
-			
-			if (players.containsKey(Joueur.hashCode(username))) {
-				System.out.println("this one is not avalable, try somthing else");
-			} else {
-				System.out.println("Alright " + username + " it is !");
-			}
-		} while (players.containsKey(Joueur.hashCode(username)));
+		username = AppControler.getInscriptionUsername();
+
+		if (players.containsKey(Joueur.hashCode(username))) {
+			System.out.println("this one is not avalable, try somthing else");
+		} else {
+			System.out.println("Alright " + username + " it is !");
+		}
 		
 		System.out.println("password");
-		password = (console.nextLine());
+		password = AppControler.getInscriptionPassword();
 		System.out.println("confirm password");
-		
-		while(! console.nextLine().contentEquals(password)) {
-			System.out.println("password doesn't match");
-		}
 		
 		newPlayer =
 				new Joueur(firstName, lastName, username, password, birthDate);
+		currnetPlayer = newPlayer;
 		players.put(newPlayer.getId(), newPlayer);
 	}
 	
@@ -284,7 +273,7 @@ public class MainApp {
 			ObjectOutputStream playerFileOut =
 					new ObjectOutputStream(new FileOutputStream(playerFile));
 			
-			if (playerFileOut != null) {
+			if (playerFileOut != null && !players.isEmpty()) {
 				playerFileOut.writeObject(players);
 			}
 			
@@ -303,7 +292,7 @@ public class MainApp {
 			ObjectOutputStream themeFileOut =
 					new ObjectOutputStream(new FileOutputStream(themeFile));
 			
-			if (themeFileOut != null) {
+			if (themeFileOut != null && !themes.isEmpty()) {
 				themeFileOut.writeObject(themes);
 			}
 			

@@ -25,7 +25,6 @@ public class ThemeSelectionPage extends JPanel {
 		
 		for (String theme : themes) {
 			JButton themeButton = new JButton(theme);
-			System.out.println("test");
 			themeButton.setBorderPainted(false);
 			themeButton.setFocusPainted(false);
 			themeButton.setSize(100, 100);

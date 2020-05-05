@@ -7,6 +7,7 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+
 import java.util.Iterator;
 import java.util.LinkedList;
 
@@ -17,6 +18,7 @@ import com.usthb.ErrorCode;
 import com.usthb.MainApp;
 import com.usthb.modeles.Levels;
 import com.usthb.modeles.ThemeJeu;
+import com.usthb.vues.ConnectionPage;
 import com.usthb.vues.EurekaFrame;
 import com.usthb.vues.InscriptionPage;
 
@@ -36,6 +38,7 @@ public class AppControler implements ActionListener, MouseListener, KeyListener{
 		String triger = e.getActionCommand(); 
 		
 		if (triger.contentEquals("")) {
+			eurekaRuner.terminate();
 			System.exit(0);
 		} else if (triger.contentEquals("Continue")) {
 			
@@ -64,33 +67,40 @@ public class AppControler implements ActionListener, MouseListener, KeyListener{
 						gameFrame.getHomePage()
 						, gameFrame.getThemeSelectionPage()
 					);
+			} else {
+				switchPanel(
+						gameFrame.getHomePage()
+						, gameFrame.getInscriptionPage()
+					);
 			}
 		} else if (triger.contentEquals("Confirm")) {
-			if (((
-					Component) e.getSource()
-				).getParent().equals(gameFrame.getConnectionPage())) {
-				
+			Component currentPage = ((Component) e.getSource()).getParent();
+			
+			if (currentPage.equals(gameFrame.getConnectionPage())) {
+				ConnectionPage connectionPage = (ConnectionPage) currentPage;
 				ErrorCode error = eurekaRuner.connection();
 
 				if (error == ErrorCode.WRONG_USERNAME) {
-					gameFrame.getConnectionPage().setUsernameError(
-							error.getErrorMessage());
+					connectionPage.setUsernameError(error.getErrorMessage());
 				} else if (error == ErrorCode.WRONG_PASSWORD) {
-					gameFrame.getConnectionPage().setPasswordError(
-							error.getErrorMessage());
+					connectionPage.setPasswordError(error.getErrorMessage());
 				} else {
 					gameFrame.getHomePage().setUsername(
 							eurekaRuner.getCurrnetPlayer().getUsername());
 
-					switchPanel(
-							gameFrame.getConnectionPage()
-							, gameFrame.getHomePage()
-							);
-					eurekaRuner.getCurrnetPlayer().setCurrentLvl(Levels.LEVEL_3);
+					switchPanel(connectionPage, gameFrame.getHomePage());
+					
 					System.out.println(eurekaRuner.getCurrnetPlayer());
 				}
 			} else {
-				
+				eurekaRuner.inscription();
+				gameFrame.getHomePage().setUsername(
+						eurekaRuner.getCurrnetPlayer().getUsername());
+
+				switchPanel(
+						gameFrame.getInscriptionPage()
+						, gameFrame.getHomePage()
+					);
 			}
 		}
 	}
@@ -113,9 +123,24 @@ public class AppControler implements ActionListener, MouseListener, KeyListener{
 		return gameFrame.getInscriptionPage().getUsernameInput().getText();
 	}
 	
+	public static String getInscriptionFirstname() {
+		return gameFrame.getInscriptionPage().getFirsnameInput().getText();
+	}
+	
+	public static String getInscriptionLastname() {
+		return gameFrame.getInscriptionPage().getLastnameInput().getText();
+	}
+	
+	public static String getInscriptionBirthDate() {
+		return gameFrame.getInscriptionPage().getBirthDateInput().getText();
+	}
+	
 	public static String getInscriptionPassword() {
 		InscriptionPage inscriptionPage = gameFrame.getInscriptionPage();
-		return inscriptionPage.getPasswordInput().getPassword().toString();
+		String password =
+				new String(inscriptionPage.getPasswordInput().getPassword());
+		System.out.println(password);
+		return password;
 	}
 	
 	@Override
@@ -159,8 +184,6 @@ public class AppControler implements ActionListener, MouseListener, KeyListener{
 				|| inscriptionpage.getLastnameInput().getText().equals("")
 				|| inscriptionpage.getBirthDateInput().getText().equals("")
 				|| inscriptionpage.getUsernameInput().getText().equals("")) {
-				
-				System.out.println(inscriptionpage.getUsernameInput().getText());
 				
 				inscriptionpage.disableCofirmButton();
 			} else {

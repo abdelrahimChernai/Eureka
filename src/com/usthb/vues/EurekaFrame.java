@@ -52,7 +52,7 @@ import com.usthb.controler.AppControler;
 		baseFrame.setBackground(Color.decode("#000000"));
 		baseFrame.setBounds(0, 0, WIDTH, HEIGHT);
 		baseFrame.add(closeButton);
-		baseFrame.add(inscriptionPage);
+		baseFrame.add(homePage);
 	}
 	
 	public JPanel getBaseFrame() {
