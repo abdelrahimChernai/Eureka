@@ -99,7 +99,7 @@ public class GamePage extends JPanel {
 	}
 	
 	public void setChansesLeft(int chansesLeft) {
-		this.chansesLeft.setText("You still have" + chansesLeft + " chances");
+		this.chansesLeft.setText("You still have " + chansesLeft + " chances");
 	}
 
 	public void setUsername(String username) {

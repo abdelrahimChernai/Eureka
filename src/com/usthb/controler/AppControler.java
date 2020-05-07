@@ -3,6 +3,8 @@ package com.usthb.controler;
 import java.awt.Component;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.FocusEvent;
+import java.awt.event.FocusListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.event.MouseEvent;
@@ -14,6 +16,7 @@ import java.util.NoSuchElementException;
 import java.util.StringTokenizer;
 
 import javax.swing.JPanel;
+import javax.swing.JTextField;
 
 import com.usthb.ErrorCode;
 import com.usthb.MainApp;
@@ -37,145 +40,6 @@ public class AppControler implements ActionListener, MouseListener, KeyListener 
 		gameFrame.setVisible(true);
 	}
 
-	public void actionPerformed(ActionEvent e) {
-		Component currentPage = ((Component) e.getSource()).getParent();
-		String triger = e.getActionCommand(); 
-		
-		if (triger.contentEquals("")) {
-			eurekaRuner.terminate();
-			System.exit(0);
-		} else if (triger.contentEquals("Continue")) {
-			
-			if (eurekaRuner.getCurrentPlayer() == null) {
-				switchPanel(
-						gameFrame.getHomePage()
-						, gameFrame.getConnectionPage()
-					);
-			}
-			
-		} else if (triger.contentEquals("New Game")) {
-			if (eurekaRuner.getCurrentPlayer() != null) {
-				LinkedList<String> themes = new LinkedList<String>();
-				Iterator<ThemeJeu> it = eurekaRuner.getThemes().iterator();
-				
-				while (it.hasNext()) {
-					themes.add(it.next().getLable());
-				}
-				
-				gameFrame.setThemeSelectionPage(
-						themes
-						, eurekaRuner.getCurrentPlayer().getUsername()
-					);
-				
-				switchPanel(
-						gameFrame.getHomePage()
-						, gameFrame.getThemeSelectionPage()
-					);
-			} else {
-				switchPanel(
-						gameFrame.getHomePage()
-						, gameFrame.getInscriptionPage()
-					);
-			}
-		} else if (triger.contentEquals("Confirm")) {
-			if (currentPage.equals(gameFrame.getConnectionPage())) {
-				ConnectionPage connectionPage = (ConnectionPage) currentPage;
-				ErrorCode error = eurekaRuner.connection();
-
-				if (error == ErrorCode.WRONG_USERNAME) {
-					connectionPage.setUsernameError(error.getErrorMessage());
-				} else if (error == ErrorCode.WRONG_PASSWORD) {
-					connectionPage.setPasswordError(error.getErrorMessage());
-				} else {
-					gameFrame.getHomePage().setUsername(
-							eurekaRuner.getCurrentPlayer().getUsername());
-
-					switchPanel(connectionPage, gameFrame.getHomePage());
-				}
-			} else if (currentPage.equals(gameFrame.getInscriptionPage())) {
-				InscriptionPage inscriptionPage = (InscriptionPage)currentPage;
-				
-				eurekaRuner.inscription();
-				gameFrame.getHomePage().setUsername(
-						eurekaRuner.getCurrentPlayer().getUsername());
-
-				switchPanel(inscriptionPage, gameFrame.getHomePage());
-			} else if (currentPage.equals(gameFrame.getGamePage())) {
-				playRound(eurekaRuner.getCurrentGame());
-			}
-		} else if (currentPage.equals(gameFrame.getThemeSelectionPage())) {
-//			ThemeSelectionPage themeSelectionPage =
-//					(ThemeSelectionPage) currentPage;
-			Iterator<ThemeJeu> themesIterator =
-					eurekaRuner.getThemes().iterator();
-			ThemeJeu selectedTheme = null;
-			
-			while (themesIterator.hasNext() && selectedTheme == null) {
-				ThemeJeu theme = themesIterator.next();
-				
-				if (triger.contentEquals(theme.getLable())) {
-					selectedTheme = theme;
-				}
-			}
-			
-			if (selectedTheme != null) {
-				gameFrame.setGamePage(
-						eurekaRuner.getCurrentPlayer().getUsername());
-				
-				startGame(selectedTheme, eurekaRuner.getCurrentPlayer());
-			}
-			
-		}
-	}
-	
-	private void startGame(ThemeJeu theme, Joueur player) {
-		eurekaRuner.setCurrentGame(new PartieJeu(theme));
-		PartieJeu currentGame = eurekaRuner.getCurrentGame();
-		GamePage gamePage = gameFrame.getGamePage();
-		
-		switchPanel(gameFrame.getThemeSelectionPage(), gamePage);
-		currentGame.startGame();
-		eurekaRuner.getCurrentPlayer().setCurrentLvl();
-		gamePage.setQuestion(currentGame.getQuestion().getLable());
-		gamePage.setCurrentAnswer(currentGame.getCurrentAnswer());
-		gamePage.setLevel(currentGame.getCurrentLevel());
-		gamePage.setChansesLeft(currentGame.getAttemptsLeft());
-		
-		player.addGame(currentGame);
-	}
-	
-	private void playRound(PartieJeu game) {
-		GamePage gamePage = gameFrame.getGamePage();
-		
-		game.checkChar(gamePage.getPlayerInput().getText().charAt(0));
-		
-		// On vérifie si le caractère était correcte ou non, si la réponse
-		// courante du joueur se trouve inchangé (celle de la partie) donc le
-		//caractère est faut
-		if (gamePage.getCurrentAnswer().equals(game.getCurrentAnswer())) {
-			gamePage.updatePlayerInputState(false);
-			gamePage.setChansesLeft(game.getAttemptsLeft());
-			
-		} else {
-			gamePage.updatePlayerInputState(true);
-			gamePage.setCurrentAnswer(game.getCurrentAnswer());
-			
-			if (eurekaRuner.getCurrentPlayer().getCurrentLvl().getLvlNumber()
-				< game.getCurrentLevel()) {
-				
-				eurekaRuner.getCurrentPlayer().incrementLevel();
-				gamePage.setLevel(game.getCurrentLevel());
-				gamePage.setQuestion(game.getQuestion().getLable());
-			}
-		}
-	}
-	
-	private void switchPanel(JPanel oldPanel, JPanel newPanel) {
-		gameFrame.remove(oldPanel);
-		gameFrame.add(newPanel);
-		gameFrame.repaint();
-	}
-	
 	public static String getConnectionUsername() {
 		return gameFrame.getConnectionPage().getUsernameInput().getText();
 	}
@@ -207,6 +71,144 @@ public class AppControler implements ActionListener, MouseListener, KeyListener 
 		return password;
 	}
 	
+	private void startGame(ThemeJeu theme, Joueur player) {
+		eurekaRuner.setCurrentGame(new PartieJeu(theme));
+		PartieJeu currentGame = eurekaRuner.getCurrentGame();
+		GamePage gamePage = gameFrame.getGamePage();
+		
+		switchPanel(gameFrame.getThemeSelectionPage(), gamePage);
+		currentGame.startGame();
+		eurekaRuner.getCurrentPlayer().setCurrentLvl();
+		gamePage.setQuestion(currentGame.getQuestion().getLable());
+		gamePage.setCurrentAnswer(currentGame.getCurrentAnswer());
+		gamePage.setLevel(currentGame.getCurrentLevel());
+		gamePage.setChansesLeft(currentGame.getAttemptsLeft());
+		
+		player.addGame(currentGame);
+	}
+
+	private void playRound(PartieJeu game) {
+		GamePage gamePage = gameFrame.getGamePage();
+		
+		game.checkChar(gamePage.getPlayerInput().getText().charAt(0));
+		
+		// On vérifie si le caractère était correcte ou non, si la réponse
+		// courante du joueur se trouve inchangé (celle de la partie) donc le
+		//caractère est faut
+		if (gamePage.getCurrentAnswer().equals(game.getCurrentAnswer())) {
+			gamePage.updatePlayerInputState(false);
+		} else {
+			gamePage.updatePlayerInputState(true);
+			gamePage.setCurrentAnswer(game.getCurrentAnswer());
+			
+			if (eurekaRuner.getCurrentPlayer().getCurrentLvl().getLvlNumber()
+				< game.getCurrentLevel()) {
+				
+				eurekaRuner.getCurrentPlayer().incrementLevel();
+				gamePage.setLevel(game.getCurrentLevel());
+				gamePage.setQuestion(game.getQuestion().getLable());
+			}
+		}
+		
+		gamePage.setChansesLeft(game.getAttemptsLeft());
+		gamePage.disableCofirmButton();
+	}
+
+	private void switchPanel(JPanel oldPanel, JPanel newPanel) {
+		gameFrame.remove(oldPanel);
+		gameFrame.add(newPanel);
+		gameFrame.repaint();
+	}
+
+	public void actionPerformed(ActionEvent e) {
+			Component currentPage = ((Component) e.getSource()).getParent();
+			String triger = e.getActionCommand(); 
+			
+			if (triger.contentEquals("")) {
+				eurekaRuner.terminate();
+				System.exit(0);
+			} else if (triger.contentEquals("Continue")) {
+				
+				if (eurekaRuner.getCurrentPlayer() == null) {
+					switchPanel(
+							gameFrame.getHomePage()
+							, gameFrame.getConnectionPage()
+						);
+				}
+				
+			} else if (triger.contentEquals("New Game")) {
+				if (eurekaRuner.getCurrentPlayer() != null) {
+					LinkedList<String> themes = new LinkedList<String>();
+					Iterator<ThemeJeu> it = eurekaRuner.getThemes().iterator();
+					
+					while (it.hasNext()) {
+						themes.add(it.next().getLable());
+					}
+					
+					gameFrame.setThemeSelectionPage(
+							themes
+							, eurekaRuner.getCurrentPlayer().getUsername()
+						);
+					
+					switchPanel(
+							gameFrame.getHomePage()
+							, gameFrame.getThemeSelectionPage()
+						);
+				} else {
+					switchPanel(
+							gameFrame.getHomePage()
+							, gameFrame.getInscriptionPage()
+						);
+				}
+			} else if (triger.contentEquals("Confirm")) {
+				if (currentPage.equals(gameFrame.getConnectionPage())) {
+					ConnectionPage connectionPage = (ConnectionPage) currentPage;
+					ErrorCode error = eurekaRuner.connection();
+	
+					if (error == ErrorCode.WRONG_USERNAME) {
+						connectionPage.setUsernameError(error.getErrorMessage());
+					} else if (error == ErrorCode.WRONG_PASSWORD) {
+						connectionPage.setPasswordError(error.getErrorMessage());
+					} else {
+						gameFrame.getHomePage().setUsername(
+								eurekaRuner.getCurrentPlayer().getUsername());
+	
+						switchPanel(connectionPage, gameFrame.getHomePage());
+					}
+				} else if (currentPage.equals(gameFrame.getInscriptionPage())) {
+					InscriptionPage inscriptionPage = (InscriptionPage)currentPage;
+					
+					eurekaRuner.inscription();
+					gameFrame.getHomePage().setUsername(
+							eurekaRuner.getCurrentPlayer().getUsername());
+	
+					switchPanel(inscriptionPage, gameFrame.getHomePage());
+				} else if (currentPage.equals(gameFrame.getGamePage())) {
+					playRound(eurekaRuner.getCurrentGame());
+				}
+			} else if (currentPage.equals(gameFrame.getThemeSelectionPage())) {
+				Iterator<ThemeJeu> themesIterator =
+						eurekaRuner.getThemes().iterator();
+				ThemeJeu selectedTheme = null;
+				
+				while (themesIterator.hasNext() && selectedTheme == null) {
+					ThemeJeu theme = themesIterator.next();
+					
+					if (triger.contentEquals(theme.getLable())) {
+						selectedTheme = theme;
+					}
+				}
+				
+				if (selectedTheme != null) {
+					gameFrame.setGamePage(
+							eurekaRuner.getCurrentPlayer().getUsername());
+					
+					startGame(selectedTheme, eurekaRuner.getCurrentPlayer());
+				}
+				
+			}
+		}
+
 	@Override
 	public void mouseClicked(MouseEvent e) {
 		if (eurekaRuner.getCurrentPlayer() == null) {
@@ -239,17 +241,21 @@ public class AppControler implements ActionListener, MouseListener, KeyListener 
 
 	@Override
 	public void keyTyped(KeyEvent e) {
-		try {
-			Thread.sleep(1000);
-		} catch (InterruptedException e2) {
-			// TODO Auto-generated catch block
-			e2.printStackTrace();
-		}
-		Component parentPanel = ((Component) e.getSource()).getParent();
 		
+	}
+
+	@Override
+	public void keyPressed(KeyEvent e) {
+
+	}
+
+	@Override
+	public void keyReleased(KeyEvent e) {
+		Component parentPanel = ((Component) e.getSource()).getParent();
+
 		if (parentPanel.equals(gameFrame.getInscriptionPage())) {
 			InscriptionPage inscriptionpage = (InscriptionPage) parentPanel;
-			
+
 			String firstName = inscriptionpage.getFirsnameInput().getText();
 			String lastName = inscriptionpage.getLastnameInput().getText();
 			String username = inscriptionpage.getUsernameInput().getText();
@@ -265,17 +271,17 @@ public class AppControler implements ActionListener, MouseListener, KeyListener 
 				month = Integer.valueOf(birthDateTokenizer.nextToken()) - 1;
 				year = Integer.valueOf(birthDateTokenizer.nextToken()) - 1900;
 			} catch (NoSuchElementException e1) {
-				
+
 			}
 			Date birthDate = new Date(year, month, day);
-			
+
 			boolean firstNameValid = Joueur.isFirstNameValid(firstName);
 			boolean lastNameValid = Joueur.isLastNameValid(lastName);
 			boolean dateValid = Joueur.isDateValide(birthDate);
 			boolean usernameValid = Joueur.isUsernameValid(username);
 			boolean passwordValid = Joueur.isPasswordValid(new String(password));
 			boolean confirPasswordValid = true;
-			
+
 			if (passwordConfirmation.length == password.length) {
 				for (int i = 0; i < password.length; i++) {
 
@@ -286,38 +292,38 @@ public class AppControler implements ActionListener, MouseListener, KeyListener 
 			} else {
 				confirPasswordValid = false;
 			}
-			
+
 			if (e.getSource().equals(inscriptionpage.getFirsnameInput())) {
 				firstNameValid = Joueur.isFirstNameValid(firstName);
-				
+
 				inscriptionpage.setFirsnameError("test", firstNameValid);
 			} else if (e.getSource().equals(
 					inscriptionpage.getLastnameInput())) {
-				
+
 				lastNameValid = Joueur.isLastNameValid(lastName);
-				
+
 				inscriptionpage.setLastnameError("test", lastNameValid);
 			} else if (e.getSource().equals(
 					inscriptionpage.getUsernameInput())) {
-				
+
 				usernameValid = Joueur.isUsernameValid(username);
-				
+
 				inscriptionpage.setUsernameError("test", usernameValid);
 			} else if (e.getSource().equals(
 					inscriptionpage.getPasswordInput())) {
-				
+
 				passwordValid = Joueur.isPasswordValid(new String(password));
-				
+
 				inscriptionpage.setPasswordError("test", passwordValid);
 			} else if (e.getSource().equals(
 					inscriptionpage.getBirthDateInput())) {
-				
+
 				dateValid = Joueur.isDateValide(birthDate);
-				
+
 				inscriptionpage.setBirthDateError("test", dateValid);
 			} else if (e.getSource().equals(
 					inscriptionpage.getConfirmPasswordInput())) {
-				
+
 				if (passwordConfirmation.length == password.length) {
 					for (int i = 0; i < password.length; i++) {
 
@@ -328,38 +334,29 @@ public class AppControler implements ActionListener, MouseListener, KeyListener 
 				} else {
 					confirPasswordValid = false;
 				}
-				
+
 				inscriptionpage.setConfirmPasswordError(
 						"test"
 						, confirPasswordValid
-					);
-				
+						);
+
 				//Pour des raisons de sécurité on efface les mots de passes
 				for (int i = 0; i < password.length; i++) {
 					password[i] = 0;
 				}
-				
+
 				for (int i = 0; i < passwordConfirmation.length; i++) {
 					passwordConfirmation[i] = 0;
 				}
 			}
-			
-			System.out.println("____________________________________");
-			System.out.println("firstNameValid " + firstNameValid);
-			System.out.println("lastNameValid " + lastNameValid);
-			System.out.println("dateValid " + dateValid);
-			System.out.println("usernameValid " + usernameValid);
-			System.out.println("passwordValid " + passwordValid);
-			System.out.println("confirPasswordValid " + confirPasswordValid);
-			System.out.println("____________________________________");
-			
+
 			if (firstNameValid
 					&& lastNameValid
 					&& dateValid
 					&& usernameValid
 					&& passwordValid
 					&& confirPasswordValid) {
-				
+
 				inscriptionpage.enableCofirmButton();
 			} else {
 				inscriptionpage.disableCofirmButton();
@@ -370,7 +367,7 @@ public class AppControler implements ActionListener, MouseListener, KeyListener 
 				if (e.getSource().equals(connectionPage.getUsernameInput())) {
 					if(! connectionPage.getPasswordInput().getText()
 							.isBlank()) {
-						
+
 						connectionPage.getConfirmButton().doClick();
 					}
 				} else if (e.getSource().equals(
@@ -378,47 +375,25 @@ public class AppControler implements ActionListener, MouseListener, KeyListener 
 
 					if (!connectionPage.getUsernameInput().getText()
 							.isBlank()) {
-						
+
 						connectionPage.getConfirmButton().doClick();
 					}
 				}
 			}
 		} else if (parentPanel.equals(gameFrame.getGamePage())) {
 			GamePage gamePage = (GamePage) parentPanel;
-			
+
 			if (e.getSource().equals(gamePage.getPlayerInput())) {
-				if (e.getKeyChar() == KeyEvent.VK_BACK_SPACE 
-						|| e.getKeyChar() == KeyEvent.VK_ESCAPE) {
-					
-					if (gamePage.getPlayerInput().getText().length() == 1) {
-						gamePage.enableCofirmButton();
-					} else {
-						gamePage.disableCofirmButton();
-					}
-				} else if (e.getKeyChar() == KeyEvent.VK_ENTER) {
+				if (e.getKeyChar() == KeyEvent.VK_ENTER) {
 					if (gamePage.getConfirmButton().isEnabled()) {
 						gamePage.getConfirmButton().doClick();
 					}
-				} else {
+				} else if (gamePage.getPlayerInput().getText().length() == 1) {
 					gamePage.enableCofirmButton();
-					
-					if (gamePage.getPlayerInput().getText().length() != 1) {
-						gamePage.disableCofirmButton();
-					}
+				} else {
+					gamePage.disableCofirmButton();
 				}
 			}
 		}
-	}
-
-	@Override
-	public void keyPressed(KeyEvent e) {
-
-	}
-
-	@Override
-	public void keyReleased(KeyEvent e) {
-		
-	}
-	
-
+	}	
 }
