@@ -10,6 +10,7 @@ import javax.swing.JPanel;
 import com.usthb.controler.AppControler;
 
 public class ThemeSelectionPage extends JPanel {
+	private AppControler manger = new AppControler(); 
 	private JLabel username;
 	private LinkedList<JButton> themesButtons;
 	
@@ -30,7 +31,7 @@ public class ThemeSelectionPage extends JPanel {
 			themeButton.setSize(100, 100);
 			themeButton.setBackground(Color.decode("#BB86FC"));
 			themeButton.setForeground(Color.decode("#FFFFFF"));
-			themeButton.addActionListener(new AppControler());
+			themeButton.addActionListener(manger);
 			
 			themesButtons.add(themeButton);
 		}

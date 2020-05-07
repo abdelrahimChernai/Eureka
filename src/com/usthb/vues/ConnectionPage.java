@@ -13,6 +13,7 @@ import javax.swing.border.LineBorder;
 import com.usthb.controler.AppControler;
 
 public class ConnectionPage extends JPanel {
+	private AppControler manager = new AppControler();
 	private JLabel usernameText;
 	private JLabel passwordText;
 	private JLabel usernameError;
@@ -47,6 +48,7 @@ public class ConnectionPage extends JPanel {
 		//	usernameInput.setFont(new Font("Comic Sans MS", Font.BOLD, 20));
 		usernameInput.setBackground(Color.decode("#1A1919"));
 		usernameInput.setForeground(Color.decode("#FFFFFF"));
+		usernameInput.addKeyListener(manager);
 		usernameInput.setBorder(
 				new LineBorder(Color.decode("#FFFFFF"), 1, true));
 		
@@ -55,6 +57,7 @@ public class ConnectionPage extends JPanel {
 		passwordInput.setHorizontalAlignment(SwingConstants.CENTER);
 		passwordInput.setBackground(Color.decode("#1A1919"));	
 		passwordInput.setForeground(Color.decode("#FFFFFF"));
+		passwordInput.addKeyListener(manager);
 		passwordInput.setBorder(
 				new LineBorder(Color.decode("#FFFFFF"), 1, true));
 
@@ -64,7 +67,7 @@ public class ConnectionPage extends JPanel {
 		confirmButton.setBounds(280, 489, 250, 45);
 		confirmButton.setBackground(Color.decode("#4BBA87"));
 		confirmButton.setForeground(Color.decode("#FFFFFF"));
-		confirmButton.addActionListener(new AppControler());
+		confirmButton.addActionListener(manager);
 
 		this.setBackground(Color.decode("#1A1919"));
 		this.add(usernameText);
@@ -86,7 +89,10 @@ public class ConnectionPage extends JPanel {
 	}
 
 	public void setUsernameError(String errorMesseg) {
+		int width = errorMesseg.length() * 7;
+		usernameError.setBounds(((810 - width) / 2), 264, width, 20);
 		usernameError.setText(errorMesseg);
+		usernameError.setHorizontalAlignment(SwingConstants.CENTER);
 		
 		usernameInput.setText("");
 		usernameInput.setBorder(
@@ -100,7 +106,10 @@ public class ConnectionPage extends JPanel {
 	}
 
 	public void setPasswordError(String errorMesseg) {
+		int width =  errorMesseg.length() * 7;
+		passwordError.setBounds(((810 - width) / 2), 395, width, 20);
 		passwordError.setText(errorMesseg);
+		passwordError.setHorizontalAlignment(SwingConstants.CENTER);
 		
 		usernameInput.setBorder(
 				new LineBorder(Color.decode("#4BBA87"), 1, true));
@@ -110,6 +119,10 @@ public class ConnectionPage extends JPanel {
 				new LineBorder(Color.decode("#E81123"), 1, true));
 		
 		this.repaint();
+	}
+
+	public JButton getConfirmButton() {
+		return confirmButton;
 	}
 	
 	

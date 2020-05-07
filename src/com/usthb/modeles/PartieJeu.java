@@ -80,22 +80,34 @@ public class PartieJeu implements Serializable {
 		return score;
 	}
 
+	public String getCurrentAnswer() {
+		return currentAnswer.toString();
+	}
+
 	public Potence getHangman() {
 		return hangman;
 	}
 		
-	private Question getQuestion() {
+	public Question getQuestion() {
 		int i = 0;
 		
 		while (
 				i < theme.questions.size() 
-				&& ! theme.questions.get(i).id.equals(this.questionId)
+				&& ! theme.questions.get(i).getId().equals(this.questionId)
 			) {
 			
 			i++;
 		}
 		
 		return theme.questions.get(i);
+	}
+	
+	public int getCurrentLevel() {
+		return questionId.charAt(questionId.length() - 1) - 48;
+	}
+	
+	public int getAttemptsLeft() {
+		return 8 - hangman.getState();
 	}
 	
 	/**
@@ -128,18 +140,13 @@ public class PartieJeu implements Serializable {
 	
 	public void startGame() {
 		this.questionId = theme.generateQuestionID() + 1;		
-		setupCurrnetAnswer(getQuestion().answer);
-		System.out.println(getQuestion().lable);
-		System.out.println(currentAnswer);
+		setupCurrnetAnswer(getQuestion().getAnswer());
 	}
 	
 	private void nextLevel() {
 		hangman.clearState();
 		setNextQuestionId();
-		setupCurrnetAnswer(getQuestion().answer);
-		System.out.println("Level " + questionId.charAt(questionId.length() - 1));
-		System.out.println(getQuestion().lable);
-		System.out.println(currentAnswer);
+		setupCurrnetAnswer(getQuestion().getAnswer());
 	}
 	
 	private void finishGame(boolean win) {
@@ -190,8 +197,7 @@ public class PartieJeu implements Serializable {
 	 * @see com#usthb#dessin#Potence
 	 */
 	public void checkChar(char inputChar) {
-		String answer = getQuestion().answer;
-		System.out.println(getQuestion().lable);
+		String answer = getQuestion().getAnswer();
 		
 		if (
 				answer.indexOf(inputChar) != -1
@@ -206,14 +212,11 @@ public class PartieJeu implements Serializable {
 				}
 			}
 			
-			System.out.println(currentAnswer);
-			
 			if (answer.equals(currentAnswer.toString())) {//convertie
 				//currentAnswer en String puis compare avec answer
 				
 				if (Integer.valueOf(questionId.substring(questionId.length() - 1)) == 5) {
 //					hangman.setFoundAnswerTrue();
-					System.out.println("You Won!");
 				} else {
 					nextLevel();
  				}
@@ -225,7 +228,6 @@ public class PartieJeu implements Serializable {
 			}
 		} else {
 			hangman.incrementState();
-			System.out.println("nah..." + hangman.getState());
 			//TODO draw the next state of the Hangman (maybe animated)
 		}
 	}

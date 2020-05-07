@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.util.Date;
 import java.util.LinkedList;
 import java.util.Objects;
+import java.util.regex.Pattern;
 
 import com.usthb.MainApp;
 
@@ -152,8 +153,18 @@ public class Joueur implements Serializable{
 		return this.id;
 	}
 	
-	public void setCurrentLvl(Levels currentLvl) {
-		this.currentLvl = currentLvl;
+	public Levels getCurrentLvl() {
+		return this.currentLvl;
+	}
+	
+	public void setCurrentLvl() {
+		this.currentLvl = Levels.LEVEL_1;
+	}
+	
+	public void incrementLevel() {
+		if (currentLvl.getLvlNumber() < 5) {
+			this.currentLvl = Levels.getLvl(currentLvl.getLvlNumber() + 1);
+		}
 	}
 
 	/**
@@ -236,6 +247,23 @@ public class Joueur implements Serializable{
 		this.playerGames.add(partie);
 	}
 
+	public static boolean isFirstNameValid(String firstName) {
+		return Pattern.matches("[a-zA-Z]+", firstName);
+	}
+	
+	public static boolean isLastNameValid(String lastName) {
+		return Pattern.matches("[a-zA-Z]+", lastName);
+	}
+	
+	public static boolean isUsernameValid(String username) {
+		return Pattern.matches("[a-zA-Z][a-zA-Z0-9]*", username);
+	}
+	
+	public static boolean isPasswordValid(String password) {
+		
+		return password.length() >= 4;
+	}
+	
 	/**
 	 * <p>
 	 * 	Versifie si une date est correcte selon les normes du calendrier

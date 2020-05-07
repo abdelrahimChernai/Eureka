@@ -16,6 +16,7 @@ import com.usthb.controler.AppControler;
 	private JPanel inscriptionPage;
 	private JPanel connectionPage;
 	private JPanel themeSelectionPage;
+	private JPanel gamePage;
 	private final int WIDTH = 810;
 	private final int HEIGHT = 620;
 	
@@ -52,7 +53,7 @@ import com.usthb.controler.AppControler;
 		baseFrame.setBackground(Color.decode("#000000"));
 		baseFrame.setBounds(0, 0, WIDTH, HEIGHT);
 		baseFrame.add(closeButton);
-		baseFrame.add(homePage);
+		baseFrame.add(inscriptionPage);
 	}
 	
 	public JPanel getBaseFrame() {
@@ -74,7 +75,7 @@ import com.usthb.controler.AppControler;
 	public JPanel getThemeSelectionPage() {
 		return themeSelectionPage;
 	}
-
+	
 	public void setThemeSelectionPage(
 			LinkedList<String> themes
 			, String username) {
@@ -83,10 +84,14 @@ import com.usthb.controler.AppControler;
 		this.themeSelectionPage.setBounds(0, 32, WIDTH, HEIGHT - 32);
 	}
 	
-	
+	public GamePage getGamePage() {
+		return (GamePage) gamePage;
+	}
 
-	
-	
-	
+	public void setGamePage(String username) {
+
+		this.gamePage = new GamePage(username);
+		this.gamePage.setBounds(0, 32, WIDTH, HEIGHT - 32);
+	}
 	
 }

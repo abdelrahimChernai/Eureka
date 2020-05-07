@@ -14,6 +14,7 @@ import java.util.StringTokenizer;
 
 import com.usthb.controler.AppControler;
 import com.usthb.modeles.Joueur;
+import com.usthb.modeles.PartieJeu;
 import com.usthb.modeles.ThemeJeu;
 
 /**
@@ -31,9 +32,12 @@ import com.usthb.modeles.ThemeJeu;
  * @version 1.1.1
  */
 public class MainApp {
+	
 	public static Scanner console = new Scanner(System.in);		// TEST
 	
 	private Joueur currnetPlayer;
+	
+	private PartieJeu currentGame;
 	
 	/**
 	 * <p>
@@ -100,6 +104,7 @@ public class MainApp {
 			try {
 				ObjectInputStream playerFileIn =
 						new ObjectInputStream(new FileInputStream(playerFile));
+				
 				players = (HashMap<Integer, Joueur>) playerFileIn.readObject();
 				
 			
@@ -224,8 +229,8 @@ public class MainApp {
 		birthDateString =
 				new StringTokenizer(AppControler.getInscriptionBirthDate());
 		day = Integer.parseUnsignedInt(birthDateString.nextToken());
-		mounth = Integer.parseUnsignedInt(birthDateString.nextToken());
-		year = Integer.parseUnsignedInt(birthDateString.nextToken());
+		mounth = Integer.parseUnsignedInt(birthDateString.nextToken()) - 1;
+		year = Integer.parseUnsignedInt(birthDateString.nextToken()) - 1900;
 		birthDate = new Date(year, mounth, day);
 		
 		username = AppControler.getInscriptionUsername();
@@ -236,12 +241,14 @@ public class MainApp {
 			System.out.println("Alright " + username + " it is !");
 		}
 		
-		System.out.println("password");
 		password = AppControler.getInscriptionPassword();
-		System.out.println("confirm password");
 		
 		newPlayer =
 				new Joueur(firstName, lastName, username, password, birthDate);
+		
+		//Pour des raisons de sécurité on efface le mot de passe
+		password = new String("");
+		
 		currnetPlayer = newPlayer;
 		players.put(newPlayer.getId(), newPlayer);
 	}
@@ -314,8 +321,18 @@ public class MainApp {
 		AppControler.start();
 	}
 
-	public Joueur getCurrnetPlayer() {
+	public Joueur getCurrentPlayer() {
 		return currnetPlayer;
+	}
+
+
+	public PartieJeu getCurrentGame() {
+		return currentGame;
+	}
+
+
+	public void setCurrentGame(PartieJeu currentGame) {
+		this.currentGame = currentGame;
 	}
 
 
