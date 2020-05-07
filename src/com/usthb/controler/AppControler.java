@@ -183,6 +183,9 @@ public class AppControler implements ActionListener, MouseListener, KeyListener 
 						inscriptionPage.setUsernameError(
 								error.getErrorMessage()
 								, false);
+						inscriptionPage.getPasswordInput().setText("");
+						inscriptionPage.getConfirmPasswordInput().setText("");
+						
 					} else if (error.equals(ErrorCode.UNVALID_DATE_FORMAT)) {
 						inscriptionPage.setBirthDateError(
 								error.getErrorMessage()
