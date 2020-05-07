@@ -165,11 +165,11 @@ public class AppControler implements ActionListener, MouseListener, KeyListener 
 					ConnectionPage connectionPage = (ConnectionPage) currentPage;
 					ErrorCode error = eurekaRuner.connection();
 	
-					if (error == ErrorCode.WRONG_USERNAME) {
+					if (error.equals(ErrorCode.WRONG_USERNAME)) {
 						connectionPage.setUsernameError(error.getErrorMessage());
-					} else if (error == ErrorCode.WRONG_PASSWORD) {
+					} else if (error.equals(ErrorCode.WRONG_PASSWORD)) {
 						connectionPage.setPasswordError(error.getErrorMessage());
-					} else {
+					} else if (error.equals(ErrorCode.NO_ERROR)){
 						gameFrame.getHomePage().setUsername(
 								eurekaRuner.getCurrentPlayer().getUsername());
 	
@@ -177,12 +177,23 @@ public class AppControler implements ActionListener, MouseListener, KeyListener 
 					}
 				} else if (currentPage.equals(gameFrame.getInscriptionPage())) {
 					InscriptionPage inscriptionPage = (InscriptionPage)currentPage;
+					ErrorCode error = eurekaRuner.inscription();
 					
-					eurekaRuner.inscription();
-					gameFrame.getHomePage().setUsername(
-							eurekaRuner.getCurrentPlayer().getUsername());
-	
-					switchPanel(inscriptionPage, gameFrame.getHomePage());
+					if (error.equals(ErrorCode.UNAVALABLE_USERNAME)) {
+						inscriptionPage.setUsernameError(
+								error.getErrorMessage()
+								, false);
+					} else if (error.equals(ErrorCode.UNVALID_DATE_FORMAT)) {
+						inscriptionPage.setBirthDateError(
+								error.getErrorMessage()
+								, false);
+						
+					} else if (error.equals(ErrorCode.NO_ERROR)) {
+						gameFrame.getHomePage().setUsername(
+								eurekaRuner.getCurrentPlayer().getUsername());
+						switchPanel(inscriptionPage, gameFrame.getHomePage());
+					}
+					
 				} else if (currentPage.equals(gameFrame.getGamePage())) {
 					playRound(eurekaRuner.getCurrentGame());
 				}
@@ -263,7 +274,7 @@ public class AppControler implements ActionListener, MouseListener, KeyListener 
 			char[] passwordConfirmation =
 					inscriptionpage.getConfirmPasswordInput().getPassword();
 			String dateString = inscriptionpage.getBirthDateInput().getText();
-			int day = -1, month = -1, year = -1;
+			int day, month, year;
 			StringTokenizer birthDateTokenizer =
 					new StringTokenizer(dateString);
 			try {
@@ -271,7 +282,9 @@ public class AppControler implements ActionListener, MouseListener, KeyListener 
 				month = Integer.valueOf(birthDateTokenizer.nextToken()) - 1;
 				year = Integer.valueOf(birthDateTokenizer.nextToken()) - 1900;
 			} catch (NoSuchElementException e1) {
-
+				day = -1;
+				month = -1;
+				year = -1;
 			}
 			Date birthDate = new Date(year, month, day);
 
@@ -292,62 +305,55 @@ public class AppControler implements ActionListener, MouseListener, KeyListener 
 			} else {
 				confirPasswordValid = false;
 			}
+			
+			//Pour des raisons de sécurité on efface les mots de passes
+			for (int i = 0; i < password.length; i++) {
+				password[i] = 0;
+			}
+
+			for (int i = 0; i < passwordConfirmation.length; i++) {
+				passwordConfirmation[i] = 0;
+			}
 
 			if (e.getSource().equals(inscriptionpage.getFirsnameInput())) {
-				firstNameValid = Joueur.isFirstNameValid(firstName);
-
-				inscriptionpage.setFirsnameError("test", firstNameValid);
+				inscriptionpage.setFirsnameError(
+						ErrorCode.UNVALID_NAME.getErrorMessage()
+						, firstNameValid);
+				
 			} else if (e.getSource().equals(
 					inscriptionpage.getLastnameInput())) {
 
-				lastNameValid = Joueur.isLastNameValid(lastName);
-
-				inscriptionpage.setLastnameError("test", lastNameValid);
+				inscriptionpage.setLastnameError(
+						ErrorCode.UNVALID_NAME.getErrorMessage()
+						, lastNameValid);
+				
+			} else if (e.getSource().equals(
+					inscriptionpage.getBirthDateInput())) {
+				
+				inscriptionpage.setBirthDateError(
+						ErrorCode.UNVALID_DATE_FORMAT.getErrorMessage()
+						, dateValid);
+				
 			} else if (e.getSource().equals(
 					inscriptionpage.getUsernameInput())) {
 
-				usernameValid = Joueur.isUsernameValid(username);
-
-				inscriptionpage.setUsernameError("test", usernameValid);
+				inscriptionpage.setUsernameError(
+						ErrorCode.UNVALID_USERNAME.getErrorMessage()
+						, usernameValid);
+				
 			} else if (e.getSource().equals(
 					inscriptionpage.getPasswordInput())) {
 
-				passwordValid = Joueur.isPasswordValid(new String(password));
-
-				inscriptionpage.setPasswordError("test", passwordValid);
-			} else if (e.getSource().equals(
-					inscriptionpage.getBirthDateInput())) {
-
-				dateValid = Joueur.isDateValide(birthDate);
-
-				inscriptionpage.setBirthDateError("test", dateValid);
+				inscriptionpage.setPasswordError(
+						ErrorCode.UNVALID_PASSWORD.getErrorMessage()
+						, passwordValid);
+				
 			} else if (e.getSource().equals(
 					inscriptionpage.getConfirmPasswordInput())) {
 
-				if (passwordConfirmation.length == password.length) {
-					for (int i = 0; i < password.length; i++) {
-
-						if (passwordConfirmation[i] != password[i]) {
-							confirPasswordValid = false;
-						}
-					}
-				} else {
-					confirPasswordValid = false;
-				}
-
 				inscriptionpage.setConfirmPasswordError(
-						"test"
-						, confirPasswordValid
-						);
-
-				//Pour des raisons de sécurité on efface les mots de passes
-				for (int i = 0; i < password.length; i++) {
-					password[i] = 0;
-				}
-
-				for (int i = 0; i < passwordConfirmation.length; i++) {
-					passwordConfirmation[i] = 0;
-				}
+						ErrorCode.WRONG_CONFIRM_PASSWORD.getErrorMessage()
+						, confirPasswordValid);
 			}
 
 			if (firstNameValid

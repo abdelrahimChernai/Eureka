@@ -188,7 +188,7 @@ public class MainApp {
 			
 		currnetPlayer =  players.get(Joueur.hashCode(username));
 		
-		return null;
+		return ErrorCode.NO_ERROR;
 	}
 	
 	/**
@@ -212,7 +212,7 @@ public class MainApp {
 	 * 
 	 * @since 1.1.1
 	 */
-	public void inscription() {
+	public ErrorCode inscription() {
 		Joueur newPlayer;
 		String firstName;
 		String lastName;
@@ -223,8 +223,16 @@ public class MainApp {
 		int day, mounth, year;
 		
 		firstName = AppControler.getInscriptionFirstname();
+		
+		if (!Joueur.isFirstNameValid(firstName)) {
+			return ErrorCode.UNVALID_NAME;
+		}
 			
 		lastName = AppControler.getInscriptionLastname();
+		
+		if (!Joueur.isLastNameValid(lastName)) {
+			return ErrorCode.UNVALID_NAME;
+		}
 
 		birthDateString =
 				new StringTokenizer(AppControler.getInscriptionBirthDate());
@@ -233,15 +241,21 @@ public class MainApp {
 		year = Integer.parseUnsignedInt(birthDateString.nextToken()) - 1900;
 		birthDate = new Date(year, mounth, day);
 		
+		if (!Joueur.isDateValide(birthDate)) {
+			return ErrorCode.UNVALID_DATE_FORMAT;
+		}
+		
 		username = AppControler.getInscriptionUsername();
 
 		if (players.containsKey(Joueur.hashCode(username))) {
-			System.out.println("this one is not avalable, try somthing else");
-		} else {
-			System.out.println("Alright " + username + " it is !");
+			return ErrorCode.UNAVALABLE_USERNAME;
 		}
 		
 		password = AppControler.getInscriptionPassword();
+		
+		if (!Joueur.isPasswordValid(password)) {
+			return ErrorCode.UNVALID_PASSWORD;
+		}
 		
 		newPlayer =
 				new Joueur(firstName, lastName, username, password, birthDate);
@@ -251,6 +265,8 @@ public class MainApp {
 		
 		currnetPlayer = newPlayer;
 		players.put(newPlayer.getId(), newPlayer);
+		
+		return ErrorCode.NO_ERROR;
 	}
 	
 	/**
