@@ -83,8 +83,7 @@ public class AppControler implements ActionListener, MouseListener, KeyListener 
 		gamePage.setCurrentAnswer(currentGame.getCurrentAnswer());
 		gamePage.setLevel(currentGame.getCurrentLevel());
 		gamePage.setChansesLeft(currentGame.getAttemptsLeft());
-		
-		player.addGame(currentGame);
+		gamePage.setScore(currentGame.getScore());
 	}
 
 	private void playRound(PartieJeu game) {
@@ -111,7 +110,30 @@ public class AppControler implements ActionListener, MouseListener, KeyListener 
 		}
 		
 		gamePage.setChansesLeft(game.getAttemptsLeft());
+		gamePage.setScore(game.getScore());
 		gamePage.disableCofirmButton();
+		
+		if (game.getHangman().isWinGame()) {
+			System.out.println("You win");
+			
+			eurekaRuner.getCurrentPlayer().addGame(
+					eurekaRuner.getCurrentGame());
+
+			switchPanel(
+					gameFrame.getGamePage()
+					, gameFrame.getHomePage());
+			
+			System.out.println(eurekaRuner.getCurrentPlayer().getTotalScore());
+		} else if (game.getAttemptsLeft() == 0) {
+			System.out.println("You lost");
+			eurekaRuner.getCurrentPlayer().addGame(
+					eurekaRuner.getCurrentGame());
+
+			switchPanel(
+					gameFrame.getGamePage()
+					, gameFrame.getHomePage());
+			System.out.println(eurekaRuner.getCurrentPlayer().getTotalScore());
+		}
 	}
 
 	private void switchPanel(JPanel oldPanel, JPanel newPanel) {

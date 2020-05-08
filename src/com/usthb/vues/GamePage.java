@@ -17,6 +17,7 @@ import com.usthb.controler.AppControler;
 public class GamePage extends JPanel {
 	private AppControler manager = new AppControler();
 	private JLabel chansesLeft;
+	private JLabel score;
 	private JLabel username;
 	private JTextPane question;
 	private JLabel level;
@@ -32,6 +33,11 @@ public class GamePage extends JPanel {
 		chansesLeft.setForeground(Color.decode("#FFFFFF"));
 		chansesLeft.setBounds((310 - 168) / 2, 0, 168, 20);
 		chansesLeft.setHorizontalAlignment(SwingConstants.CENTER);
+		
+		score = new JLabel("0");
+		score.setForeground(Color.decode("#4BBA87"));
+		score.setBounds((310 - 168) / 2, 319, 168, 20);
+		score.setHorizontalAlignment(SwingConstants.CENTER);
 		
 		this.username = new JLabel(username);
 		this.username.setForeground(Color.decode("#BB86FC"));
@@ -52,6 +58,7 @@ public class GamePage extends JPanel {
 				, questionStyle.getLength()
 				, center
 				, false);
+		
 		
 		level = new JLabel();
 		level.setForeground(Color.decode("#FFFFFF"));
@@ -78,6 +85,7 @@ public class GamePage extends JPanel {
 		hangemanPanel.setBackground(Color.decode("#1A1919"));
 		hangemanPanel.setBounds(40, 224, 310, 339);
 		hangemanPanel.add(chansesLeft);
+		hangemanPanel.add(score);
 		
 		confirmButton = new JButton("Confirm");
 		confirmButton.setBorderPainted(false);
@@ -102,6 +110,17 @@ public class GamePage extends JPanel {
 		this.chansesLeft.setText("You still have " + chansesLeft + " chances");
 	}
 
+	public void setScore(int score) {
+		int width =  Integer.toString(score).length() * 7;
+		int centerOnX = chansesLeft.getBounds().x
+				+ (chansesLeft.getBounds().width / 2);
+		
+		this.score.setText("" + score);
+		this.score.setBounds(centerOnX - (width / 2), 319, width, 20);
+		
+		this.repaint();
+	}
+
 	public void setUsername(String username) {
 		this.username.setText(username);
 	}
@@ -120,7 +139,7 @@ public class GamePage extends JPanel {
 	}
 
 	public void setCurrentAnswer(String currentAnswer) {
-		this.currentAnswer.setText(currentAnswer);;
+		this.currentAnswer.setText(currentAnswer);
 	}
 
 	public JTextField getPlayerInput() {

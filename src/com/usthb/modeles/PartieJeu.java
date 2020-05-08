@@ -145,8 +145,10 @@ public class PartieJeu implements Serializable {
 	
 	private void nextLevel() {
 		hangman.clearState();
+		score += theme.coefficent * this.getQuestion().getNumberPoints();
 		setNextQuestionId();
 		setupCurrnetAnswer(getQuestion().getAnswer());
+		
 	}
 	
 	private void finishGame(boolean win) {
@@ -216,7 +218,8 @@ public class PartieJeu implements Serializable {
 				//currentAnswer en String puis compare avec answer
 				
 				if (Integer.valueOf(questionId.substring(questionId.length() - 1)) == 5) {
-//					hangman.setFoundAnswerTrue();
+					hangman.setWinGame();
+					score += theme.coefficent * this.getQuestion().getNumberPoints();
 				} else {
 					nextLevel();
  				}
