@@ -10,6 +10,8 @@ import com.usthb.controler.AppControler;
 
 public class HomePage extends JPanel {
 	private JLabel username;
+	private JLabel dontHaveAnAccount;
+	private JLabel createAccount;
 	private JButton newGameButton;
 	private JButton continueButton;
 	
@@ -20,6 +22,15 @@ public class HomePage extends JPanel {
 		username.setForeground(Color.decode("#BB86FC"));
 		username.setBounds(682, 93, 50, 25);
 		username.addMouseListener(new AppControler());
+		
+		dontHaveAnAccount = new JLabel("Dont have an account?");
+		dontHaveAnAccount.setForeground(Color.decode("#FFFFFF"));
+		dontHaveAnAccount.setBounds(331, 509, 147, 25);
+		
+		createAccount = new JLabel("Creat one now!");
+		createAccount.setForeground(Color.decode("#BB86FC"));
+		createAccount.setBounds(356, 534, 98, 25);
+		createAccount.addMouseListener(new AppControler());
 		
 		newGameButton = new JButton("New Game");
 		newGameButton.setBorderPainted(false);
@@ -39,12 +50,29 @@ public class HomePage extends JPanel {
 		
 		this.setBackground(Color.decode("#1A1919"));
 		this.add(username);
+		this.add(dontHaveAnAccount);
+		this.add(createAccount);
 		this.add(newGameButton);
 		this.add(continueButton);
 	}
 
+	public JLabel getUsername() {
+		return username;
+	}
+
 	public void setUsername(String username) {
 		this.username.setText(username);
+	}
+
+	public JLabel getCreateAccount() {
+		return createAccount;
+	}
+
+	public void hideAccountCreation() {
+		this.dontHaveAnAccount.setVisible(false);
+		this.createAccount.setVisible(false);
+		
+		this.repaint();
 	}
 	
 }

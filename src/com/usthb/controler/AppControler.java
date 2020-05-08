@@ -36,6 +36,9 @@ public class AppControler implements ActionListener, MouseListener, KeyListener 
 		eurekaRuner = new  MainApp();
 		gameFrame = new EurekaFrame();
 		
+//		ThemeJeu theme = new ThemeJeu(coefficent, lable, type);
+//		eurekaRuner.getThemes().add(theme);
+		
 		eurekaRuner.initialization();
 		gameFrame.setVisible(true);
 	}
@@ -151,11 +154,10 @@ public class AppControler implements ActionListener, MouseListener, KeyListener 
 				System.exit(0);
 			} else if (triger.contentEquals("Continue")) {
 				
-				if (eurekaRuner.getCurrentPlayer() == null) {
-					switchPanel(
-							gameFrame.getHomePage()
-							, gameFrame.getConnectionPage()
-						);
+				if (eurekaRuner.getCurrentPlayer() != null) {
+					
+				} else {
+					
 				}
 				
 			} else if (triger.contentEquals("New Game")) {
@@ -177,10 +179,7 @@ public class AppControler implements ActionListener, MouseListener, KeyListener 
 							, gameFrame.getThemeSelectionPage()
 						);
 				} else {
-					switchPanel(
-							gameFrame.getHomePage()
-							, gameFrame.getInscriptionPage()
-						);
+					
 				}
 			} else if (triger.contentEquals("Confirm")) {
 				if (currentPage.equals(gameFrame.getConnectionPage())) {
@@ -216,6 +215,7 @@ public class AppControler implements ActionListener, MouseListener, KeyListener 
 					} else if (error.equals(ErrorCode.NO_ERROR)) {
 						gameFrame.getHomePage().setUsername(
 								eurekaRuner.getCurrentPlayer().getUsername());
+						gameFrame.getHomePage().hideAccountCreation();
 						switchPanel(inscriptionPage, gameFrame.getHomePage());
 					}
 					
@@ -249,12 +249,23 @@ public class AppControler implements ActionListener, MouseListener, KeyListener 
 	public void mouseClicked(MouseEvent e) {
 		if (eurekaRuner.getCurrentPlayer() == null) {
 			int triger = e.getButton();
-		
-			if (triger == MouseEvent.BUTTON1) {
-				switchPanel(
-						gameFrame.getHomePage()
-						, gameFrame.getConnectionPage()
-						);
+			
+			if (e.getSource().equals(gameFrame.getHomePage().getUsername())) {
+				if (triger == MouseEvent.BUTTON1) {
+					switchPanel(
+							gameFrame.getHomePage()
+							, gameFrame.getConnectionPage()
+							);
+				}
+			} else if (e.getSource().equals(
+					gameFrame.getHomePage().getCreateAccount())) {
+				
+				if (triger == MouseEvent.BUTTON1) {
+					switchPanel(
+							gameFrame.getHomePage()
+							, gameFrame.getInscriptionPage()
+							);
+				}
 			}
 		}
 	}
