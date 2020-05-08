@@ -1,6 +1,7 @@
 package com.usthb.vues;
 
 import java.awt.Color;
+import java.awt.Font;
 import java.util.LinkedList;
 
 import javax.swing.JButton;
@@ -14,18 +15,23 @@ public class ThemeSelectionPage extends JPanel {
 	private JLabel username;
 	private LinkedList<JButton> themesButtons;
 	
-	public ThemeSelectionPage(LinkedList<String> themes, String username) {
+	public ThemeSelectionPage(LinkedList<String> themes
+			, String username
+			, Font font) {
+		
 		super(null, true);
 		
 		this.themesButtons = new LinkedList<JButton>();
 		
 		this.username = new JLabel(username);
+		this.username.setFont(font);
 		this.username.setForeground(Color.decode("#BB86FC"));
-		this.username.setBounds(682, 93, 50, 25);
+		this.username.setBounds(682, 93, 50, 20);
 		this.username.addMouseListener(new AppControler());
 		
 		for (String theme : themes) {
 			JButton themeButton = new JButton(theme);
+			themeButton.setFont(font);
 			themeButton.setBorderPainted(false);
 			themeButton.setFocusPainted(false);
 			themeButton.setSize(100, 100);

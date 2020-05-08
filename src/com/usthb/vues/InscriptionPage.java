@@ -1,6 +1,7 @@
 package com.usthb.vues;
 
 import java.awt.Color;
+import java.awt.Font;
 
 import javax.swing.JButton;
 import javax.swing.JLabel;
@@ -37,26 +38,31 @@ public class InscriptionPage extends JPanel {
 	private JPasswordField confirmPasswordInput;
 	private JButton confirmButton;
 	
-	public InscriptionPage() {
+	public InscriptionPage(Font font) {
 		super(null, true);
 		
 		firsnameText = new JLabel("Firsname");
+		firsnameText.setFont(font);
 		firsnameText.setBounds(154, 127, 82, 27);
 		firsnameText.setForeground(Color.decode("#FFFFFF"));
 		
 		lastnameText = new JLabel("Lastname");
+		lastnameText.setFont(font);
 		lastnameText.setBounds(154, 232, 88, 27);
 		lastnameText.setForeground(Color.decode("#FFFFFF"));
 		
 		birthDateText = new JLabel("Date of Birth");
+		birthDateText.setFont(font);
 		birthDateText.setBounds(154, 337, 115, 27);
 		birthDateText.setForeground(Color.decode("#FFFFFF"));
 		
 		usernameText = new JLabel("Username");
+		usernameText.setFont(font);
 		usernameText.setBounds(447, 127, 92, 27);
 		usernameText.setForeground(Color.decode("#FFFFFF"));
 		
 		passwordText = new JLabel("Password");
+		usernameText.setFont(font);
 		passwordText.setBounds(447, 232, 80, 27);
 		passwordText.setForeground(Color.decode("#FFFFFF"));
 		
@@ -66,31 +72,38 @@ public class InscriptionPage extends JPanel {
 		
 		
 		firsnameError = new JLabel();
+		firsnameError.setFont(font);
 		firsnameError.setBounds(134, 202, 111, 20);
 		firsnameError.setForeground(Color.decode("#E81123"));
 		
 		lastnameError = new JLabel();
+		lastnameError.setFont(font);
 		lastnameError.setBounds(134, 307, 111, 20);
 		lastnameError.setForeground(Color.decode("#E81123"));
 		
 		birthDateError = new JLabel();
+		birthDateError.setFont(font);
 		birthDateError.setBounds(134, 412, 111, 20);
 		birthDateError.setForeground(Color.decode("#E81123"));
 		
 		usernameError = new JLabel();
+		usernameError.setFont(font);
 		usernameError.setBounds(427, 202, 111, 20);
 		usernameError.setForeground(Color.decode("#E81123"));
 		
 		passwordError = new JLabel();
+		passwordError.setFont(font);
 		passwordError.setBounds(427, 307, 111, 20);
 		passwordError.setForeground(Color.decode("#E81123"));
 		
 		confirmPasswordError = new JLabel();
+		confirmPasswordError.setFont(font);
 		confirmPasswordError.setBounds(427, 412, 111, 20);
 		confirmPasswordError.setForeground(Color.decode("#E81123"));
 		
 		
 		firsnameInput = new JTextField();
+		firsnameInput.setFont(font);
 		firsnameInput.setBounds(134, 154, 250, 45);
 		firsnameInput.setHorizontalAlignment(SwingConstants.CENTER);
 		firsnameInput.setBackground(Color.decode("#1A1919"));	
@@ -100,6 +113,7 @@ public class InscriptionPage extends JPanel {
 				new LineBorder(Color.decode("#FFFFFF"), 1, true));
 		
 		lastnameInput = new JTextField();
+		lastnameInput.setFont(font);
 		lastnameInput.setBounds(134, 259, 250, 45);
 		lastnameInput.setHorizontalAlignment(SwingConstants.CENTER);
 		lastnameInput.setBackground(Color.decode("#1A1919"));	
@@ -109,6 +123,7 @@ public class InscriptionPage extends JPanel {
 				new LineBorder(Color.decode("#FFFFFF"), 1, true));
 		
 		birthDateInput = new JTextField();
+		birthDateInput.setFont(font);
 		birthDateInput.setBounds(134, 364, 250, 45);
 		birthDateInput.setHorizontalAlignment(SwingConstants.CENTER);
 		birthDateInput.setBackground(Color.decode("#1A1919"));	
@@ -118,6 +133,7 @@ public class InscriptionPage extends JPanel {
 				new LineBorder(Color.decode("#FFFFFF"), 1, true));
 		
 		usernameInput = new JTextField();
+		usernameInput.setFont(font);
 		usernameInput.setBounds(427, 154, 250, 45);
 		usernameInput.setHorizontalAlignment(SwingConstants.CENTER);
 		usernameInput.setBackground(Color.decode("#1A1919"));	
@@ -127,6 +143,7 @@ public class InscriptionPage extends JPanel {
 				new LineBorder(Color.decode("#FFFFFF"), 1, true));
 		
 		passwordInput = new JPasswordField();
+		passwordInput.setFont(font);
 		passwordInput.setBounds(427, 259, 250, 45);
 		passwordInput.setHorizontalAlignment(SwingConstants.CENTER);
 		passwordInput.setBackground(Color.decode("#1A1919"));	
@@ -136,6 +153,7 @@ public class InscriptionPage extends JPanel {
 				new LineBorder(Color.decode("#FFFFFF"), 1, true));
 		
 		confirmPasswordInput = new JPasswordField();
+		confirmPasswordInput.setFont(font);
 		confirmPasswordInput.setBounds(427, 364, 250, 45);
 		confirmPasswordInput.setHorizontalAlignment(SwingConstants.CENTER);
 		confirmPasswordInput.setBackground(Color.decode("#1A1919"));	
@@ -146,6 +164,7 @@ public class InscriptionPage extends JPanel {
 		
 		
 		confirmButton = new JButton("Confirm");
+		confirmButton.setFont(font);
 		confirmButton.setBorderPainted(false);
 		confirmButton.setFocusPainted(false);
 		confirmButton.setBounds(280, 489, 250, 45);
@@ -187,7 +206,7 @@ public class InscriptionPage extends JPanel {
 
 	public void setFirsnameError(String errorMesseg, boolean valid) {
 		if (!valid) {
-			int width =  errorMesseg.length() * 7;
+			int width =  errorMesseg.length() * 8;
 			int centerOnX = firsnameInput.getBounds().x
 					+ (firsnameInput.getBounds().width / 2);
 
@@ -209,7 +228,7 @@ public class InscriptionPage extends JPanel {
 
 	public void setLastnameError(String errorMesseg, boolean valid) {
 		if (!valid) {
-			int width =  errorMesseg.length() * 7;
+			int width =  errorMesseg.length() * 8;
 			int centerOnX = lastnameInput.getBounds().x
 					+ (lastnameInput.getBounds().width / 2);
 
@@ -231,7 +250,7 @@ public class InscriptionPage extends JPanel {
 
 	public void setBirthDateError(String errorMesseg, boolean valid) {
 		if (!valid) {
-			int width =  errorMesseg.length() * 7;
+			int width =  errorMesseg.length() * 8;
 			int centerOnX = birthDateInput.getBounds().x
 					+ (birthDateInput.getBounds().width / 2);
 
@@ -253,7 +272,7 @@ public class InscriptionPage extends JPanel {
 
 	public void setUsernameError(String errorMesseg, boolean valid) {
 		if (!valid) {
-			int width =  errorMesseg.length() * 7;
+			int width =  errorMesseg.length() * 8;
 			int centerOnX = usernameInput.getBounds().x
 					+ (usernameInput.getBounds().width / 2);
 
@@ -276,7 +295,7 @@ public class InscriptionPage extends JPanel {
 
 	public void setPasswordError(String errorMesseg, boolean valid) {
 		if (!valid) {
-			int width =  errorMesseg.length() * 7;
+			int width =  errorMesseg.length() * 8;
 			int centerOnX = passwordInput.getBounds().x
 					+ (passwordInput.getBounds().width / 2);
 
@@ -298,7 +317,7 @@ public class InscriptionPage extends JPanel {
 
 	public void setConfirmPasswordError(String errorMesseg, boolean valid) {
 		if (!valid) {
-			int width =  errorMesseg.length() * 7;
+			int width =  errorMesseg.length() * 8;
 			int centerOnX = confirmPasswordInput.getBounds().x
 					+ (confirmPasswordInput.getBounds().width / 2);
 

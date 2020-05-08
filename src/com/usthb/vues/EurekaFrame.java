@@ -1,12 +1,15 @@
 package com.usthb.vues;
 
 import java.awt.Color;
+import java.awt.Font;
+import java.awt.FontFormatException;
+import java.io.File;
+import java.io.IOException;
 import java.util.LinkedList;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
-
 
 import com.usthb.controler.AppControler;
 
@@ -19,15 +22,26 @@ import com.usthb.controler.AppControler;
 	private JPanel gamePage;
 	private final int WIDTH = 810;
 	private final int HEIGHT = 620;
+	public Font font;
 	
 	public EurekaFrame() {
-		homePage = new HomePage();
+		File fontFile = new File("resources\\fonts\\Nunito-Regular.ttf");
+		
+		try {
+			font = Font.createFont(Font.TRUETYPE_FONT, fontFile);
+			font = font.deriveFont(14f);
+		} catch (FontFormatException | IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		homePage = new HomePage(font);
 		homePage.setBounds(0, 32, WIDTH, HEIGHT - 32);
 		
-		inscriptionPage = new InscriptionPage();
+		inscriptionPage = new InscriptionPage(font);
 		inscriptionPage.setBounds(0, 32, WIDTH, HEIGHT - 32);
 		
-		connectionPage = new ConnectionPage();
+		connectionPage = new ConnectionPage(font);
 		connectionPage.setBounds(0, 32, WIDTH, HEIGHT - 32);
 		
 		setupBaseFrame();
@@ -47,6 +61,8 @@ import com.usthb.controler.AppControler;
 		closeButton.setBounds(WIDTH - 46, 1, 45, 28);
 		closeButton.setBackground(Color.decode("#E81123"));
 		closeButton.addActionListener(new AppControler());
+		
+		
 		
 	
 		baseFrame = new JPanel(null, true);
@@ -80,7 +96,11 @@ import com.usthb.controler.AppControler;
 			LinkedList<String> themes
 			, String username) {
 
-		this.themeSelectionPage = new ThemeSelectionPage(themes, username);
+		this.themeSelectionPage = new ThemeSelectionPage(
+				themes
+				, username
+				, font);
+		
 		this.themeSelectionPage.setBounds(0, 32, WIDTH, HEIGHT - 32);
 	}
 	
@@ -90,7 +110,7 @@ import com.usthb.controler.AppControler;
 
 	public void setGamePage(String username) {
 
-		this.gamePage = new GamePage(username);
+		this.gamePage = new GamePage(username, font);
 		this.gamePage.setBounds(0, 32, WIDTH, HEIGHT - 32);
 	}
 	

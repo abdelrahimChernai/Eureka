@@ -1,6 +1,7 @@
 package com.usthb.vues;
 
 import java.awt.Color;
+import java.awt.Font;
 
 import javax.swing.JButton;
 import javax.swing.JLabel;
@@ -15,24 +16,28 @@ public class HomePage extends JPanel {
 	private JButton newGameButton;
 	private JButton continueButton;
 	
-	public HomePage() {
+	public HomePage(Font font) {
 		super(null, true);
 		
 		username = new JLabel("Log In");
+		username.setFont(font);
 		username.setForeground(Color.decode("#BB86FC"));
-		username.setBounds(682, 93, 50, 25);
+		username.setBounds(682, 93, 48, 20);
 		username.addMouseListener(new AppControler());
 		
 		dontHaveAnAccount = new JLabel("Dont have an account?");
+		dontHaveAnAccount.setFont(font);
 		dontHaveAnAccount.setForeground(Color.decode("#FFFFFF"));
-		dontHaveAnAccount.setBounds(331, 509, 147, 25);
+		dontHaveAnAccount.setBounds(331, 509, 168, 25);
 		
 		createAccount = new JLabel("Creat one now!");
+		createAccount.setFont(font);
 		createAccount.setForeground(Color.decode("#BB86FC"));
-		createAccount.setBounds(356, 534, 98, 25);
+		createAccount.setBounds(356, 534, 112, 25);
 		createAccount.addMouseListener(new AppControler());
 		
 		newGameButton = new JButton("New Game");
+		newGameButton.setFont(font);
 		newGameButton.setBorderPainted(false);
 		newGameButton.setFocusPainted(false);
 		newGameButton.setBounds(280, 326, 250, 45);
@@ -41,6 +46,7 @@ public class HomePage extends JPanel {
 		newGameButton.addActionListener(new AppControler());
 		
 		continueButton = new JButton("Continue");
+		continueButton.setFont(font);
 		continueButton.setBorderPainted(false);
 		continueButton.setFocusPainted(false);
 		continueButton.setBounds(280, 394, 250, 45);

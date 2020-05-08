@@ -1,5 +1,6 @@
 package com.usthb.vues;
 import java.awt.Color;
+import java.awt.Font;
 
 import javax.swing.JButton;
 import javax.swing.JLabel;
@@ -26,25 +27,29 @@ public class GamePage extends JPanel {
 	private JPanel hangemanPanel;
 	private JButton confirmButton;
 	
-	public GamePage(String username) {
+	public GamePage(String username, Font font) {
 		super(null, true);
 		
 		chansesLeft = new JLabel();
+		chansesLeft.setFont(font);
 		chansesLeft.setForeground(Color.decode("#FFFFFF"));
 		chansesLeft.setBounds((310 - 168) / 2, 0, 168, 20);
 		chansesLeft.setHorizontalAlignment(SwingConstants.CENTER);
 		
 		score = new JLabel("0");
+		score.setFont(font);
 		score.setForeground(Color.decode("#4BBA87"));
-		score.setBounds((310 - 168) / 2, 319, 168, 20);
+		score.setBounds((310 - 168) / 2, 319, 8, 20);
 		score.setHorizontalAlignment(SwingConstants.CENTER);
 		
 		this.username = new JLabel(username);
+		this.username.setFont(font);
 		this.username.setForeground(Color.decode("#BB86FC"));
-		this.username.setBounds(682, 93, 50, 25);
+		this.username.setBounds(682, 93, 50, 20);
 		this.username.addMouseListener(manager);
 		
 		question = new JTextPane();
+		question.setFont(font);
 		StyledDocument questionStyle = question.getStyledDocument();
 		SimpleAttributeSet center = new SimpleAttributeSet();
 		question.setBounds((810 - 200) / 2, 122, 200, 40);
@@ -61,11 +66,13 @@ public class GamePage extends JPanel {
 		
 		
 		level = new JLabel();
+		level.setFont(font);
 		level.setForeground(Color.decode("#FFFFFF"));
 		level.setBounds((810 - 77) / 2, 77, 80, 20);
 		level.setHorizontalAlignment(SwingConstants.CENTER);
 		
 		currentAnswer = new JLabel();
+		currentAnswer.setFont(font);
 		currentAnswer.setBounds(451, 253, 250, 45);
 		currentAnswer.setHorizontalAlignment(SwingConstants.CENTER);
 		currentAnswer.setForeground(Color.decode("#FFFFFF"));
@@ -73,6 +80,7 @@ public class GamePage extends JPanel {
 				new LineBorder(Color.decode("#FFFFFF"), 1 ,true));
 		
 		playerInput = new JTextField();
+		playerInput.setFont(font);
 		playerInput.setBounds(451, 371, 250, 45);
 		playerInput.setHorizontalAlignment(SwingConstants.CENTER);
 		playerInput.setBackground(Color.decode("#1A1919"));	
@@ -88,6 +96,7 @@ public class GamePage extends JPanel {
 		hangemanPanel.add(score);
 		
 		confirmButton = new JButton("Confirm");
+		confirmButton.setFont(font);
 		confirmButton.setBorderPainted(false);
 		confirmButton.setFocusPainted(false);
 		confirmButton.setBounds(451, 489, 250, 45);
@@ -111,7 +120,7 @@ public class GamePage extends JPanel {
 	}
 
 	public void setScore(int score) {
-		int width =  Integer.toString(score).length() * 7;
+		int width =  Integer.toString(score).length() * 9;
 		int centerOnX = chansesLeft.getBounds().x
 				+ (chansesLeft.getBounds().width / 2);
 		
