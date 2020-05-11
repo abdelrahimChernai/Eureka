@@ -10,11 +10,12 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Scanner;
+import java.util.StringTokenizer;
 
+import com.usthb.controler.AppControler;
 import com.usthb.modeles.Joueur;
 import com.usthb.modeles.PartieJeu;
 import com.usthb.modeles.ThemeJeu;
-import com.usthb.modeles.ThemeType;
 
 /**
  * <b>
@@ -31,7 +32,12 @@ import com.usthb.modeles.ThemeType;
  * @version 1.1.1
  */
 public class MainApp {
+	
 	public static Scanner console = new Scanner(System.in);		// TEST
+	
+	private Joueur currnetPlayer;
+	
+	private PartieJeu currentGame;
 	
 	/**
 	 * <p>
@@ -44,8 +50,7 @@ public class MainApp {
 	 * 
 	 * @see MainApp#initialization()
 	 */
-	private static HashMap<Integer, Joueur> players =
-		new HashMap<Integer, Joueur>();
+	private HashMap<Integer, Joueur> players;
 	
 	/**
 	 * <p>
@@ -57,8 +62,17 @@ public class MainApp {
 	 * @see com.usthb.modeles.ThemeJeu
 	 * @see com.usthb.modeles.Question
 	 */
-	private static HashSet<ThemeJeu> themes = new HashSet<ThemeJeu>();
+	private HashSet<ThemeJeu> themes;
 	
+	
+	
+	public MainApp() {
+		this.players = new HashMap<Integer, Joueur>();
+		this.themes  = new HashSet<ThemeJeu>();
+		this.currnetPlayer = null;
+	}
+
+
 	/**
 	 * <p>
 	 * 	Se lance dès le lancement du jeu pour préparer les éléments et données
@@ -82,7 +96,7 @@ public class MainApp {
 	 * @see MainApp#themes
 	 * @see MainApp#players
 	 */
-	private static void initialization() {
+	public void initialization() {
 		File playerFile = new File("player.sve");
 		File themeFile = new File("themes.sve");
 		
@@ -90,8 +104,9 @@ public class MainApp {
 			try {
 				ObjectInputStream playerFileIn =
 						new ObjectInputStream(new FileInputStream(playerFile));
-			
+				
 				players = (HashMap<Integer, Joueur>) playerFileIn.readObject();
+				
 			
 				try {
 					playerFileIn.close();
@@ -115,7 +130,6 @@ public class MainApp {
 						new ObjectInputStream(new FileInputStream(themeFile));
 			
 				themes = (HashSet<ThemeJeu>) themeFileIn.readObject();
-			
 				try {
 					themeFileIn.close();
 				} catch (IOException e) {
@@ -154,35 +168,27 @@ public class MainApp {
 	 * 
 	 * @since 1.1.1
 	 */
-	public static Joueur connection() {
+	public ErrorCode connection() {
 		String username;
 		String password;
 		
-		do {
-			System.out.println("username");
-			username = console.nextLine();
+		username = AppControler.getConnectionUsername();
+
+		if (! players.containsKey(Joueur.hashCode(username))) {
+			return ErrorCode.WRONG_USERNAME;
+		}
+
+		password = AppControler.getConnectionPassword();
+
+		if (!players.get(
+				Joueur.hashCode(username)).getPassword().equals(password)) {
 			
-			if (players.containsKey(Joueur.hashCode(username))) {
-				System.out.println("Hello " + username + "!");
-			} else {
-				System.out.println("Sure about that ?");
-			}
+			return ErrorCode.WRONG_PASSWORD;
+		}
 			
-		} while (! players.containsKey(Joueur.hashCode(username)));
+		currnetPlayer =  players.get(Joueur.hashCode(username));
 		
-		do {
-			System.out.println("password");
-			password = console.nextLine();
-			
-			if (players.get(Joueur.hashCode(username)).getPassword().equals(password)) {
-				System.out.println("You are loged in");
-			} else {
-				System.out.println("Wrong the password is, my young padawan");
-			}
-		} while (! players.get(Joueur.hashCode(username)).getPassword().equals(password));
-		
-			
-		return players.get(Joueur.hashCode(username));
+		return ErrorCode.NO_ERROR;
 	}
 	
 	/**
@@ -206,53 +212,61 @@ public class MainApp {
 	 * 
 	 * @since 1.1.1
 	 */
-	public static void inscription() {
+	public ErrorCode inscription() {
 		Joueur newPlayer;
 		String firstName;
 		String lastName;
 		String username;
 		String password;
 		Date birthDate;
+		StringTokenizer birthDateString;
 		int day, mounth, year;
 		
-		System.out.println("first name");
-		firstName = console.nextLine();
+		firstName = AppControler.getInscriptionFirstname();
+		
+		if (!Joueur.isFirstNameValid(firstName)) {
+			return ErrorCode.UNVALID_NAME;
+		}
 			
-		System.out.println("last name");
-		lastName = console.nextLine();
+		lastName = AppControler.getInscriptionLastname();
+		
+		if (!Joueur.isLastNameValid(lastName)) {
+			return ErrorCode.UNVALID_NAME;
+		}
 
-		do {
-			System.out.println("Birth date dd mm yyyy");
-			day = console.nextInt();
-			mounth = console.nextInt() - 1;
-			year = console.nextInt() - 1900;
-			birthDate = new Date(year, mounth, day);
-		} while (! Joueur.isDateValide(birthDate));
-			
-		console.nextLine();
+		birthDateString =
+				new StringTokenizer(AppControler.getInscriptionBirthDate());
+		day = Integer.parseUnsignedInt(birthDateString.nextToken());
+		mounth = Integer.parseUnsignedInt(birthDateString.nextToken()) - 1;
+		year = Integer.parseUnsignedInt(birthDateString.nextToken()) - 1900;
+		birthDate = new Date(year, mounth, day);
 		
-		do {
-			System.out.println("username");
-			username = console.nextLine();
-			
-			if (players.containsKey(Joueur.hashCode(username))) {
-				System.out.println("this one is not avalable, try somthing else");
-			} else {
-				System.out.println("Alright " + username + " it is !");
-			}
-		} while (players.containsKey(Joueur.hashCode(username)));
+		if (!Joueur.isDateValide(birthDate)) {
+			return ErrorCode.UNVALID_DATE_FORMAT;
+		}
 		
-		System.out.println("password");
-		password = (console.nextLine());
-		System.out.println("confirm password");
+		username = AppControler.getInscriptionUsername();
+
+		if (players.containsKey(Joueur.hashCode(username))) {
+			return ErrorCode.UNAVALABLE_USERNAME;
+		}
 		
-		while(! console.nextLine().contentEquals(password)) {
-			System.out.println("password doesn't match");
+		password = AppControler.getInscriptionPassword();
+		
+		if (!Joueur.isPasswordValid(password)) {
+			return ErrorCode.UNVALID_PASSWORD;
 		}
 		
 		newPlayer =
 				new Joueur(firstName, lastName, username, password, birthDate);
+		
+		//Pour des raisons de sécurité on efface le mot de passe
+		password = new String("");
+		
+		currnetPlayer = newPlayer;
 		players.put(newPlayer.getId(), newPlayer);
+		
+		return ErrorCode.NO_ERROR;
 	}
 	
 	/**
@@ -261,7 +275,7 @@ public class MainApp {
 	 * 	dans les fichiers de sauvegarde.
 	 * </p>
 	 */
-	public static void terminate() {
+	public void terminate() {
 		File playerFile = new File("player.sve");
 		File themeFile = new File("themes.sve");
 		
@@ -282,7 +296,7 @@ public class MainApp {
 			ObjectOutputStream playerFileOut =
 					new ObjectOutputStream(new FileOutputStream(playerFile));
 			
-			if (playerFileOut != null) {
+			if (playerFileOut != null && !players.isEmpty()) {
 				playerFileOut.writeObject(players);
 			}
 			
@@ -301,7 +315,7 @@ public class MainApp {
 			ObjectOutputStream themeFileOut =
 					new ObjectOutputStream(new FileOutputStream(themeFile));
 			
-			if (themeFileOut != null) {
+			if (themeFileOut != null && !themes.isEmpty()) {
 				themeFileOut.writeObject(themes);
 			}
 			
@@ -320,19 +334,26 @@ public class MainApp {
 	 * @param args - non utilisé.
 	 */
 	public static void main(String[] args) {
-		Joueur currentPlayer;
-
-		initialization();
-		currentPlayer = connection();
-		System.out.println(currentPlayer.getUsername() + " loged in");
-		
-		PartieJeu partie = new PartieJeu(themes.iterator().next());
-		partie.startGame();
-		while (!partie.getHangman().isFoundAnswer() && partie.getHangman().getState() < 8) {
-			partie.checkChar(console.next().charAt(0));
-		}
-		
-		console.close();
-		terminate();
+		AppControler.start();
 	}
+
+	public Joueur getCurrentPlayer() {
+		return currnetPlayer;
+	}
+
+
+	public PartieJeu getCurrentGame() {
+		return currentGame;
+	}
+
+
+	public void setCurrentGame(PartieJeu currentGame) {
+		this.currentGame = currentGame;
+	}
+
+
+	public HashSet<ThemeJeu> getThemes() {
+		return themes;
+	}
+	
 }

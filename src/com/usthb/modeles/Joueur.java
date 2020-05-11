@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.util.Date;
 import java.util.LinkedList;
 import java.util.Objects;
+import java.util.regex.Pattern;
 
 import com.usthb.MainApp;
 
@@ -152,6 +153,20 @@ public class Joueur implements Serializable{
 		return this.id;
 	}
 	
+	public Levels getCurrentLvl() {
+		return this.currentLvl;
+	}
+	
+	public void setCurrentLvl() {
+		this.currentLvl = Levels.LEVEL_1;
+	}
+	
+	public void incrementLevel() {
+		if (currentLvl.getLvlNumber() < 5) {
+			this.currentLvl = Levels.getLvl(currentLvl.getLvlNumber() + 1);
+		}
+	}
+
 	/**
 	 * <p>
 	 * 	Utilise la fonction de Objects pour créer un Numéro séquentiel et
@@ -207,6 +222,49 @@ public class Joueur implements Serializable{
 	}
 		
 	/**
+	 * Donne le nombre de points du joueur depuis son inscription 
+	 * @return le score totale calculé à partir de la liste des parties jouées.
+	 * 
+	 * @see PartieJeu
+	 * 
+	 * @see Joueur#playerGames
+	 */
+	public int getTotalScore() {
+		int totalScore = 0;
+		
+		for (PartieJeu game : this.playerGames) {
+			totalScore += game.getScore();
+		}
+		return totalScore;
+	}
+	
+	/**
+	 * <b>Ajoute une partie a la liste des parties du joueur</b>
+	 * 
+	 * @param partie la partie a ajouter
+	 */
+	public void addGame(PartieJeu partie) {
+		this.playerGames.add(partie);
+	}
+
+	public static boolean isFirstNameValid(String firstName) {
+		return Pattern.matches("[a-zA-Z]+", firstName);
+	}
+	
+	public static boolean isLastNameValid(String lastName) {
+		return Pattern.matches("[a-zA-Z]+", lastName);
+	}
+	
+	public static boolean isUsernameValid(String username) {
+		return Pattern.matches("[a-zA-Z][a-zA-Z0-9]*", username);
+	}
+	
+	public static boolean isPasswordValid(String password) {
+		
+		return password.length() >= 4;
+	}
+	
+	/**
 	 * <p>
 	 * 	Versifie si une date est correcte selon les normes du calendrier
 	 * 	grégorien en vérifiant la valeur des jours selon les mois et si l'année
@@ -215,8 +273,6 @@ public class Joueur implements Serializable{
 	 * @param date une date a verifier
 	 * @return	true si cette date est une date du calendrier grégorien
 	 */
-	
-	@SuppressWarnings("deprecation")
 	public static boolean isDateValide(Date date) {
 		if (
 				date.getYear() >= 0
@@ -273,23 +329,6 @@ public class Joueur implements Serializable{
 		} else {
 			return false;
 		}
-	}
-	
-	/**
-	 * Donne le nombre de points du joueur depuis son inscription 
-	 * @return le score totale calculé à partir de la liste des parties jouées.
-	 * 
-	 * @see PartieJeu
-	 * 
-	 * @see Joueur#playerGames
-	 */
-	public int getTotalScore() {
-		int totalScore = 0;
-		
-		for (PartieJeu game : this.playerGames) {
-			totalScore += game.getScore();
-		}
-		return totalScore;
 	}
 	
 	public String toString() {
