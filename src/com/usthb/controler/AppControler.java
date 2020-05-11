@@ -3,12 +3,11 @@ package com.usthb.controler;
 import java.awt.Component;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.FocusEvent;
-import java.awt.event.FocusListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+
 import java.util.Date;
 import java.util.Iterator;
 import java.util.LinkedList;
@@ -16,7 +15,6 @@ import java.util.NoSuchElementException;
 import java.util.StringTokenizer;
 
 import javax.swing.JPanel;
-import javax.swing.JTextField;
 
 import com.usthb.ErrorCode;
 import com.usthb.MainApp;
@@ -28,7 +26,10 @@ import com.usthb.vues.EurekaFrame;
 import com.usthb.vues.GamePage;
 import com.usthb.vues.InscriptionPage;
 
-public class AppControler implements ActionListener, MouseListener, KeyListener {
+public class AppControler implements ActionListener
+	, MouseListener
+	, KeyListener {
+	
 	private static MainApp eurekaRuner;
 	private static EurekaFrame gameFrame;
 	
@@ -150,8 +151,13 @@ public class AppControler implements ActionListener, MouseListener, KeyListener 
 			String triger = e.getActionCommand(); 
 			
 			if (triger.contentEquals("")) {
-				eurekaRuner.terminate();
-				System.exit(0);
+				if (currentPage.equals(gameFrame)) {
+					
+				} else {
+					eurekaRuner.terminate();
+					System.exit(0);
+				}
+				
 			} else if (triger.contentEquals("Continue")) {
 				
 				if (eurekaRuner.getCurrentPlayer() != null) {
@@ -179,7 +185,9 @@ public class AppControler implements ActionListener, MouseListener, KeyListener 
 							, gameFrame.getThemeSelectionPage()
 						);
 				} else {
-					
+//					gameFrame.setMassagePanel("test2", "test2", "test");
+//					gameFrame.getMassagePanel().addMassagePanel(gameFrame);
+//					gameFrame.getHomePage().setEnabled(false);
 				}
 			} else if (triger.contentEquals("Confirm")) {
 				if (currentPage.equals(gameFrame.getConnectionPage())) {

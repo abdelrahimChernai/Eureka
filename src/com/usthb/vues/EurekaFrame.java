@@ -20,8 +20,9 @@ import com.usthb.controler.AppControler;
 	private JPanel connectionPage;
 	private JPanel themeSelectionPage;
 	private JPanel gamePage;
-	private final int WIDTH = 810;
-	private final int HEIGHT = 620;
+	private JPanel massagePanel;
+	public static final int WIDTH = 810;
+	public static final int HEIGHT = 620;
 	public Font font;
 	
 	public EurekaFrame() {
@@ -112,6 +113,18 @@ import com.usthb.controler.AppControler;
 
 		this.gamePage = new GamePage(username, font);
 		this.gamePage.setBounds(0, 32, WIDTH, HEIGHT - 32);
+	}
+
+	public MessagePanel getMassagePanel() {
+		return (MessagePanel) massagePanel;
+	}
+
+	public void setMassagePanel(String button1Text
+			, String button2Text
+			, String massage) {
+		this.massagePanel =
+				new MessagePanel(button1Text, button2Text, massage);
+		this.massagePanel.setBounds(0, 32, WIDTH, HEIGHT - 32); 
 	}
 	
 }
