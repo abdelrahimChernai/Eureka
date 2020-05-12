@@ -24,7 +24,7 @@ public class Question implements Serializable {
 	 * @see ThemeJeu#lable
 	 * @since 2.0
 	 */
-	private String id;
+	protected String id;
 	
 	/**
 	 * Le niveau de la question, ce dernier est associé à un nombre de points
@@ -32,19 +32,19 @@ public class Question implements Serializable {
 	 * @see Levels
 	 * @since 2.0
 	 */
-	private Levels lvl;
+	protected Levels lvl;
   
 	/**
 	 * Le texte de la question seras affiché sous l'image contenant la question.
 	 * 
 	 * @see Question#imagePath
 	 */
-	private String lable;
+	protected String lable;
 
 	/**
 	 * La réponse que le Joueur doit trouver 
 	 */
-	private String answer;
+	protected String answer;
 
 	/**
 	 * <p>
@@ -52,7 +52,7 @@ public class Question implements Serializable {
 	 * 	ne s'affiche pas le libellé pourra la remplacer.
 	 * </p>
 	 */
-	private String imagePath;
+	protected String imagePath;
 	
 	public Question(String id, Levels lvl, String lable, String answer) {
 		this.id = id;
