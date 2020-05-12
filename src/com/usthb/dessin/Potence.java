@@ -51,7 +51,7 @@ public class Potence extends Component implements Serializable{
 	 * @see com.usthb.modeles.Question#answer
 	 * @see com.usthb.modeles.PartieJeu#checkChar(char)
 	 */
-	private boolean foundAnswer = false;
+	private boolean winGame = false;
 	
 	/**
 	 * <p>
@@ -82,12 +82,12 @@ public class Potence extends Component implements Serializable{
 	 * 
 	 * @see com.usthb.modeles.PartieJeu#checkChar(char)
 	 */
-	public void setFoundAnswerTrue() {
-		this.foundAnswer = true;
+	public void setWinGame() {
+		this.winGame = true;
 	}
 	
-	public boolean isFoundAnswer() {
-		return foundAnswer;
+	public boolean isWinGame() {
+		return winGame;
 	}
 
 	/**
