@@ -15,7 +15,7 @@ public class Enfant extends Joueur {
 	}
 
 	@Override
-	LinkedList<QuestionEnfant> getQuestions(ThemeJeu theme) {
+	public LinkedList<QuestionEnfant> getQuestions(ThemeJeu theme) {
 		LinkedList<QuestionEnfant> questions = new LinkedList<QuestionEnfant>();
 		
 		for (Question question : theme.getQuestions()) {

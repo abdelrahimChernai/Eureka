@@ -260,17 +260,15 @@ public class MainApp {
 			return ErrorCode.UNVALID_PASSWORD;
 		}
 		
-		if (
-				Calendar.getInstance().get(Calendar.YEAR) - birthDate.getYear() 
-				> 18) { // le joueur est adulte
+		if (Calendar.getInstance().get(Calendar.YEAR)
+				- (birthDate.getYear() + 1900)
+			> 18) { // le joueur est adulte
 
 		newPlayer =
 				new Adulte(firstName, lastName, username, password, birthDate);
-		System.out.println(newPlayer.getClass());
 		} else {
 		newPlayer =
 				new Enfant(firstName, lastName, username, password, birthDate);
-		System.out.println(newPlayer.getClass());
 		}
 		
 		//Pour des raisons de sécurité on efface le mot de passe

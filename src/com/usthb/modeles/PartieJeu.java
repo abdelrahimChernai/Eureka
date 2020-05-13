@@ -1,6 +1,7 @@
 package com.usthb.modeles;
 
 import java.io.Serializable;
+import java.util.LinkedList;
 
 import com.usthb.dessin.Potence;
 
@@ -58,6 +59,8 @@ public class PartieJeu implements Serializable {
 	 */
 	private StringBuffer currentAnswer;
 	
+	private LinkedList<Question> questions;
+	
 	/**
 	 * <p>
 	 * 	Le pendu de cette partie, garde ces données et s'occupes de le dessiner
@@ -71,9 +74,10 @@ public class PartieJeu implements Serializable {
 	 */
 	private Potence hangman = new Potence();
 	
-	public PartieJeu(ThemeJeu theme) {
+	public PartieJeu(ThemeJeu theme, LinkedList<? extends Question> questions) {
 		gamesNumber++;
 		this.theme = theme;
+		this.questions = (LinkedList<Question>) questions;
 	}
 	
 	public int getScore() {
@@ -92,14 +96,14 @@ public class PartieJeu implements Serializable {
 		int i = 0;
 		
 		while (
-				i < theme.questions.size() 
-				&& ! theme.questions.get(i).getId().equals(this.questionId)
+				i < questions.size() 
+				&& ! questions.get(i).getId().equals(this.questionId)
 			) {
 			
 			i++;
 		}
 		
-		return theme.questions.get(i);
+		return questions.get(i);
 	}
 	
 	public int getCurrentLevel() {

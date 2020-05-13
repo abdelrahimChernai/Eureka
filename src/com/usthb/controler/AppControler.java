@@ -77,7 +77,9 @@ public class AppControler implements ActionListener
 	}
 	
 	private void startGame(ThemeJeu theme, Joueur player) {
-		eurekaRuner.setCurrentGame(new PartieJeu(theme));
+		eurekaRuner.setCurrentGame(new PartieJeu(
+				theme
+				, eurekaRuner.getCurrentPlayer().getQuestions(theme)));
 		PartieJeu currentGame = eurekaRuner.getCurrentGame();
 		GamePage gamePage = gameFrame.getGamePage();
 		

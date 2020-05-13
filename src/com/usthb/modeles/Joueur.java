@@ -341,6 +341,6 @@ public abstract class Joueur implements Serializable{
 				+ this.getTotalScore() + " points";
 	}
 	
-	abstract LinkedList<? extends Question> getQuestions(ThemeJeu theme);
+	public abstract LinkedList<? extends Question> getQuestions(ThemeJeu theme);
 	
 }
