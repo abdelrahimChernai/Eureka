@@ -6,6 +6,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -13,6 +14,8 @@ import java.util.Scanner;
 import java.util.StringTokenizer;
 
 import com.usthb.controler.AppControler;
+import com.usthb.modeles.Adulte;
+import com.usthb.modeles.Enfant;
 import com.usthb.modeles.Joueur;
 import com.usthb.modeles.PartieJeu;
 import com.usthb.modeles.ThemeJeu;
@@ -257,8 +260,16 @@ public class MainApp {
 			return ErrorCode.UNVALID_PASSWORD;
 		}
 		
+		if (Calendar.getInstance().get(Calendar.YEAR)
+				- (birthDate.getYear() + 1900)
+			> 18) { // le joueur est adulte
+
 		newPlayer =
-				new Joueur(firstName, lastName, username, password, birthDate);
+				new Adulte(firstName, lastName, username, password, birthDate);
+		} else {
+		newPlayer =
+				new Enfant(firstName, lastName, username, password, birthDate);
+		}
 		
 		//Pour des raisons de sécurité on efface le mot de passe
 		password = new String("");

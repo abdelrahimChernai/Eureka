@@ -16,7 +16,7 @@ import com.usthb.MainApp;
  * @version 1.2.0
  * @see ParieJeu
  */
-public class Joueur implements Serializable{
+public abstract class Joueur implements Serializable{
   
   /**
 	 * <p>
@@ -32,7 +32,7 @@ public class Joueur implements Serializable{
 	 * 
 	 * @see com.usthb.MainApp#players
 	 */
-	private int id;
+	protected int id;
 	
 	/**
      * <p>
@@ -49,21 +49,21 @@ public class Joueur implements Serializable{
 	 * 
 	 * @since 1.1.0
 	 */
-	private Levels currentLvl;
+	protected Levels currentLvl;
   
 	/**
 	 * <p>
 	 * 	Représente le Nom du joueur, est demandé lors de son inscription
 	 * </p>
 	 */
-	private String lastName;
+	protected String lastName;
   
 	/**
 	 * <p>
 	 * 	Représente le Prénom du joueur, est demandé lors de son inscription
 	 * </p>
 	 */
-	private String firstName;
+	protected String firstName;
   
 	/**
 	 * <p>
@@ -78,7 +78,7 @@ public class Joueur implements Serializable{
 	 * 
 	 * @see Joueur#id
 	 */
-	private String username;
+	protected String username;
   
 	/**
 	 * <p>
@@ -86,12 +86,12 @@ public class Joueur implements Serializable{
 	 * 	identité.
 	 * </p>
 	 */
-	private String password;
+	protected String password;
   
 	/**
 	 * La date de naissance du joueur.
 	 */
-	private Date birthDate;
+	protected Date birthDate;
 	
 	/**
 	 * <p>
@@ -103,7 +103,7 @@ public class Joueur implements Serializable{
 	 * 
 	 * @see Joueur#getTotalScore()
 	 */
-	private LinkedList<PartieJeu> playerGames;
+	protected LinkedList<PartieJeu> playerGames;
 	
 	
 	/**
@@ -340,5 +340,7 @@ public class Joueur implements Serializable{
 				+ currentLvl + " : "
 				+ this.getTotalScore() + " points";
 	}
+	
+	public abstract LinkedList<? extends Question> getQuestions(ThemeJeu theme);
 	
 }

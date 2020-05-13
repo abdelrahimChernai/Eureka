@@ -21,6 +21,7 @@ import com.usthb.MainApp;
 import com.usthb.modeles.Joueur;
 import com.usthb.modeles.PartieJeu;
 import com.usthb.modeles.ThemeJeu;
+import com.usthb.modeles.ThemeType;
 import com.usthb.vues.ConnectionPage;
 import com.usthb.vues.EurekaFrame;
 import com.usthb.vues.GamePage;
@@ -37,7 +38,7 @@ public class AppControler implements ActionListener
 		eurekaRuner = new  MainApp();
 		gameFrame = new EurekaFrame();
 		
-//		ThemeJeu theme = new ThemeJeu(coefficent, lable, type);
+//		ThemeJeu theme = new ThemeJeu(2, "Cold War", ThemeType.HISTOIRE);
 //		eurekaRuner.getThemes().add(theme);
 		
 		eurekaRuner.initialization();
@@ -76,7 +77,9 @@ public class AppControler implements ActionListener
 	}
 	
 	private void startGame(ThemeJeu theme, Joueur player) {
-		eurekaRuner.setCurrentGame(new PartieJeu(theme));
+		eurekaRuner.setCurrentGame(new PartieJeu(
+				theme
+				, eurekaRuner.getCurrentPlayer().getQuestions(theme)));
 		PartieJeu currentGame = eurekaRuner.getCurrentGame();
 		GamePage gamePage = gameFrame.getGamePage();
 		
