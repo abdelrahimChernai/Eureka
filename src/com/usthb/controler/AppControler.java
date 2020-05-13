@@ -21,7 +21,6 @@ import com.usthb.MainApp;
 import com.usthb.modeles.Joueur;
 import com.usthb.modeles.PartieJeu;
 import com.usthb.modeles.ThemeJeu;
-import com.usthb.modeles.ThemeType;
 import com.usthb.vues.ConnectionPage;
 import com.usthb.vues.EurekaFrame;
 import com.usthb.vues.GamePage;
