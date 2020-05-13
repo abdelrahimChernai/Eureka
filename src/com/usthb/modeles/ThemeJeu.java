@@ -61,7 +61,8 @@ public class ThemeJeu implements Serializable {
 		this.coefficent = coefficent;
 		this.lable = lable;
 		this.type = type;
-
+		
+		System.out.println("****** questions adultes ******");
 		for (int i = 1; i <= 5; i++) {
 			Levels questionLvl;
 			String questionLable;
@@ -76,7 +77,31 @@ public class ThemeJeu implements Serializable {
 			System.out.println("answer");
 			questionAnswer = new String(MainApp.console.nextLine());
 			
-			this.questions.add(new Question(
+			this.questions.add(new QuestionAdulte(
+												this.generateQuestionID() + i
+												, questionLvl
+												, questionLable
+												, questionAnswer
+											));
+		}
+		
+		
+		System.out.println("****** questions enfants ******");
+		for (int i = 1; i <= 5; i++) {
+			Levels questionLvl;
+			String questionLable;
+			String questionAnswer;
+
+			System.out.println("Question level " + i) ;
+			questionLvl = Levels.getLvl(i);
+
+			System.out.println("lable");
+			questionLable = new String(MainApp.console.nextLine());
+			
+			System.out.println("answer");
+			questionAnswer = new String(MainApp.console.nextLine());
+			
+			this.questions.add(new QuestionEnfant(
 												this.generateQuestionID() + i
 												, questionLvl
 												, questionLable
@@ -99,6 +124,10 @@ public class ThemeJeu implements Serializable {
 	
 	public String getLable() {
 		return lable;
+	}
+
+	public LinkedList<Question> getQuestions() {
+		return questions;
 	}
 
 	/**
