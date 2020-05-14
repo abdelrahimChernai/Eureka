@@ -100,8 +100,8 @@ public class MainApp {
 	 * @see MainApp#players
 	 */
 	public void initialization() {
-		File playerFile = new File("player.sve");
-		File themeFile = new File("themes.sve");
+		File playerFile = new File("resources\\save\\player.sve");
+		File themeFile = new File("resources\\save\\themes.sve");
 		
 		if (playerFile.exists()) {
 			try {
@@ -287,8 +287,8 @@ public class MainApp {
 	 * </p>
 	 */
 	public void terminate() {
-		File playerFile = new File("player.sve");
-		File themeFile = new File("themes.sve");
+		File playerFile = new File("resources\\save\\player.sve");
+		File themeFile = new File("resources\\save\\themes.sve");
 		
 		try {
 			playerFile.createNewFile();

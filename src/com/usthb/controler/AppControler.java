@@ -7,25 +7,27 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
-
 import java.util.Date;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.NoSuchElementException;
 import java.util.StringTokenizer;
 
+
+
 import javax.swing.JPanel;
+
 
 import com.usthb.ErrorCode;
 import com.usthb.MainApp;
 import com.usthb.modeles.Joueur;
 import com.usthb.modeles.PartieJeu;
 import com.usthb.modeles.ThemeJeu;
-import com.usthb.modeles.ThemeType;
 import com.usthb.vues.ConnectionPage;
 import com.usthb.vues.EurekaFrame;
 import com.usthb.vues.GamePage;
 import com.usthb.vues.InscriptionPage;
+
 
 public class AppControler implements ActionListener
 	, MouseListener
@@ -188,9 +190,7 @@ public class AppControler implements ActionListener
 							, gameFrame.getThemeSelectionPage()
 						);
 				} else {
-//					gameFrame.setMassagePanel("test2", "test2", "test");
-//					gameFrame.getMassagePanel().addMassagePanel(gameFrame);
-//					gameFrame.getHomePage().setEnabled(false);
+					gameFrame.getPopUp().displayPopUp(gameFrame.getLocation());
 				}
 			} else if (triger.contentEquals("Confirm")) {
 				if (currentPage.equals(gameFrame.getConnectionPage())) {
