@@ -3,19 +3,20 @@ package com.usthb.vues;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.FontFormatException;
-import java.awt.PopupMenu;
+
 import java.io.File;
 import java.io.IOException;
+
 import java.util.LinkedList;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
-import javax.swing.Popup;
 
 import com.usthb.controler.AppControler;
 
  public class EurekaFrame extends JFrame {
+	private AppControler manager;
 	private PopUp popUp;
 	private JPanel baseFrame;
 	private JPanel homePage;
@@ -28,6 +29,7 @@ import com.usthb.controler.AppControler;
 	public Font font;
 	
 	public EurekaFrame() {
+		this.manager = new AppControler();
 		File fontFile = new File("resources\\fonts\\Nunito-Regular.ttf");
 		
 		try {
@@ -52,9 +54,12 @@ import com.usthb.controler.AppControler;
 		
 		this.setTitle("Eureka");
 		this.setLayout(null);
+		this.setResizable(false);
 		this.setSize(WIDTH, HEIGHT);
 		this.setContentPane(baseFrame);
 		this.setUndecorated(true);
+		// mets la par défaut fenêtre au centre de l'ecrant 
+		this.setLocationRelativeTo(null);
 	}
 	
 	private void setupBaseFrame() {
@@ -65,14 +70,13 @@ import com.usthb.controler.AppControler;
 		closeButton.setBounds(WIDTH - 46, 1, 45, 28);
 		closeButton.setBackground(Color.decode("#E81123"));
 		closeButton.addActionListener(new AppControler());
-		
-		
-		
 	
 		baseFrame = new JPanel(null, true);
 		baseFrame.setBackground(Color.decode("#000000"));
 		baseFrame.setBounds(0, 0, WIDTH, HEIGHT);
 		baseFrame.add(closeButton);
+		baseFrame.addMouseListener(manager);
+		baseFrame.addMouseMotionListener(manager);
 		baseFrame.add(homePage);
 	}
 	

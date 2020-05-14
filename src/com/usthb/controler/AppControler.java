@@ -7,6 +7,7 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.awt.event.MouseMotionListener;
 import java.util.Date;
 import java.util.Iterator;
 import java.util.LinkedList;
@@ -29,12 +30,17 @@ import com.usthb.vues.GamePage;
 import com.usthb.vues.InscriptionPage;
 
 
-public class AppControler implements ActionListener
+public class AppControler implements
+	ActionListener
 	, MouseListener
+	, MouseMotionListener
 	, KeyListener {
 	
 	private static MainApp eurekaRuner;
 	private static EurekaFrame gameFrame;
+	
+	//La position d'un clique, utilisé pour pouvoir bouger la fenêtre
+	private int x, y;
 	
 	public static void start() {
 		eurekaRuner = new  MainApp();
@@ -282,7 +288,8 @@ public class AppControler implements ActionListener
 	}
 
 	public void mousePressed(MouseEvent e) {
-		
+		this.x = e.getX();
+		this.y = e.getY();
 	}
 
 	public void mouseReleased(MouseEvent e) {
@@ -294,6 +301,17 @@ public class AppControler implements ActionListener
 	}
 
 	public void mouseExited(MouseEvent e) {
+		
+	}
+
+	@Override
+	public void mouseDragged(MouseEvent e) {
+		gameFrame.setLocation(e.getXOnScreen() - x, e.getYOnScreen() - y);
+	}
+
+	@Override
+	public void mouseMoved(MouseEvent e) {
+		// TODO Auto-generated method stub
 		
 	}
 
