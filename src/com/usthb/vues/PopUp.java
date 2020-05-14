@@ -229,6 +229,52 @@ public class PopUp extends JDialog {
 		displayPopUp(center);
 	}
 	
+	public void displayNoCurrentGame(Point center) {
+		baseFrame.removeAll();
+		
+		noCurrentGame = new JPanel(null, true);
+
+		JLabel message = new JLabel("You have no game in progress");
+		message.setFont(this.getFont());
+		message.setHorizontalAlignment(SwingConstants.CENTER);
+		message.setForeground(Color.decode("#FFFFFF"));
+		message.setBounds((WIDTH - (message.getText().length() * 8)) / 2
+				, 23
+				, (message.getText().length() * 8)
+				, 20);
+
+		JButton newGameButton = new JButton("Cancel");
+		newGameButton.setFont(this.getFont());
+		newGameButton.setBorderPainted(false);
+		newGameButton.setFocusPainted(false);
+		newGameButton.setBounds(67, 95, 150, 40);
+		newGameButton.setBackground(Color.decode("#4BBA87"));
+		newGameButton.setForeground(Color.decode("#FFFFFF"));
+		newGameButton.addActionListener(manager);
+
+		JButton cancelButton = new JButton("New Game");
+		cancelButton.setFont(this.getFont());
+		cancelButton.setBorderPainted(false);
+		cancelButton.setFocusPainted(false);
+		cancelButton.setBounds(283, 95, 150, 40);
+		cancelButton.setBackground(Color.decode("#BB86FC"));
+		cancelButton.setForeground(Color.decode("#FFFFFF"));
+		cancelButton.addActionListener(manager);
+
+
+
+		noCurrentGame.add(message);
+		noCurrentGame.add(newGameButton);
+		noCurrentGame.add(cancelButton);
+		noCurrentGame.setBounds(0, 32, WIDTH, HEIGHT - 32);
+		noCurrentGame.setBackground(Color.decode("#1A1919"));
+
+		baseFrame.add(closeButton);
+		baseFrame.add(noCurrentGame);
+
+		displayPopUp(center);
+	}
+	
 	public void removePopUp() {
 		this.setVisible(false);
 		this.dispose();

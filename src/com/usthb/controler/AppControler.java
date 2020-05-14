@@ -108,13 +108,7 @@ public class AppControler implements
 	private void playRound(PartieJeu game) {
 		GamePage gamePage = gameFrame.getGamePage();
 		
-		// On vérifie si il y a un caractère car il est possible de continuer
-		//un partie en utilisant la méthode playRound et dans ce cas le text sera null 
-			try {
-				game.checkChar(gamePage.getPlayerInput().getText().charAt(0));
-			} catch (NullPointerException e) {
-				e.printStackTrace();
-			}
+		game.checkChar(gamePage.getPlayerInput().getText().charAt(0));
 			
 		
 		// On vérifie si le caractère était correcte ou non, si la réponse
@@ -208,16 +202,21 @@ public class AppControler implements
 			} else if (triger.contentEquals("Continue")) {
 				
 				if (eurekaRuner.getCurrentPlayer() != null) {
-					if (eurekaRuner.getCurrentPlayer().hasGames()
+					if (
+							eurekaRuner.getCurrentPlayer().hasGames()
 							&& eurekaRuner.getCurrentPlayer().getLastGame()
-								.getAttemptsLeft() > 0) {
+								.getAttemptsLeft() > 0
+							&& !eurekaRuner.getCurrentPlayer().getCurrentLvl()
+								.equals(Levels.LEVEL_5)) {
 
 						loadGame(eurekaRuner.getCurrentPlayer()
 								.getLastGame());
 						
 						eurekaRuner.getCurrentPlayer().removeLastGame();
 					} else {
-					
+						gameFrame.displayBackground(gameFrame.getHomePage());
+						gameFrame.getPopUp().displayNoCurrentGame(
+								gameFrame.getLocation());
 					}
 				} else {
 					gameFrame.displayBackground(gameFrame.getHomePage());
@@ -241,10 +240,13 @@ public class AppControler implements
 					
 					if (((JButton) e.getSource()).getParent().
 							equals(gameFrame.getHomePage())) {
-						if (eurekaRuner.getCurrentPlayer().
-								getCurrentLvl() == null
-								|| eurekaRuner.getCurrentPlayer().
-								getCurrentLvl().equals(Levels.LEVEL_5)) {
+						
+						Joueur currentPlayer = eurekaRuner.getCurrentPlayer();
+						
+						if (
+								!currentPlayer.hasGames()
+								|| currentPlayer.getCurrentLvl().equals(
+										Levels.LEVEL_5)) {
 							
 							switchPanel(
 									gameFrame.getHomePage()
@@ -351,6 +353,23 @@ public class AppControler implements
 				gameFrame.removeBackground();
 				startGame(eurekaRuner.getCurrentGame().getTheme()
 						, eurekaRuner.getCurrentPlayer());
+			} else if (triger.contentEquals("Log In")) {
+				gameFrame.getPopUp().removePopUp();
+				gameFrame.removeBackground();
+				switchPanel(
+						gameFrame.getHomePage()
+						, gameFrame.getConnectionPage()
+					);
+			} else if (triger.contentEquals("Create Account")) {
+				gameFrame.getPopUp().removePopUp();
+				gameFrame.removeBackground();
+				switchPanel(
+						gameFrame.getHomePage()
+						, gameFrame.getInscriptionPage()
+					);
+			} else if (triger.contentEquals("Cancel")) {
+				gameFrame.getPopUp().removePopUp();
+				gameFrame.removeBackground();
 			}
 		}
 
@@ -373,7 +392,7 @@ public class AppControler implements
 					switchPanel(
 							gameFrame.getHomePage()
 							, gameFrame.getInscriptionPage()
-							);
+						);
 				}
 			}
 		}
