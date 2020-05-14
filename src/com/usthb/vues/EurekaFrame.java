@@ -3,6 +3,7 @@ package com.usthb.vues;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.FontFormatException;
+import java.awt.PopupMenu;
 import java.io.File;
 import java.io.IOException;
 import java.util.LinkedList;
@@ -10,17 +11,18 @@ import java.util.LinkedList;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
+import javax.swing.Popup;
 
 import com.usthb.controler.AppControler;
 
  public class EurekaFrame extends JFrame {
+	private PopUp popUp;
 	private JPanel baseFrame;
 	private JPanel homePage;
 	private JPanel inscriptionPage;
 	private JPanel connectionPage;
 	private JPanel themeSelectionPage;
 	private JPanel gamePage;
-	private JPanel massagePanel;
 	public static final int WIDTH = 810;
 	public static final int HEIGHT = 620;
 	public Font font;
@@ -32,9 +34,10 @@ import com.usthb.controler.AppControler;
 			font = Font.createFont(Font.TRUETYPE_FONT, fontFile);
 			font = font.deriveFont(14f);
 		} catch (FontFormatException | IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		
+		popUp = new PopUp(this);
 		
 		homePage = new HomePage(font);
 		homePage.setBounds(0, 32, WIDTH, HEIGHT - 32);
@@ -73,6 +76,10 @@ import com.usthb.controler.AppControler;
 		baseFrame.add(homePage);
 	}
 	
+	public PopUp getPopUp() {
+		return popUp;
+	}
+
 	public JPanel getBaseFrame() {
 		return baseFrame;
 	}
@@ -114,17 +121,4 @@ import com.usthb.controler.AppControler;
 		this.gamePage = new GamePage(username, font);
 		this.gamePage.setBounds(0, 32, WIDTH, HEIGHT - 32);
 	}
-
-	public MessagePanel getMassagePanel() {
-		return (MessagePanel) massagePanel;
-	}
-
-	public void setMassagePanel(String button1Text
-			, String button2Text
-			, String massage) {
-		this.massagePanel =
-				new MessagePanel(button1Text, button2Text, massage);
-		this.massagePanel.setBounds(0, 32, WIDTH, HEIGHT - 32); 
-	}
-	
 }
