@@ -90,7 +90,7 @@ public class GamePage extends JPanel {
 				new LineBorder(Color.decode("#FFFFFF"), 1, true));
 		
 		hangemanPanel = new JPanel(null, true);
-		hangemanPanel.setBackground(Color.decode("#1A1919"));
+		hangemanPanel.setBackground(new Color(.09f, .09f, .09f, 0.9f));
 		hangemanPanel.setBounds(40, 224, 310, 339);
 		hangemanPanel.add(chansesLeft);
 		hangemanPanel.add(score);

@@ -221,6 +221,10 @@ public abstract class Joueur implements Serializable{
 		return this.password;
 	}
 		
+	public PartieJeu getLastGame() {
+		return playerGames.getLast();
+	}
+
 	/**
 	 * Donne le nombre de points du joueur depuis son inscription 
 	 * @return le score totale calculé à partir de la liste des parties jouées.
@@ -329,6 +333,14 @@ public abstract class Joueur implements Serializable{
 		} else {
 			return false;
 		}
+	}
+	
+	public void removeLastGame() {
+		playerGames.removeLast();
+	}
+	
+	public boolean hasGames() {
+		return !playerGames.isEmpty();
 	}
 	
 	public String toString() {

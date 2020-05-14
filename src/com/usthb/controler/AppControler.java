@@ -1,5 +1,6 @@
 package com.usthb.controler;
 
+import java.awt.Color;
 import java.awt.Component;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -14,16 +15,17 @@ import java.util.LinkedList;
 import java.util.NoSuchElementException;
 import java.util.StringTokenizer;
 
-
-
+import javax.swing.JButton;
 import javax.swing.JPanel;
-
+import javax.swing.border.LineBorder;
 
 import com.usthb.ErrorCode;
 import com.usthb.MainApp;
 import com.usthb.modeles.Joueur;
+import com.usthb.modeles.Levels;
 import com.usthb.modeles.PartieJeu;
 import com.usthb.modeles.ThemeJeu;
+import com.usthb.modeles.ThemeType;
 import com.usthb.vues.ConnectionPage;
 import com.usthb.vues.EurekaFrame;
 import com.usthb.vues.GamePage;
@@ -85,6 +87,8 @@ public class AppControler implements
 	}
 	
 	private void startGame(ThemeJeu theme, Joueur player) {
+		gameFrame.getGamePage().getPlayerInput().setBorder(
+				new LineBorder(Color.decode("#FFFFFF"), 1, true));
 		eurekaRuner.setCurrentGame(new PartieJeu(
 				theme
 				, eurekaRuner.getCurrentPlayer().getQuestions(theme)));
@@ -104,7 +108,14 @@ public class AppControler implements
 	private void playRound(PartieJeu game) {
 		GamePage gamePage = gameFrame.getGamePage();
 		
-		game.checkChar(gamePage.getPlayerInput().getText().charAt(0));
+		// On vérifie si il y a un caractère car il est possible de continuer
+		//un partie en utilisant la méthode playRound et dans ce cas le text sera null 
+			try {
+				game.checkChar(gamePage.getPlayerInput().getText().charAt(0));
+			} catch (NullPointerException e) {
+				e.printStackTrace();
+			}
+			
 		
 		// On vérifie si le caractère était correcte ou non, si la réponse
 		// courante du joueur se trouve inchangé (celle de la partie) donc le
@@ -129,26 +140,40 @@ public class AppControler implements
 		gamePage.disableCofirmButton();
 		
 		if (game.getHangman().isWinGame()) {
-			System.out.println("You win");
+			gameFrame.displayBackground(gameFrame.getGamePage());
+			gameFrame.getPopUp().displayGameFinished(
+					gameFrame.getLocation()
+					, true
+					, game.getScore());
 			
 			eurekaRuner.getCurrentPlayer().addGame(
 					eurekaRuner.getCurrentGame());
-
-			switchPanel(
-					gameFrame.getGamePage()
-					, gameFrame.getHomePage());
-			
-			System.out.println(eurekaRuner.getCurrentPlayer().getTotalScore());
 		} else if (game.getAttemptsLeft() == 0) {
-			System.out.println("You lost");
+			gameFrame.displayBackground(gameFrame.getGamePage());
+			gameFrame.getPopUp().displayGameFinished(
+					gameFrame.getLocation()
+					, false
+					, game.getScore());
 			eurekaRuner.getCurrentPlayer().addGame(
 					eurekaRuner.getCurrentGame());
-
-			switchPanel(
-					gameFrame.getGamePage()
-					, gameFrame.getHomePage());
-			System.out.println(eurekaRuner.getCurrentPlayer().getTotalScore());
 		}
+	}
+	
+	private void loadGame(PartieJeu game) {
+		gameFrame.setGamePage(eurekaRuner.getCurrentPlayer().getUsername());
+		gameFrame.getGamePage().getPlayerInput().setBorder(
+				new LineBorder(Color.decode("#FFFFFF"), 1, true));
+		eurekaRuner.setCurrentGame(game);
+		
+		GamePage gamePage = gameFrame.getGamePage();
+		
+		switchPanel(gameFrame.getHomePage(), gamePage);
+		
+		gamePage.setQuestion(game.getQuestion().getLable());
+		gamePage.setCurrentAnswer(game.getCurrentAnswer());
+		gamePage.setLevel(game.getCurrentLevel());
+		gamePage.setChansesLeft(game.getAttemptsLeft());
+		gamePage.setScore(game.getScore());
 	}
 
 	private void switchPanel(JPanel oldPanel, JPanel newPanel) {
@@ -162,9 +187,20 @@ public class AppControler implements
 			String triger = e.getActionCommand(); 
 			
 			if (triger.contentEquals("")) {
-				if (currentPage.equals(gameFrame)) {
-					
+				if (currentPage.equals(gameFrame.getPopUp().getBaseFrame())) {
+					gameFrame.getPopUp().removePopUp();
+					gameFrame.removeBackground();
 				} else {
+					JPanel parent = (JPanel) ((Component) e.getSource())
+							.getParent();
+					
+					for (Component component : parent.getComponents()) {
+						if (component.equals(gameFrame.getGamePage())) {
+							eurekaRuner.getCurrentPlayer().addGame(
+									eurekaRuner.getCurrentGame());
+						}
+					}
+					
 					eurekaRuner.terminate();
 					System.exit(0);
 				}
@@ -172,9 +208,21 @@ public class AppControler implements
 			} else if (triger.contentEquals("Continue")) {
 				
 				if (eurekaRuner.getCurrentPlayer() != null) {
+					if (eurekaRuner.getCurrentPlayer().hasGames()
+							&& eurekaRuner.getCurrentPlayer().getLastGame()
+								.getAttemptsLeft() > 0) {
+
+						loadGame(eurekaRuner.getCurrentPlayer()
+								.getLastGame());
+						
+						eurekaRuner.getCurrentPlayer().removeLastGame();
+					} else {
 					
+					}
 				} else {
-					
+					gameFrame.displayBackground(gameFrame.getHomePage());
+					gameFrame.getPopUp().displayNotConnected(
+							gameFrame.getLocation());
 				}
 				
 			} else if (triger.contentEquals("New Game")) {
@@ -191,12 +239,44 @@ public class AppControler implements
 							, eurekaRuner.getCurrentPlayer().getUsername()
 						);
 					
-					switchPanel(
-							gameFrame.getHomePage()
-							, gameFrame.getThemeSelectionPage()
-						);
+					if (((JButton) e.getSource()).getParent().
+							equals(gameFrame.getHomePage())) {
+						if (eurekaRuner.getCurrentPlayer().
+								getCurrentLvl() == null
+								|| eurekaRuner.getCurrentPlayer().
+								getCurrentLvl().equals(Levels.LEVEL_5)) {
+							
+							switchPanel(
+									gameFrame.getHomePage()
+									, gameFrame.getThemeSelectionPage()
+								);
+						} else {
+							gameFrame.displayBackground(gameFrame.getHomePage());
+							gameFrame.getPopUp().displayLoseProgress(
+									gameFrame.getLocation());
+						}
+					} else if (((JButton) e.getSource()).getParent().
+							equals(gameFrame.getGamePage())) {
+						
+						gameFrame.getPopUp().removePopUp();
+						gameFrame.removeBackground();
+						switchPanel(
+								gameFrame.getGamePage()
+								, gameFrame.getThemeSelectionPage()
+							);
+					} else {
+						eurekaRuner.getCurrentPlayer().removeLastGame();
+						gameFrame.getPopUp().removePopUp();
+						gameFrame.removeBackground();
+						switchPanel(
+								gameFrame.getHomePage()
+								, gameFrame.getThemeSelectionPage()
+							);
+					}
 				} else {
-					gameFrame.getPopUp().displayPopUp(gameFrame.getLocation());
+					gameFrame.displayBackground(gameFrame.getHomePage());
+					gameFrame.getPopUp().displayNotConnected(
+							gameFrame.getLocation());
 				}
 			} else if (triger.contentEquals("Confirm")) {
 				if (currentPage.equals(gameFrame.getConnectionPage())) {
@@ -208,9 +288,9 @@ public class AppControler implements
 					} else if (error.equals(ErrorCode.WRONG_PASSWORD)) {
 						connectionPage.setPasswordError(error.getErrorMessage());
 					} else if (error.equals(ErrorCode.NO_ERROR)){
-						gameFrame.getHomePage().setUsername(
+						gameFrame.getHomePage().disableConnection(
 								eurekaRuner.getCurrentPlayer().getUsername());
-	
+						
 						switchPanel(connectionPage, gameFrame.getHomePage());
 					}
 				} else if (currentPage.equals(gameFrame.getInscriptionPage())) {
@@ -230,7 +310,7 @@ public class AppControler implements
 								, false);
 						
 					} else if (error.equals(ErrorCode.NO_ERROR)) {
-						gameFrame.getHomePage().setUsername(
+						gameFrame.getHomePage().disableConnection(
 								eurekaRuner.getCurrentPlayer().getUsername());
 						gameFrame.getHomePage().hideAccountCreation();
 						switchPanel(inscriptionPage, gameFrame.getHomePage());
@@ -259,6 +339,18 @@ public class AppControler implements
 					startGame(selectedTheme, eurekaRuner.getCurrentPlayer());
 				}
 				
+			} else if (triger.contentEquals("Home Page")) {
+				gameFrame.getPopUp().removePopUp();
+				gameFrame.removeBackground();
+				switchPanel(
+						gameFrame.getGamePage()
+						, gameFrame.getHomePage()
+					);
+			} else if (triger.contentEquals("Replay")) {
+				gameFrame.getPopUp().removePopUp();
+				gameFrame.removeBackground();
+				startGame(eurekaRuner.getCurrentGame().getTheme()
+						, eurekaRuner.getCurrentPlayer());
 			}
 		}
 
@@ -288,8 +380,10 @@ public class AppControler implements
 	}
 
 	public void mousePressed(MouseEvent e) {
-		this.x = e.getX();
-		this.y = e.getY();
+		if (e.getY() < 32) { 
+			this.x = e.getX();
+			this.y = e.getY();
+		}
 	}
 
 	public void mouseReleased(MouseEvent e) {
@@ -306,7 +400,10 @@ public class AppControler implements
 
 	@Override
 	public void mouseDragged(MouseEvent e) {
-		gameFrame.setLocation(e.getXOnScreen() - x, e.getYOnScreen() - y);
+		if (e.getY() < 32) { 
+			gameFrame.setLocation(e.getXOnScreen() - x, e.getYOnScreen() - y);
+		}
+		
 	}
 
 	@Override

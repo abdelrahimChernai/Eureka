@@ -65,9 +65,13 @@ public class HomePage extends JPanel {
 	public JLabel getUsername() {
 		return username;
 	}
+	
+	
 
-	public void setUsername(String username) {
+	public void disableConnection(String username) {
 		this.username.setText(username);
+		this.createAccount.setVisible(false);
+		this.dontHaveAnAccount.setVisible(false);
 	}
 
 	public JLabel getCreateAccount() {

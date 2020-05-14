@@ -84,6 +84,10 @@ public class PartieJeu implements Serializable {
 		return score;
 	}
 
+	public ThemeJeu getTheme() {
+		return theme;
+	}
+
 	public String getCurrentAnswer() {
 		return currentAnswer.toString();
 	}

@@ -19,6 +19,7 @@ import com.usthb.controler.AppControler;
 	private AppControler manager;
 	private PopUp popUp;
 	private JPanel baseFrame;
+	private JPanel backgound;
 	private JPanel homePage;
 	private JPanel inscriptionPage;
 	private JPanel connectionPage;
@@ -39,7 +40,10 @@ import com.usthb.controler.AppControler;
 			e.printStackTrace();
 		}
 		
-		popUp = new PopUp(this);
+		popUp = new PopUp(this, font);
+		
+		backgound = new JPanel(null, true);
+		backgound.setBackground(new Color(0.f, 0.f, 0.f, 0.25f));
 		
 		homePage = new HomePage(font);
 		homePage.setBounds(0, 32, WIDTH, HEIGHT - 32);
@@ -78,6 +82,19 @@ import com.usthb.controler.AppControler;
 		baseFrame.addMouseListener(manager);
 		baseFrame.addMouseMotionListener(manager);
 		baseFrame.add(homePage);
+	}
+	
+	public void displayBackground(JPanel panel) {
+		backgound.setBounds(0, 1, WIDTH, HEIGHT - 33);
+		panel.add(backgound, panel.getComponentCount());
+		panel.repaint();
+	}
+	
+	public void removeBackground() {
+		JPanel parent = (JPanel) backgound.getParent();
+		
+		parent.remove(backgound);
+		parent.repaint();
 	}
 	
 	public PopUp getPopUp() {
