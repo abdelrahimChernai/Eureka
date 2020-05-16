@@ -224,6 +224,15 @@ public abstract class Joueur implements Serializable{
 	public PartieJeu getLastGame() {
 		return playerGames.getLast();
 	}
+	
+	public boolean hasCurrentGmae() {
+		if (playerGames.isEmpty()) {
+			return false;
+		}
+
+		return playerGames.getLast().getAttemptsLeft() > 0
+				&& !playerGames.getLast().getHangman().isWinGame();
+	}
 
 	/**
 	 * Donne le nombre de points du joueur depuis son inscription 
@@ -248,7 +257,11 @@ public abstract class Joueur implements Serializable{
 	 * @param partie la partie a ajouter
 	 */
 	public void addGame(PartieJeu partie) {
-		this.playerGames.add(partie);
+		this.playerGames.addLast(partie);
+	}
+
+	public void removeLastGame() {
+		playerGames.removeLast();
 	}
 
 	public static boolean isFirstNameValid(String firstName) {
@@ -333,14 +346,6 @@ public abstract class Joueur implements Serializable{
 		} else {
 			return false;
 		}
-	}
-	
-	public void removeLastGame() {
-		playerGames.removeLast();
-	}
-	
-	public boolean hasGames() {
-		return !playerGames.isEmpty();
 	}
 	
 	public String toString() {

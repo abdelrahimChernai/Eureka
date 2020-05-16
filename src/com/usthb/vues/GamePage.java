@@ -17,6 +17,7 @@ import com.usthb.controler.AppControler;
 
 public class GamePage extends JPanel {
 	private AppControler manager = new AppControler();
+	private JLabel back;
 	private JLabel chansesLeft;
 	private JLabel score;
 	private JLabel username;
@@ -29,6 +30,13 @@ public class GamePage extends JPanel {
 	
 	public GamePage(String username, Font font) {
 		super(null, true);
+		
+		back = new JLabel("Back");
+		back.setFont(font);
+		back.setHorizontalAlignment(SwingConstants.CENTER);
+		back.setForeground(Color.decode("#BB86FC"));
+		back.setBounds(60, 90, 32, 20);
+		back.addMouseListener(manager);
 		
 		chansesLeft = new JLabel();
 		chansesLeft.setFont(font);
@@ -106,6 +114,7 @@ public class GamePage extends JPanel {
 		confirmButton.setEnabled(false);
 		
 		this.setBackground(Color.decode("#1A1919"));
+		this.add(back);
 		this.add(this.username);
 		this.add(question);
 		this.add(level);

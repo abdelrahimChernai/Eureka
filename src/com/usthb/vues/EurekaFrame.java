@@ -14,6 +14,7 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 
 import com.usthb.controler.AppControler;
+import com.usthb.modeles.Joueur;
 
  public class EurekaFrame extends JFrame {
 	private AppControler manager;
@@ -123,11 +124,11 @@ import com.usthb.controler.AppControler;
 	
 	public void setThemeSelectionPage(
 			LinkedList<String> themes
-			, String username) {
+			, Joueur player) {
 
 		this.themeSelectionPage = new ThemeSelectionPage(
 				themes
-				, username
+				, player
 				, font);
 		
 		this.themeSelectionPage.setBounds(0, 32, WIDTH, HEIGHT - 32);

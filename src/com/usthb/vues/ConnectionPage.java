@@ -15,6 +15,7 @@ import com.usthb.controler.AppControler;
 
 public class ConnectionPage extends JPanel {
 	private AppControler manager = new AppControler();
+	private JLabel back;
 	private JLabel usernameText;
 	private JLabel passwordText;
 	private JLabel usernameError;
@@ -25,6 +26,13 @@ public class ConnectionPage extends JPanel {
 	
 	public ConnectionPage(Font font) {
 		super(null, true);
+		
+		back = new JLabel("Back");
+		back.setFont(font);
+		back.setHorizontalAlignment(SwingConstants.CENTER);
+		back.setForeground(Color.decode("#BB86FC"));
+		back.setBounds(60, 90, 32, 20);
+		back.addMouseListener(manager);
 		
 		usernameText = new JLabel("Username");
 		usernameText.setFont(font);
@@ -76,6 +84,7 @@ public class ConnectionPage extends JPanel {
 		confirmButton.addActionListener(manager);
 
 		this.setBackground(Color.decode("#1A1919"));
+		this.add(back);
 		this.add(usernameText);
 		this.add(usernameInput);
 		this.add(usernameError);
