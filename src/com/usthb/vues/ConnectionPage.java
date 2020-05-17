@@ -3,6 +3,7 @@ package com.usthb.vues;
 import java.awt.Color;
 import java.awt.Font;
 
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -29,7 +30,6 @@ public class ConnectionPage extends JPanel {
 		
 		back = new JLabel("Back");
 		back.setFont(font);
-		back.setHorizontalAlignment(SwingConstants.CENTER);
 		back.setForeground(Color.decode("#BB86FC"));
 		back.setBounds(60, 90, 32, 20);
 		back.addMouseListener(manager);
