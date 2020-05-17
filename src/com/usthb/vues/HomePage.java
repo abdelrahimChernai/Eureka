@@ -84,7 +84,11 @@ public class HomePage extends JPanel {
 	
 	
 
-	public void disableConnection(String username, int lvl) {
+	/**
+	 * @param username
+	 * @param lvl
+	 */
+	public void setPlayerText(String username, int lvl) {
 		this.username.setText(username);
 		this.lvl.setText("Level " + lvl);
 		this.createAccount.setVisible(false);

@@ -142,6 +142,7 @@ public abstract class Joueur implements Serializable{
 		this.username = username;
 		this.password = password;
 		this.birthDate = birthDate;
+		this.currentLvl = Levels.NO_LEVEL;
 		this.playerGames = new LinkedList<PartieJeu>();
 	}
 	
@@ -231,7 +232,7 @@ public abstract class Joueur implements Serializable{
 		}
 
 		return playerGames.getLast().getAttemptsLeft() > 0
-				&& !playerGames.getLast().getHangman().isWinGame();
+				&& !playerGames.getLast().isWin();
 	}
 
 	/**

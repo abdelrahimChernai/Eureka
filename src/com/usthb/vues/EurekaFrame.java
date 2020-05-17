@@ -14,6 +14,7 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 
 import com.usthb.controler.AppControler;
+import com.usthb.dessin.Potence;
 import com.usthb.modeles.Joueur;
 
  public class EurekaFrame extends JFrame {
@@ -26,11 +27,12 @@ import com.usthb.modeles.Joueur;
 	private JPanel connectionPage;
 	private JPanel themeSelectionPage;
 	private JPanel gamePage;
+	private Potence hangman;
 	public static final int WIDTH = 810;
 	public static final int HEIGHT = 620;
 	public Font font;
 	
-	public EurekaFrame() {
+	public EurekaFrame(Potence hangman) {
 		this.manager = new AppControler();
 		File fontFile = new File("resources\\fonts\\Nunito-Regular.ttf");
 		
@@ -57,6 +59,7 @@ import com.usthb.modeles.Joueur;
 		
 		setupBaseFrame();
 		
+		this.hangman = hangman;
 		this.setTitle("Eureka");
 		this.setLayout(null);
 		this.setResizable(false);
@@ -124,11 +127,13 @@ import com.usthb.modeles.Joueur;
 	
 	public void setThemeSelectionPage(
 			LinkedList<String> themes
-			, Joueur player) {
+			, String playerUsername
+			, int playerLvl) {
 
 		this.themeSelectionPage = new ThemeSelectionPage(
 				themes
-				, player
+				, playerUsername
+				, playerLvl
 				, font);
 		
 		this.themeSelectionPage.setBounds(0, 32, WIDTH, HEIGHT - 32);
@@ -139,8 +144,7 @@ import com.usthb.modeles.Joueur;
 	}
 
 	public void setGamePage(String username) {
-
-		this.gamePage = new GamePage(username, font);
+		this.gamePage = new GamePage(username, hangman, font);
 		this.gamePage.setBounds(0, 32, WIDTH, HEIGHT - 32);
 	}
 }

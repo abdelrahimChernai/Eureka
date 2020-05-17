@@ -48,11 +48,11 @@ public class AppControler implements
 	
 	public static void start() {
 		eurekaRunner = new  MainApp();
-		gameFrame = new EurekaFrame();
+		gameFrame = new EurekaFrame(PartieJeu.getHangman());
 		backStack = new Stack<JPanel>();
 		
 //		ThemeJeu theme = new ThemeJeu(2, "Cold War", ThemeType.HISTOIRE);
-//		eurekaRuner.getThemes().add(theme);
+//		eurekaRunner.getThemes().add(theme);
 		
 		eurekaRunner.initialization();
 		gameFrame.setVisible(true);
@@ -98,7 +98,6 @@ public class AppControler implements
 		PartieJeu currentGame = eurekaRunner.getCurrentGame();
 		GamePage gamePage = gameFrame.getGamePage();
 		
-		switchPanel(gameFrame.getThemeSelectionPage(), gamePage);
 		currentGame.startGame();
 		eurekaRunner.getCurrentPlayer().setCurrentLvl();
 		gamePage.setQuestion(currentGame.getQuestion().getLable());
@@ -106,6 +105,7 @@ public class AppControler implements
 		gamePage.setLevel(currentGame.getCurrentLevel());
 		gamePage.setChansesLeft(currentGame.getAttemptsLeft());
 		gamePage.setScore(currentGame.getScore());
+		switchPanel(gameFrame.getThemeSelectionPage(), gamePage);
 	}
 
 	private void playRound(PartieJeu game) {
@@ -136,7 +136,7 @@ public class AppControler implements
 		gamePage.setScore(game.getScore());
 		gamePage.disableCofirmButton();
 		
-		if (game.getHangman().isWinGame()) {
+		if (game.isWin()) {
 			gameFrame.displayBackground(gameFrame.getGamePage());
 			gameFrame.getPopUp().displayGameFinished(
 					gameFrame.getLocation()
@@ -247,7 +247,9 @@ public class AppControler implements
 					
 					gameFrame.setThemeSelectionPage(
 							themes
-							, eurekaRunner.getCurrentPlayer()
+							, eurekaRunner.getCurrentPlayer().getUsername()
+							, eurekaRunner.getCurrentPlayer().getCurrentLvl()
+								.getLvlNumber()
 						);
 					
 					if (((JButton) e.getSource()).getParent().
@@ -299,7 +301,7 @@ public class AppControler implements
 					} else if (error.equals(ErrorCode.WRONG_PASSWORD)) {
 						connectionPage.setPasswordError(error.getErrorMessage());
 					} else if (error.equals(ErrorCode.NO_ERROR)){
-						gameFrame.getHomePage().disableConnection(
+						gameFrame.getHomePage().setPlayerText(
 							eurekaRunner.getCurrentPlayer().getUsername()
 							, eurekaRunner.getCurrentPlayer().getCurrentLvl().
 								getLvlNumber());
@@ -330,7 +332,7 @@ public class AppControler implements
 							lvl = eurekaRunner.getCurrentPlayer()
 									.getCurrentLvl().getLvlNumber();
 						}
-						gameFrame.getHomePage().disableConnection(
+						gameFrame.getHomePage().setPlayerText(
 							eurekaRunner.getCurrentPlayer().getUsername()
 							, lvl);
 						gameFrame.getHomePage().hideAccountCreation();

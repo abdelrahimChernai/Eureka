@@ -29,6 +29,8 @@ public class PartieJeu implements Serializable {
 	 * @see ThemeJeu#coefficent
 	 */
 	private int score = 0;
+	
+	private boolean win;
 
 	/**
 	 * <p>
@@ -72,16 +74,21 @@ public class PartieJeu implements Serializable {
 	 * 
 	 * @see PartieJeu#checkChar(char)
 	 */
-	private Potence hangman = new Potence();
+	private static Potence hangman = new Potence();
 	
 	public PartieJeu(ThemeJeu theme, LinkedList<? extends Question> questions) {
 		gamesNumber++;
+		this.win = false;
 		this.theme = theme;
 		this.questions = (LinkedList<Question>) questions;
 	}
 	
 	public int getScore() {
 		return score;
+	}
+
+	public boolean isWin() {
+		return win;
 	}
 
 	public ThemeJeu getTheme() {
@@ -92,7 +99,7 @@ public class PartieJeu implements Serializable {
 		return currentAnswer.toString();
 	}
 
-	public Potence getHangman() {
+	public static Potence getHangman() {
 		return hangman;
 	}
 		
@@ -147,6 +154,7 @@ public class PartieJeu implements Serializable {
 	}
 	
 	public void startGame() {
+		hangman.clearState();
 		this.questionId = theme.generateQuestionID() + 1;		
 		setupCurrnetAnswer(getQuestion().getAnswer());
 	}
@@ -159,14 +167,6 @@ public class PartieJeu implements Serializable {
 		
 	}
 	
-	private void finishGame(boolean win) {
-		if (win) {
-			
-		} else {
-			
-		}
-	}
-
 	/**
 	 * <b>
 	 * 	Cette fonction vérifie si le caractère entré par le joueur est dans la
@@ -226,9 +226,10 @@ public class PartieJeu implements Serializable {
 				//currentAnswer en String puis compare avec answer
 				
 				if (Integer.valueOf(questionId.substring(questionId.length() - 1)) == 5) {
-					hangman.setWinGame();
+					this.win = true; 
 					score += theme.coefficent * this.getQuestion().getNumberPoints();
 				} else {
+					hangman.setFoundAnswer();
 					nextLevel();
  				}
 				/*

@@ -21,7 +21,8 @@ public class ThemeSelectionPage extends JPanel {
 	private LinkedList<JButton> themesButtons;
 	
 	public ThemeSelectionPage(LinkedList<String> themes
-			, Joueur player
+			, String playerUsername
+			, int playerLvl
 			, Font font) {
 		
 		super(null, true);
@@ -35,14 +36,14 @@ public class ThemeSelectionPage extends JPanel {
 		back.setBounds(60, 90, 32, 20);
 		back.addMouseListener(manager);
 		
-		username = new JLabel(player.getUsername());
+		username = new JLabel(playerUsername);
 		username.setFont(font);
 		username.setHorizontalAlignment(SwingConstants.CENTER);
 		username.setForeground(Color.decode("#BB86FC"));
 		username.setBounds(682, 80, 48, 20);
 		username.addMouseListener(manager);
 		
-		lvl = new JLabel("Level " + player.getCurrentLvl().getLvlNumber());
+		lvl = new JLabel("Level " + playerLvl);
 		Font temp = font.deriveFont(12f);
 		lvl.setFont(temp);
 		lvl.setHorizontalAlignment(SwingConstants.CENTER);

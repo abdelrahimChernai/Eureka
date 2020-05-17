@@ -14,6 +14,7 @@ import javax.swing.text.StyleConstants;
 import javax.swing.text.StyledDocument;
 
 import com.usthb.controler.AppControler;
+import com.usthb.dessin.Potence;
 
 public class GamePage extends JPanel {
 	private AppControler manager = new AppControler();
@@ -28,7 +29,7 @@ public class GamePage extends JPanel {
 	private JPanel hangemanPanel;
 	private JButton confirmButton;
 	
-	public GamePage(String username, Font font) {
+	public GamePage(String username, Potence hangman,Font font) {
 		super(null, true);
 		
 		back = new JLabel("Back");
@@ -43,6 +44,11 @@ public class GamePage extends JPanel {
 		chansesLeft.setForeground(Color.decode("#FFFFFF"));
 		chansesLeft.setBounds((310 - 168) / 2, 0, 168, 20);
 		chansesLeft.setHorizontalAlignment(SwingConstants.CENTER);
+		
+		hangman.setFont(font);
+		hangman.setBounds(5, 30, 300, 280);
+		hangman.setBackground(new Color(.09f, .09f, .09f, 0.9f));
+		hangman.setForeground(Color.decode("#FFFFFF"));
 		
 		score = new JLabel("0");
 		score.setFont(font);
@@ -102,6 +108,7 @@ public class GamePage extends JPanel {
 		hangemanPanel.setBounds(40, 224, 310, 339);
 		hangemanPanel.add(chansesLeft);
 		hangemanPanel.add(score);
+		hangemanPanel.add(hangman);
 		
 		confirmButton = new JButton("Confirm");
 		confirmButton.setFont(font);
@@ -162,6 +169,10 @@ public class GamePage extends JPanel {
 
 	public JTextField getPlayerInput() {
 		return playerInput;
+	}
+
+	public JPanel getHangemanPanel() {
+		return hangemanPanel;
 	}
 
 	public JButton getConfirmButton() {

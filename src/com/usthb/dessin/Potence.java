@@ -1,7 +1,9 @@
 package com.usthb.dessin;
 
+import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dimension;
+import java.awt.Font;
 import java.awt.Graphics;
 import java.io.Serializable;
 
@@ -22,7 +24,7 @@ import java.io.Serializable;
  * @see com.usthb.modeles.PartieJeu
  */
 public class Potence extends Component implements Serializable{
-	
+
 	/**
 	 * <p>
 	 * 	Représente l'état de la potence qui peut être entre 1 et 8, cet état
@@ -37,7 +39,7 @@ public class Potence extends Component implements Serializable{
 	 * @see com.usthb.modeles.PartieJeu#checkChar(char)
 	 */
 	private int state = 0;
-	
+
 	/**
 	 * <p>
 	 * 	Représente si la réponse en cours est égale à la réponse de la question.
@@ -51,8 +53,8 @@ public class Potence extends Component implements Serializable{
 	 * @see com.usthb.modeles.Question#answer
 	 * @see com.usthb.modeles.PartieJeu#checkChar(char)
 	 */
-	private boolean winGame = false;
-	
+	private boolean foundAnswer = false;
+
 	/**
 	 * <p>
 	 * 	Représente les dimensions de la fenêtre (hauteur et largeur en pixels)
@@ -64,11 +66,11 @@ public class Potence extends Component implements Serializable{
 	 * TODO add a link to Potence.paint
 	 */
 	private Dimension windowDimension;
-	
+
 	public int getState() {
 		return state;
 	}
-	
+
 	public void clearState() {
 		this.state = 0;
 	}
@@ -82,12 +84,8 @@ public class Potence extends Component implements Serializable{
 	 * 
 	 * @see com.usthb.modeles.PartieJeu#checkChar(char)
 	 */
-	public void setWinGame() {
-		this.winGame = true;
-	}
-	
-	public boolean isWinGame() {
-		return winGame;
+	public void setFoundAnswer() {
+		this.foundAnswer = true;
 	}
 
 	/**
@@ -102,7 +100,7 @@ public class Potence extends Component implements Serializable{
 	public void incrementState() {
 		this.state++;
 	}
-	
+
 	/**
 	 * <p>
 	 * 	Cette méthode s'occupe de dessiner le pendu selon la variable sate, elle
@@ -112,7 +110,49 @@ public class Potence extends Component implements Serializable{
 	 * 
 	 * @param
 	 */
-	public void paint(Graphics hamgmanDrawManager) {
+	@Override
+	public void paint(Graphics g) {
+		windowDimension = this.getSize();
 		
+		switch (state) {
+		case 0 :
+			g.drawLine(l(30), h(120), l(90), h(120));
+
+		case 1 :
+			g.drawLine(l(30), h(120), l(30), h(40));
+		
+		case 2 :
+			g.drawLine(l(60), h(120), l(30), h(90));
+		
+		case 3 :
+			g.drawLine(l(30), h(40), l(80), h(40));
+		
+		case 4 :
+			g.drawLine(l(30), h(60), l(50), h(40));
+		
+		case 5 :
+			g.drawLine(l(70), h(40), l(70), h(60));
+	
+		case 6 :
+			g.drawOval(l(65), h(60), l(10), h(10));
+		
+		case 7 :
+			g.drawLine(l(70), h(70), l(70), h(85));
+			g.drawLine(l(70), h(70), l(65), h(75));
+			g.drawLine(l(70), h(70), l(75), h(75));
+			g.drawLine(l(70), h(85), l(65), h(95));
+			g.drawLine(l(70), h(85), l(75), h(95));
+		}
+
+	}
+	
+	private int l (int v) {
+		double k = Math.min(windowDimension.width/100., windowDimension.height/110);
+		return (int) (v * k);
+	}
+	
+	private int h (int v) {
+		double k = Math.min(windowDimension.width/100., windowDimension.height/110);
+		return (int) (v * k);
 	}
 }
