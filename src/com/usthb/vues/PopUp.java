@@ -2,15 +2,17 @@ package com.usthb.vues;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.Point;
-import java.security.MessageDigest;
 
 import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JTextPane;
 import javax.swing.SwingConstants;
-import javax.swing.border.LineBorder;
+import javax.swing.text.SimpleAttributeSet;
+import javax.swing.text.StyleConstants;
+import javax.swing.text.StyledDocument;
 
 import com.usthb.controler.AppControler;
 
@@ -24,6 +26,9 @@ public class PopUp extends JDialog {
 	private JPanel notConnected;
 	private JPanel noCurrentGame;
 	private JPanel loseProgress;
+	private JPanel about;
+	private JPanel help;
+	
 	
 	public PopUp(JFrame parent, Font font) { 
 		super(parent, "test", true);
@@ -275,8 +280,146 @@ public class PopUp extends JDialog {
 		displayPopUp(center);
 	}
 	
+	public void displayAbout(Point center) {
+		baseFrame.removeAll();
+		
+		this.setSize(WIDTH, 260);
+		baseFrame.setSize(WIDTH, 260);
+		
+		about = new JPanel(null, true);
+
+		JLabel aboutEureka = new JLabel("About Eureka:");
+		aboutEureka.setFont(this.getFont());
+		aboutEureka.setHorizontalAlignment(SwingConstants.CENTER);
+		aboutEureka.setForeground(Color.decode("#FFFFFF"));
+		aboutEureka.setBounds((WIDTH - (aboutEureka.getText().length() * 8)) / 2
+				, 23
+				, aboutEureka.getText().length() * 8
+				, 20);
+		
+		JLabel authors =
+				new JLabel("By Abdelraim Chernai and Yasmine Bouamra");
+		authors.setFont(this.getFont());
+		authors.setHorizontalAlignment(SwingConstants.CENTER);
+		authors.setForeground(Color.decode("#FFFFFF"));
+		authors.setBounds((WIDTH - (authors.getText().length() * 7)) / 2
+				, 72
+				, authors.getText().length() * 7
+				, 20);
+		
+		JLabel version =
+				new JLabel("Version 1.2");
+		version.setFont(this.getFont());
+		version.setHorizontalAlignment(SwingConstants.CENTER);
+		version.setForeground(Color.decode("#FFFFFF"));
+		version.setBounds(authors.getX()
+				, 108
+				, version.getText().length() * 8
+				, 20);
+
+		JLabel date =
+				new JLabel("May 21  2020");
+		date.setFont(this.getFont());
+		date.setHorizontalAlignment(SwingConstants.CENTER);
+		date.setForeground(Color.decode("#FFFFFF"));
+		date.setBounds((authors.getX() + authors.getWidth())
+						- (date.getText().length() * 8) 
+				, 108
+				, date.getText().length() * 8
+				, 20);
+
+		JButton okayButton = new JButton("Okay");
+		okayButton.setFont(this.getFont());
+		okayButton.setBorderPainted(false);
+		okayButton.setFocusPainted(false);
+		okayButton.setBounds(175, 156, 150, 40);
+		okayButton.setBackground(Color.decode("#4BBA87"));
+		okayButton.setForeground(Color.decode("#FFFFFF"));
+		okayButton.addActionListener(manager);
+
+		about.add(aboutEureka);
+		about.add(authors);
+		about.add(version);
+		about.add(date);
+		about.add(okayButton);
+		about.setBounds(0, 32, WIDTH, 228);
+		about.setBackground(Color.decode("#1A1919"));
+
+		baseFrame.add(closeButton);
+		baseFrame.add(about);
+
+		displayPopUp(center);
+	}
+	
+	public void displayHelp(Point center) {
+		baseFrame.removeAll();
+		
+		this.setSize(WIDTH, 350);
+		baseFrame.setSize(WIDTH, 350);
+		
+		help = new JPanel(null, true);
+
+		JLabel aboutEureka = new JLabel("Game Rules:");
+		aboutEureka.setFont(this.getFont());
+		aboutEureka.setHorizontalAlignment(SwingConstants.CENTER);
+		aboutEureka.setForeground(Color.decode("#FFFFFF"));
+		aboutEureka.setBounds((WIDTH - (aboutEureka.getText().length() * 8)) / 2
+				, 23
+				, aboutEureka.getText().length() * 8
+				, 20);
+		
+		JTextPane rules = new JTextPane();
+		rules.setFont(this.getFont());
+		StyledDocument rulesStyle = rules.getStyledDocument();
+		SimpleAttributeSet centered = new SimpleAttributeSet();
+		rules.setBounds(37, 54, 427, 180);
+		rules.setBackground(Color.decode("#1A1919"));
+		rules.setForeground(Color.decode("#FFFFFF"));
+		rules.setEditable(false);
+		rules.setFocusable(false);
+		StyleConstants.setAlignment(centered, StyleConstants.ALIGN_JUSTIFIED);
+		rulesStyle.setParagraphAttributes(
+				0
+				, rulesStyle.getLength()
+				, centered
+				, false);
+		rules.setText("-\tEureka est un jeu éducatif qui se base sur le"
+				+ "principe du Pendu.\n"
+				+ "-\tQuand vous commencez une partie, une question vous sera"
+				+ "posé. Pour gagner, vous devez entrer la réponse caractère"
+				+ "par caractère.\n"
+				+ "-\tDurant une partie, vous pourrez avoir jusqu'à 8 essais"
+				+ "pour deviner de quels lettres la réponse est composée.\n"
+				+ "-\tLe nombre de points gagnés durant la partie dépend du"
+				+ "niveau de difficulté.\n"
+				+ "-\tChaque partie gagnée vous fait passer au niveau suivant."
+				);
+		
+		JButton okayButton = new JButton("Okay");
+		okayButton.setFont(this.getFont());
+		okayButton.setBorderPainted(false);
+		okayButton.setFocusPainted(false);
+		okayButton.setBounds(175, 246, 150, 40);
+		okayButton.setBackground(Color.decode("#4BBA87"));
+		okayButton.setForeground(Color.decode("#FFFFFF"));
+		okayButton.addActionListener(manager);
+
+		help.add(aboutEureka);
+		help.add(okayButton);
+		help.add(rules);
+		help.setBounds(0, 32, WIDTH, 328);
+		help.setBackground(Color.decode("#1A1919"));
+
+		baseFrame.add(closeButton);
+		baseFrame.add(help);
+
+		displayPopUp(center);
+	}
+	
 	public void removePopUp() {
 		this.setVisible(false);
 		this.dispose();
+		this.setSize(WIDTH, HEIGHT);
+		baseFrame.setSize(WIDTH, HEIGHT - 32);
 	}
 }

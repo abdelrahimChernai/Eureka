@@ -7,9 +7,10 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.util.Calendar;
-import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.NoSuchElementException;
 import java.util.Scanner;
 import java.util.StringTokenizer;
 
@@ -221,9 +222,9 @@ public class MainApp {
 		String lastName;
 		String username;
 		String password;
-		Date birthDate;
+		Calendar birthDate;
 		StringTokenizer birthDateString;
-		int day, mounth, year;
+		int day, month, year;
 		
 		firstName = AppControler.getInscriptionFirstname();
 		
@@ -239,12 +240,19 @@ public class MainApp {
 
 		birthDateString =
 				new StringTokenizer(AppControler.getInscriptionBirthDate());
-		day = Integer.parseUnsignedInt(birthDateString.nextToken());
-		mounth = Integer.parseUnsignedInt(birthDateString.nextToken()) - 1;
-		year = Integer.parseUnsignedInt(birthDateString.nextToken()) - 1900;
-		birthDate = new Date(year, mounth, day);
+		try {
+			day = Integer.parseUnsignedInt(birthDateString.nextToken());
+			month = Integer.parseUnsignedInt(birthDateString.nextToken());
+			year = Integer.parseUnsignedInt(birthDateString.nextToken());
+		} catch (NoSuchElementException e) {
+			day = -1;
+			month = -1;
+			year = -1;
+		}
 		
-		if (!Joueur.isDateValide(birthDate)) {
+		birthDate = Joueur.checkDate(year, month, day);
+		
+		if (birthDate == null) {
 			return ErrorCode.UNVALID_DATE_FORMAT;
 		}
 		
@@ -261,14 +269,23 @@ public class MainApp {
 		}
 		
 		if (Calendar.getInstance().get(Calendar.YEAR)
-				- (birthDate.getYear() + 1900)
+				- (birthDate.get(Calendar.YEAR) + 1900)
 			> 18) { // le joueur est adulte
-
-		newPlayer =
-				new Adulte(firstName, lastName, username, password, birthDate);
+			
+			newPlayer = new Adulte(
+					firstName,
+					lastName,
+					username,
+					password,
+					birthDate.getTime()
+				);
 		} else {
-		newPlayer =
-				new Enfant(firstName, lastName, username, password, birthDate);
+			newPlayer = new Enfant(firstName,
+					lastName,
+					username,
+					password,
+					birthDate.getTime()
+				);
 		}
 		
 		//Pour des raisons de sécurité on efface le mot de passe

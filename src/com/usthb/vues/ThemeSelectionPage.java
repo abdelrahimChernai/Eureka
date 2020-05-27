@@ -10,7 +10,6 @@ import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 
 import com.usthb.controler.AppControler;
-import com.usthb.modeles.Joueur;
 
 public class ThemeSelectionPage extends JPanel {
 	private AppControler manager = new AppControler(); 

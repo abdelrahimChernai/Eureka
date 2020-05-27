@@ -1,7 +1,9 @@
 package com.usthb.modeles;
 
 import java.io.Serializable;
+import java.util.Calendar;
 import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.LinkedList;
 import java.util.Objects;
 import java.util.regex.Pattern;
@@ -288,64 +290,53 @@ public abstract class Joueur implements Serializable{
 	 * 	grégorien en vérifiant la valeur des jours selon les mois et si l'année
 	 * 	est bissextile ou pas.
 	 * </p>
-	 * @param date une date a verifier
+	 * @param birthDate une date a verifier
 	 * @return	true si cette date est une date du calendrier grégorien
 	 */
-	public static boolean isDateValide(Date date) {
-		if (
-				date.getYear() >= 0
-				&& date.getMonth() <= 12
-				&& date.getMonth() >= 1
-				&& date.getDate() >= 1
-			) {
+	public static Calendar checkDate(int year, int month, int date) {
+		if (year >= 1900 && month <= 12 && month >= 1 && date >= 1) {
 			
-			switch (date.getMonth() + 1) {
+			switch (month) {
 				case 1: case 3: case 5: case 7: case 8: case 10: case 12: 
-					if (date.getDate() <= 31) {
-						return true;
+					if (date <= 31) {
+						return new GregorianCalendar(year, month - 1, date);
 					} else {
-						return false;
+						return null;
 					}
 
 				case 4: case 6: case 9: case 11:
-					if (date.getDate() <= 30) {
-						return true;
+					if (date <= 30) {
+						return new GregorianCalendar(year, month - 1, date);
 					} else {
-						return false;
+						return null;
 					}
 
 				case 2 :
-					if (
-							(
-								(date.getYear() % 4 == 0)
-								&& (date.getYear() % 100 != 0)
-							)
-							
-							|| (
-								date.getYear() % 400 == 0
-							)
-						) {
+					if (((year % 4 == 0) && (year % 100 != 0))
+							|| (year % 400 == 0)) {
 						
-						if(date.getDate() <= 29) {
-							return true;
+						if(date <= 29) {
+							return new
+									GregorianCalendar(year, month - 1, date);
 						} else {
-							return false;
+							return null;
 						}
 							
 					} else {
-						if(date.getDate() <= 28) {
-							return true;
+						if(date <= 28) {
+							return new
+									GregorianCalendar(year, month - 1, date);
 						} else {
-							return false;
+							return null;
 						}
 					}
 				
 				default :
-					return false;
+					return null;
 			}
 			
 		} else {
-			return false;
+			return null;
 		}
 	}
 	

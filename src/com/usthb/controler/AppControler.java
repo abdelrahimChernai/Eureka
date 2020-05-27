@@ -9,7 +9,8 @@ import java.awt.event.KeyListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
-import java.util.Date;
+import java.util.Calendar;
+import java.util.GregorianCalendar;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.NoSuchElementException;
@@ -389,7 +390,9 @@ public class AppControler implements
 						gameFrame.getHomePage()
 						, gameFrame.getInscriptionPage()
 					);
-			} else if (triger.contentEquals("Cancel")) {
+			} else if (triger.contentEquals("Cancel")
+					|| triger.contentEquals("Okay")) {
+				
 				gameFrame.getPopUp().removePopUp();
 				gameFrame.removeBackground();
 			}
@@ -425,6 +428,14 @@ public class AppControler implements
 							gameFrame.getHomePage()
 							, gameFrame.getInscriptionPage()
 							);
+				} else if (label.getText().equals("About")) {
+					gameFrame.displayBackground(gameFrame.getHomePage());
+					gameFrame.getPopUp().displayAbout(gameFrame.getLocation());
+				} else if (label.getText().equals("Help")
+						|| label.getText().equals("?")) {
+					
+					gameFrame.displayBackground(gameFrame.getHomePage());
+					gameFrame.getPopUp().displayHelp(gameFrame.getLocation());
 				}
 			}
 		}
@@ -490,20 +501,22 @@ public class AppControler implements
 			int day, month, year;
 			StringTokenizer birthDateTokenizer =
 					new StringTokenizer(dateString);
+			Calendar birthDate;
 			try {
 				day = Integer.valueOf(birthDateTokenizer.nextToken());
 				month = Integer.valueOf(birthDateTokenizer.nextToken()) - 1;
-				year = Integer.valueOf(birthDateTokenizer.nextToken()) - 1900;
+				year = Integer.valueOf(birthDateTokenizer.nextToken());
 			} catch (NoSuchElementException e1) {
 				day = -1;
 				month = -1;
 				year = -1;
 			}
-			Date birthDate = new Date(year, month, day);
-
+			
+			birthDate = Joueur.checkDate(year, month, day);
+			
 			boolean firstNameValid = Joueur.isFirstNameValid(firstName);
 			boolean lastNameValid = Joueur.isLastNameValid(lastName);
-			boolean dateValid = Joueur.isDateValide(birthDate);
+			boolean dateValid = birthDate != null;
 			boolean usernameValid = Joueur.isUsernameValid(username);
 			boolean passwordValid = Joueur.isPasswordValid(new String(password));
 			boolean confirPasswordValid = true;

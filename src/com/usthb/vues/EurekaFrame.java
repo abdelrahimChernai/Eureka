@@ -15,7 +15,6 @@ import javax.swing.JPanel;
 
 import com.usthb.controler.AppControler;
 import com.usthb.dessin.Potence;
-import com.usthb.modeles.Joueur;
 
  public class EurekaFrame extends JFrame {
 	private AppControler manager;
@@ -30,7 +29,8 @@ import com.usthb.modeles.Joueur;
 	private Potence hangman;
 	public static final int WIDTH = 810;
 	public static final int HEIGHT = 620;
-	public Font font;
+	private Font font;
+	private Font titleFont;
 	
 	public EurekaFrame(Potence hangman) {
 		this.manager = new AppControler();
@@ -43,12 +43,21 @@ import com.usthb.modeles.Joueur;
 			e.printStackTrace();
 		}
 		
+		fontFile = new File("resources\\fonts\\youmurdererbb_reg.ttf");
+		
+		try {
+			titleFont = Font.createFont(Font.TRUETYPE_FONT, fontFile);
+			titleFont = titleFont.deriveFont(63f);
+		} catch (FontFormatException | IOException e) {
+			e.printStackTrace();
+		}
+		
 		popUp = new PopUp(this, font);
 		
 		backgound = new JPanel(null, true);
 		backgound.setBackground(new Color(0.f, 0.f, 0.f, 0.25f));
 		
-		homePage = new HomePage(font);
+		homePage = new HomePage(font, titleFont);
 		homePage.setBounds(0, 32, WIDTH, HEIGHT - 32);
 		
 		inscriptionPage = new InscriptionPage(font);
