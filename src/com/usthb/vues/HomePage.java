@@ -30,11 +30,11 @@ public class HomePage extends JPanel {
 		
 		manager = new AppControler();
 		
-		title = new JLabel("Welcom To Eureka");
+		title = new JLabel("Welcome To Eureka");
 		title.setFont(titleFont);
 		title.setHorizontalAlignment(SwingConstants.CENTER);
 		title.setForeground(Color.decode("#FFFFFF"));
-		title.setBounds(226, 125, 354, 50);
+		title.setBounds(215, 125, 380, 50);
 		
 		username = new JLabel("Log In");
 		username.setFont(font);
