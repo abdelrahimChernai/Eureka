@@ -269,7 +269,7 @@ public class MainApp {
 		}
 		
 		if (Calendar.getInstance().get(Calendar.YEAR)
-				- (birthDate.get(Calendar.YEAR) + 1900)
+				- (birthDate.get(Calendar.YEAR))
 			> 18) { // le joueur est adulte
 			
 			newPlayer = new Adulte(
@@ -279,6 +279,7 @@ public class MainApp {
 					password,
 					birthDate.getTime()
 				);
+			System.out.println(birthDate.getTime());
 		} else {
 			newPlayer = new Enfant(firstName,
 					lastName,
@@ -286,6 +287,7 @@ public class MainApp {
 					password,
 					birthDate.getTime()
 				);
+			System.out.println(birthDate.getTime());
 		}
 		
 		//Pour des raisons de sécurité on efface le mot de passe
