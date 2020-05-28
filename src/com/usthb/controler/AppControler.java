@@ -52,8 +52,8 @@ public class AppControler implements
 		gameFrame = new EurekaFrame(PartieJeu.getHangman());
 		backStack = new Stack<JPanel>();
 		
-//		ThemeJeu theme = new ThemeJeu(2, "Cold War", ThemeType.HISTOIRE);
-//		eurekaRunner.getThemes().add(theme);
+		//ThemeJeu theme = new ThemeJeu(3, "Culture G", ThemeType.CULTURE_GENERALE);
+    	// eurekaRunner.getThemes().add(theme);
 		
 		eurekaRunner.initialization();
 		gameFrame.setVisible(true);

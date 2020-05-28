@@ -36,7 +36,7 @@ public class Potence extends Component implements Serializable{
 	 * 
 	 * @see com.usthb.modeles.PartieJeu#checkChar(char)
 	 */
-	private int state = 0;
+	private int state = 8;
 
 	/**
 	 * <p>
@@ -70,7 +70,7 @@ public class Potence extends Component implements Serializable{
 	}
 
 	public void clearState() {
-		this.state = 0;
+		this.state = 8;
 	}
 
 	/**
@@ -96,7 +96,7 @@ public class Potence extends Component implements Serializable{
 	 * @see Potence#state
 	 */
 	public void incrementState() {
-		this.state++;
+		this.state--;
 	}
 
 	/**
@@ -114,32 +114,33 @@ public class Potence extends Component implements Serializable{
 		
 		switch (state) {
 		case 0 :
-			g.drawLine(l(30), h(120), l(90), h(120));
-
-		case 1 :
-			g.drawLine(l(30), h(120), l(30), h(40));
-		
-		case 2 :
-			g.drawLine(l(60), h(120), l(30), h(90));
-		
-		case 3 :
-			g.drawLine(l(30), h(40), l(80), h(40));
-		
-		case 4 :
-			g.drawLine(l(30), h(60), l(50), h(40));
-		
-		case 5 :
-			g.drawLine(l(70), h(40), l(70), h(60));
-	
-		case 6 :
-			g.drawOval(l(65), h(60), l(10), h(10));
-		
-		case 7 :
 			g.drawLine(l(70), h(70), l(70), h(85));
 			g.drawLine(l(70), h(70), l(65), h(75));
 			g.drawLine(l(70), h(70), l(75), h(75));
 			g.drawLine(l(70), h(85), l(65), h(95));
 			g.drawLine(l(70), h(85), l(75), h(95));
+			
+
+		case 1 :
+			g.drawOval(l(65), h(60), l(10), h(10));
+		
+		case 2 :
+			g.drawLine(l(70), h(40), l(70), h(60));
+		
+		case 3 :
+			g.drawLine(l(30), h(60), l(50), h(40));
+		
+		case 4 :
+			g.drawLine(l(30), h(40), l(80), h(40));
+		
+		case 5 :
+			g.drawLine(l(60), h(120), l(30), h(90));
+	
+		case 6 :
+			g.drawLine(l(30), h(120), l(30), h(40));
+		
+		case 7 :
+			g.drawLine(l(30), h(120), l(90), h(120));
 		}
 
 	}
