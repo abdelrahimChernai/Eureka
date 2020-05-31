@@ -6,12 +6,13 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.GregorianCalendar;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.NoSuchElementException;
 import java.util.Scanner;
+import java.util.Set;
 import java.util.StringTokenizer;
 
 import com.usthb.controler.AppControler;
@@ -279,7 +280,6 @@ public class MainApp {
 					password,
 					birthDate.getTime()
 				);
-			System.out.println(birthDate.getTime());
 		} else {
 			newPlayer = new Enfant(firstName,
 					lastName,
@@ -287,7 +287,6 @@ public class MainApp {
 					password,
 					birthDate.getTime()
 				);
-			System.out.println(birthDate.getTime());
 		}
 		
 		//Pour des raisons de sécurité on efface le mot de passe
@@ -385,5 +384,37 @@ public class MainApp {
 	public HashSet<ThemeJeu> getThemes() {
 		return themes;
 	}
-	
+
+
+	public ArrayList<String> getPlayers() {
+		Set<Integer> keySet = players.keySet();
+		ArrayList<String> players = new ArrayList<String>();
+		int i = 1;
+		
+
+		int previousMax = Integer.MAX_VALUE;
+		Joueur previousMaxPlayer = null;
+		
+		while(players.size() < keySet.size()) {
+			int maxScore = 0;
+			int maxKey = 0;
+
+			for(Integer key : keySet) {
+				if (this.players.get(key).getTotalScore() >= maxScore
+					&& this.players.get(key).getTotalScore() <= previousMax
+					&& !this.players.get(key).equals(previousMaxPlayer)) {
+					
+					maxKey = key;
+					maxScore = this.players.get(key).getTotalScore();
+				}
+			}
+			
+			players.add(i + "    " + this.players.get(maxKey).toString());
+			previousMax = maxScore;
+			previousMaxPlayer = this.players.get(maxKey);
+			i++;
+		}
+		
+		return players;
+	}
 }

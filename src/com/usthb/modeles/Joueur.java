@@ -341,13 +341,9 @@ public abstract class Joueur implements Serializable{
 	}
 	
 	public String toString() {
-		return "Player #" + id + ": "
-				+ firstName + " "
-				+ lastName + " Date of birth "
-				+ birthDate + " Username: "
-				+ username + " Level "
-				+ currentLvl + " : "
-				+ this.getTotalScore() + " points";
+		return "Level    " + currentLvl.getLvlNumber() + "    "
+				+ username + "    " +
+				+ this.getTotalScore();
 	}
 	
 	public abstract LinkedList<? extends Question> getQuestions(ThemeJeu theme);

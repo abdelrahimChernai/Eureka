@@ -12,6 +12,7 @@ import java.util.LinkedList;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 
 import com.usthb.controler.AppControler;
 import com.usthb.dessin.Potence;
@@ -26,6 +27,7 @@ import com.usthb.dessin.Potence;
 	private JPanel connectionPage;
 	private JPanel themeSelectionPage;
 	private JPanel gamePage;
+	private Leaderboard leaderboard;
 	private Potence hangman;
 	public static final int WIDTH = 810;
 	public static final int HEIGHT = 620;
@@ -148,6 +150,7 @@ import com.usthb.dessin.Potence;
 		this.themeSelectionPage.setBounds(0, 32, WIDTH, HEIGHT - 32);
 	}
 	
+	
 	public GamePage getGamePage() {
 		return (GamePage) gamePage;
 	}
@@ -155,5 +158,18 @@ import com.usthb.dessin.Potence;
 	public void setGamePage(String username) {
 		this.gamePage = new GamePage(username, hangman, font);
 		this.gamePage.setBounds(0, 32, WIDTH, HEIGHT - 32);
+	}
+
+	public Leaderboard getLeaderboard() {
+		return leaderboard;
+	}
+
+	public void setLeaderboard() {
+		leaderboard = new Leaderboard(font);
+		leaderboard.setBounds(0, 32, WIDTH, HEIGHT - 32);
+	}
+	
+	public void addPlayerToLeaderboard(String playerInfo) {
+		leaderboard.addPlayerToLeaderboard(playerInfo, font);
 	}
 }

@@ -23,7 +23,7 @@ public class HomePage extends JPanel {
 	private JButton newGameButton;
 	private JButton continueButton;
 	private JButton leaderBoardButton;
-	private JButton addThemeButton;
+//	private JButton addThemeButton;
 	
 	public HomePage(Font font, Font titleFont) {
 		super(null, true);
@@ -91,7 +91,7 @@ public class HomePage extends JPanel {
 		newGameButton.setHorizontalAlignment(SwingConstants.CENTER);
 		newGameButton.setBorderPainted(false);
 		newGameButton.setFocusPainted(false);
-		newGameButton.setBounds(280, 226, 250, 45);
+		newGameButton.setBounds(280, 256, 250, 45);
 		newGameButton.setBackground(Color.decode("#BB86FC"));
 		newGameButton.setForeground(Color.decode("#FFFFFF"));
 		newGameButton.addActionListener(manager);
@@ -101,30 +101,30 @@ public class HomePage extends JPanel {
 		continueButton.setHorizontalAlignment(SwingConstants.CENTER);
 		continueButton.setBorderPainted(false);
 		continueButton.setFocusPainted(false);
-		continueButton.setBounds(280, 294, 250, 45);
+		continueButton.setBounds(280, 324, 250, 45);
 		continueButton.setBackground(Color.decode("#BB86FC"));
 		continueButton.setForeground(Color.decode("#FFFFFF"));
 		continueButton.addActionListener(manager);
 		
-		leaderBoardButton = new JButton("Leader Board");
+		leaderBoardButton = new JButton("Leaderboard");
 		leaderBoardButton.setFont(font);
 		leaderBoardButton.setHorizontalAlignment(SwingConstants.CENTER);
 		leaderBoardButton.setBorderPainted(false);
 		leaderBoardButton.setFocusPainted(false);
-		leaderBoardButton.setBounds(305, 358, 200, 45);
+		leaderBoardButton.setBounds(305, 388, 200, 45);
 		leaderBoardButton.setBackground(Color.decode("#BB86FC"));
 		leaderBoardButton.setForeground(Color.decode("#FFFFFF"));
 		leaderBoardButton.addActionListener(manager);
 		
-		addThemeButton = new JButton("Add themes");
-		addThemeButton.setFont(font);
-		addThemeButton.setHorizontalAlignment(SwingConstants.CENTER);
-		addThemeButton.setBorderPainted(false);
-		addThemeButton.setFocusPainted(false);
-		addThemeButton.setBounds(305, 422, 200, 45);
-		addThemeButton.setBackground(Color.decode("#BB86FC"));
-		addThemeButton.setForeground(Color.decode("#FFFFFF"));
-		addThemeButton.addActionListener(manager);
+//		addThemeButton = new JButton("Add themes");
+//		addThemeButton.setFont(font);
+//		addThemeButton.setHorizontalAlignment(SwingConstants.CENTER);
+//		addThemeButton.setBorderPainted(false);
+//		addThemeButton.setFocusPainted(false);
+//		addThemeButton.setBounds(305, 422, 200, 45);
+//		addThemeButton.setBackground(Color.decode("#BB86FC"));
+//		addThemeButton.setForeground(Color.decode("#FFFFFF"));
+//		addThemeButton.addActionListener(manager);
 		
 		this.setBackground(Color.decode("#1A1919"));
 		this.add(title);
@@ -138,7 +138,7 @@ public class HomePage extends JPanel {
 		this.add(newGameButton);
 		this.add(continueButton);
 		this.add(leaderBoardButton);
-		this.add(addThemeButton);
+//		this.add(addThemeButton);
 	}
 
 	public JLabel getUsername() {

@@ -57,7 +57,6 @@ public class InscriptionPage extends JPanel {
 		signUp.setHorizontalAlignment(SwingConstants.CENTER);
 		signUp.setForeground(Color.decode("#FFFFFF"));
 		signUp.setBounds(337, 90, 137, 55);
-		signUp.addMouseListener(manager);
 		
 		firsnameText = new JLabel("Firsname");
 		firsnameText.setFont(font);

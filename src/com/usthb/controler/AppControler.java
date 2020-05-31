@@ -9,6 +9,7 @@ import java.awt.event.KeyListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Iterator;
 import java.util.LinkedList;
@@ -31,6 +32,7 @@ import com.usthb.vues.ConnectionPage;
 import com.usthb.vues.EurekaFrame;
 import com.usthb.vues.GamePage;
 import com.usthb.vues.InscriptionPage;
+import com.usthb.vues.Leaderboard;
 import com.usthb.vues.PopUp;
 
 
@@ -216,8 +218,17 @@ public class AppControler implements
 					}
 					
 					eurekaRunner.terminate();
-					System.out.println(eurekaRunner.getThemes());
 					System.exit(0);
+				}
+				
+			} else if (triger.contentEquals("Leaderboard")) {
+				gameFrame.setLeaderboard();
+				ArrayList<String> players = eurekaRunner.getPlayers();
+				
+				switchPanel(gameFrame.getHomePage(), gameFrame.getLeaderboard());
+				
+				for (String player : players) {
+					gameFrame.addPlayerToLeaderboard(player);
 				}
 				
 			} else if (triger.contentEquals("Continue")) {
