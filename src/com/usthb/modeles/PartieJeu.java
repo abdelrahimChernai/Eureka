@@ -122,7 +122,7 @@ public class PartieJeu implements Serializable {
 	}
 	
 	public int getAttemptsLeft() {
-		return 8 - hangman.getState();
+		return 0 + hangman.getState();
 	}
 	
 	/**
