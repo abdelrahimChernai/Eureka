@@ -73,6 +73,10 @@ public class PopUp extends JDialog {
 		return baseFrame;
 	}
 
+	public JPanel getGameFinished() {
+		return gameFinished;
+	}
+
 	public void displayGameFinished(Point center, boolean win, int score) {
 		baseFrame.removeAll();
 		

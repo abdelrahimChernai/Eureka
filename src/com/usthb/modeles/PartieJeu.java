@@ -1,4 +1,4 @@
-package com.usthb.modeles;
+	package com.usthb.modeles;
 
 import java.io.Serializable;
 import java.util.LinkedList;
@@ -134,11 +134,12 @@ public class PartieJeu implements Serializable {
 	private void setNextQuestionId() {
 		questionId =
 				theme.generateQuestionID()
-				+ (Integer.valueOf(
-						questionId.substring(
-								questionId.length() - 1)
+				+ (
+						Integer.valueOf(
+							questionId.substring(questionId.length() - 1)
 						)
-						+ 1);
+						+ 1
+					);
 	}
 	
 	private void setupCurrnetAnswer(String answer) {

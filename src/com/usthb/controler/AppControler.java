@@ -10,7 +10,6 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
 import java.util.Calendar;
-import java.util.GregorianCalendar;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.NoSuchElementException;
@@ -32,6 +31,7 @@ import com.usthb.vues.ConnectionPage;
 import com.usthb.vues.EurekaFrame;
 import com.usthb.vues.GamePage;
 import com.usthb.vues.InscriptionPage;
+import com.usthb.vues.PopUp;
 
 
 public class AppControler implements
@@ -52,9 +52,11 @@ public class AppControler implements
 		gameFrame = new EurekaFrame(PartieJeu.getHangman());
 		backStack = new Stack<JPanel>();
 		
-//		ThemeJeu theme = new ThemeJeu(2, "Cold War", ThemeType.HISTOIRE);
+//		ThemeJeu theme = new ThemeJeu(2, "Cold war", ThemeType.HISTOIRE);
 //		eurekaRunner.getThemes().add(theme);
-		
+//		theme = new ThemeJeu(2, "CULTURE GÉNÉRALE", ThemeType.CULTURE_GENERALE);
+//		eurekaRunner.getThemes().add(theme);
+
 		eurekaRunner.initialization();
 		gameFrame.setVisible(true);
 	}
@@ -214,6 +216,7 @@ public class AppControler implements
 					}
 					
 					eurekaRunner.terminate();
+					System.out.println(eurekaRunner.getThemes());
 					System.exit(0);
 				}
 				
@@ -269,9 +272,9 @@ public class AppControler implements
 							gameFrame.getPopUp().displayLoseProgress(
 									gameFrame.getLocation());
 						}
-					} else if (((JButton) e.getSource()).getParent().
-							equals(gameFrame.getGamePage())) {
-						
+					} else if (((JButton) e.getSource()).getParent()
+							.equals(gameFrame.getPopUp().getGameFinished())) {
+
 						gameFrame.getPopUp().removePopUp();
 						gameFrame.removeBackground();
 						switchPanel(

@@ -89,7 +89,7 @@ public class ThemeSelectionPage extends JPanel {
 		final int MIN_WIDTH = (
 				810
 				- themesButtons.size() * 100
-				+ (themesButtons.size() - 1) * SPACING
+				- (themesButtons.size() - 1) * SPACING
 			) / 2;
 		
 		for (int i = 0; i < themesButtons.size(); i++) {
