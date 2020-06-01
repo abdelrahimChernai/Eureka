@@ -59,7 +59,8 @@ public class ThemeSelectionPage extends JPanel {
 		
 		for (String theme : themes) {
 			JButton themeButton = new JButton(theme);
-			themeButton.setFont(font);
+			temp = font.deriveFont(12f);
+			themeButton.setFont(temp);
 			themeButton.setHorizontalAlignment(SwingConstants.CENTER);
 			themeButton.setBorderPainted(false);
 			themeButton.setFocusPainted(false);

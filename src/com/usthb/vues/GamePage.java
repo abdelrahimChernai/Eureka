@@ -66,7 +66,7 @@ public class GamePage extends JPanel {
 		question.setFont(font);
 		StyledDocument questionStyle = question.getStyledDocument();
 		SimpleAttributeSet center = new SimpleAttributeSet();
-		question.setBounds((810 - 200) / 2, 122, 200, 40);
+		question.setBounds((810 - 500) / 2, 122, 500, 80);
 		question.setBackground(Color.decode("#1A1919"));
 		question.setForeground(Color.decode("#FFFFFF"));
 		question.setEditable(false);
