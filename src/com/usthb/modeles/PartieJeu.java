@@ -1,7 +1,8 @@
-package com.usthb.modeles;
+	package com.usthb.modeles;
 
 import java.io.Serializable;
 import java.util.LinkedList;
+import java.util.Random;
 
 import com.usthb.dessin.Potence;
 
@@ -29,6 +30,8 @@ public class PartieJeu implements Serializable {
 	 * @see ThemeJeu#coefficent
 	 */
 	private int score = 0;
+	
+	private boolean win;
 
 	/**
 	 * <p>
@@ -72,10 +75,11 @@ public class PartieJeu implements Serializable {
 	 * 
 	 * @see PartieJeu#checkChar(char)
 	 */
-	private Potence hangman = new Potence();
+	private static Potence hangman = new Potence();
 	
 	public PartieJeu(ThemeJeu theme, LinkedList<? extends Question> questions) {
 		gamesNumber++;
+		this.win = false;
 		this.theme = theme;
 		this.questions = (LinkedList<Question>) questions;
 	}
@@ -84,11 +88,19 @@ public class PartieJeu implements Serializable {
 		return score;
 	}
 
+	public boolean isWin() {
+		return win;
+	}
+
+	public ThemeJeu getTheme() {
+		return theme;
+	}
+
 	public String getCurrentAnswer() {
 		return currentAnswer.toString();
 	}
 
-	public Potence getHangman() {
+	public static Potence getHangman() {
 		return hangman;
 	}
 		
@@ -99,7 +111,6 @@ public class PartieJeu implements Serializable {
 				i < questions.size() 
 				&& ! questions.get(i).getId().equals(this.questionId)
 			) {
-			
 			i++;
 		}
 		
@@ -107,11 +118,11 @@ public class PartieJeu implements Serializable {
 	}
 	
 	public int getCurrentLevel() {
-		return questionId.charAt(questionId.length() - 1) - 48;
+		return questionId.charAt(questionId.length() - 2) - 48;
 	}
 	
 	public int getAttemptsLeft() {
-		return 8 - hangman.getState();
+		return 0 + hangman.getState();
 	}
 	
 	/**
@@ -121,20 +132,31 @@ public class PartieJeu implements Serializable {
 	 * </p> 
 	 */
 	private void setNextQuestionId() {
+		Random rand = new Random();
+		int j = rand.nextInt(5) + 1;
 		questionId =
 				theme.generateQuestionID()
-				+ (Integer.valueOf(
-						questionId.substring(
-								questionId.length() - 1)
+				+ (
+						Integer.valueOf(
+							questionId.substring(
+									questionId.length() - 2,
+									questionId.length() - 1
+								)
 						)
-						+ 1);
+						+ 1
+					)  + "" + j;
 	}
 	
 	private void setupCurrnetAnswer(String answer) {
 		currentAnswer = new StringBuffer(answer.length());
 		
 		for (int i = 0; i < this.currentAnswer.capacity(); i++) {
-			if (answer.charAt(i) != ' ') {
+			if (
+					answer.charAt(i) != ' '
+					&& answer.charAt(i) != '’'
+					&& answer.charAt(i) != '\''
+			) {
+				
 				currentAnswer.insert(i, '*');
 			} else {
 				currentAnswer.insert(i, ' ');
@@ -143,7 +165,11 @@ public class PartieJeu implements Serializable {
 	}
 	
 	public void startGame() {
-		this.questionId = theme.generateQuestionID() + 1;		
+		Random rand = new Random();
+		int j = rand.nextInt(5) + 1;
+		
+		hangman.clearState();
+		this.questionId = theme.generateQuestionID() + 1 + j;		
 		setupCurrnetAnswer(getQuestion().getAnswer());
 	}
 	
@@ -155,14 +181,6 @@ public class PartieJeu implements Serializable {
 		
 	}
 	
-	private void finishGame(boolean win) {
-		if (win) {
-			
-		} else {
-			
-		}
-	}
-
 	/**
 	 * <b>
 	 * 	Cette fonction vérifie si le caractère entré par le joueur est dans la
@@ -205,26 +223,38 @@ public class PartieJeu implements Serializable {
 	public void checkChar(char inputChar) {
 		String answer = getQuestion().getAnswer();
 		
+		//si le caractère est dans answer et n'est pas dans la réponse
 		if (
-				answer.indexOf(inputChar) != -1
-				&& currentAnswer.indexOf(Character.toString(inputChar)) == -1
-			) {//si le caractère est dans answer et n'est pas dans la réponse
+				(
+						answer.indexOf(Character.toUpperCase(inputChar)) != -1
+						|| answer.indexOf(Character.toLowerCase(inputChar)) != -1
+				) 
+				&&(currentAnswer.indexOf(Character.toString(inputChar).toLowerCase()) == -1
+					|| currentAnswer.indexOf(Character.toString(inputChar).toUpperCase()) == -1)
+			) {
 			
 			for (int i = 0; i < answer.length(); i++) {
-
-				if (answer.charAt(i) == inputChar) {
+				if (Character.toLowerCase(answer.charAt(i))
+						==  Character.toLowerCase(inputChar)) {
 					currentAnswer.deleteCharAt(i);
 					currentAnswer.insert(i, inputChar);
 				}
 			}
 			
-			if (answer.equals(currentAnswer.toString())) {//convertie
+			if (answer.equalsIgnoreCase((currentAnswer.toString()))) {//convertie
 				//currentAnswer en String puis compare avec answer
 				
-				if (Integer.valueOf(questionId.substring(questionId.length() - 1)) == 5) {
-					hangman.setWinGame();
+				if (Integer.valueOf(
+						questionId.substring(
+								questionId.length() - 2,
+								questionId.length() - 1
+							)
+						) == 5) {
+					
+					this.win = true; 
 					score += theme.coefficent * this.getQuestion().getNumberPoints();
 				} else {
+					hangman.setFoundAnswer();
 					nextLevel();
  				}
 				/*

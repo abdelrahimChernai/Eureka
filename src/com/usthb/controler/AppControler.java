@@ -1,5 +1,6 @@
 package com.usthb.controler;
 
+import java.awt.Color;
 import java.awt.Component;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -7,43 +8,64 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
-import java.util.Date;
+import java.awt.event.MouseMotionListener;
+import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.NoSuchElementException;
+import java.util.Stack;
 import java.util.StringTokenizer;
 
-
-
+import javax.swing.JButton;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
-
+import javax.swing.border.LineBorder;
 
 import com.usthb.ErrorCode;
 import com.usthb.MainApp;
 import com.usthb.modeles.Joueur;
 import com.usthb.modeles.PartieJeu;
 import com.usthb.modeles.ThemeJeu;
+import com.usthb.modeles.ThemeType;
 import com.usthb.vues.ConnectionPage;
 import com.usthb.vues.EurekaFrame;
 import com.usthb.vues.GamePage;
 import com.usthb.vues.InscriptionPage;
+import com.usthb.vues.Leaderboard;
+import com.usthb.vues.PopUp;
 
 
-public class AppControler implements ActionListener
+public class AppControler implements
+	ActionListener
 	, MouseListener
+	, MouseMotionListener
 	, KeyListener {
 	
-	private static MainApp eurekaRuner;
+	private static MainApp eurekaRunner;
 	private static EurekaFrame gameFrame;
+	private static Stack<JPanel> backStack;
+	
+	//La position d'un clique, utilisé pour pouvoir bouger la fenêtre
+	private int x, y;
 	
 	public static void start() {
-		eurekaRuner = new  MainApp();
-		gameFrame = new EurekaFrame();
+		eurekaRunner = new  MainApp();
+		gameFrame = new EurekaFrame(PartieJeu.getHangman());
+		backStack = new Stack<JPanel>();
 		
-//		ThemeJeu theme = new ThemeJeu(2, "Cold War", ThemeType.HISTOIRE);
-//		eurekaRuner.getThemes().add(theme);
-		
-		eurekaRuner.initialization();
+//		ThemeJeu theme = new ThemeJeu(2, "Cult Gén", ThemeType.CULTURE_GENERALE);
+//		eurekaRunner.getThemes().add(theme);
+//		theme = new ThemeJeu(4, "Santé", ThemeType.SANTE);
+//		eurekaRunner.getThemes().add(theme);
+//		theme = new ThemeJeu(2, "Islam", ThemeType.ISLAM);
+//		eurekaRunner.getThemes().add(theme);
+//		theme = new ThemeJeu(3, "Histoire", ThemeType.HISTOIRE);
+//		eurekaRunner.getThemes().add(theme);
+//		theme = new ThemeJeu(3, "Géographie", ThemeType.GEOGRAPHIE);
+//		eurekaRunner.getThemes().add(theme);
+
+		eurekaRunner.initialization();
 		gameFrame.setVisible(true);
 	}
 
@@ -79,26 +101,29 @@ public class AppControler implements ActionListener
 	}
 	
 	private void startGame(ThemeJeu theme, Joueur player) {
-		eurekaRuner.setCurrentGame(new PartieJeu(
+		gameFrame.getGamePage().getPlayerInput().setBorder(
+				new LineBorder(Color.decode("#FFFFFF"), 1, true));
+		eurekaRunner.setCurrentGame(new PartieJeu(
 				theme
-				, eurekaRuner.getCurrentPlayer().getQuestions(theme)));
-		PartieJeu currentGame = eurekaRuner.getCurrentGame();
+				, eurekaRunner.getCurrentPlayer().getQuestions(theme)));
+		PartieJeu currentGame = eurekaRunner.getCurrentGame();
 		GamePage gamePage = gameFrame.getGamePage();
 		
-		switchPanel(gameFrame.getThemeSelectionPage(), gamePage);
 		currentGame.startGame();
-		eurekaRuner.getCurrentPlayer().setCurrentLvl();
+		eurekaRunner.getCurrentPlayer().setCurrentLvl();
 		gamePage.setQuestion(currentGame.getQuestion().getLable());
 		gamePage.setCurrentAnswer(currentGame.getCurrentAnswer());
 		gamePage.setLevel(currentGame.getCurrentLevel());
 		gamePage.setChansesLeft(currentGame.getAttemptsLeft());
 		gamePage.setScore(currentGame.getScore());
+		switchPanel(gameFrame.getThemeSelectionPage(), gamePage);
 	}
 
 	private void playRound(PartieJeu game) {
 		GamePage gamePage = gameFrame.getGamePage();
 		
 		game.checkChar(gamePage.getPlayerInput().getText().charAt(0));
+			
 		
 		// On vérifie si le caractère était correcte ou non, si la réponse
 		// courante du joueur se trouve inchangé (celle de la partie) donc le
@@ -109,10 +134,10 @@ public class AppControler implements ActionListener
 			gamePage.updatePlayerInputState(true);
 			gamePage.setCurrentAnswer(game.getCurrentAnswer());
 			
-			if (eurekaRuner.getCurrentPlayer().getCurrentLvl().getLvlNumber()
+			if (eurekaRunner.getCurrentPlayer().getCurrentLvl().getLvlNumber()
 				< game.getCurrentLevel()) {
 				
-				eurekaRuner.getCurrentPlayer().incrementLevel();
+				eurekaRunner.getCurrentPlayer().incrementLevel();
 				gamePage.setLevel(game.getCurrentLevel());
 				gamePage.setQuestion(game.getQuestion().getLable());
 			}
@@ -122,59 +147,120 @@ public class AppControler implements ActionListener
 		gamePage.setScore(game.getScore());
 		gamePage.disableCofirmButton();
 		
-		if (game.getHangman().isWinGame()) {
-			System.out.println("You win");
+		if (game.isWin()) {
+			gameFrame.displayBackground(gameFrame.getGamePage());
+			gameFrame.getPopUp().displayGameFinished(
+					gameFrame.getLocation()
+					, true
+					, game.getScore());
 			
-			eurekaRuner.getCurrentPlayer().addGame(
-					eurekaRuner.getCurrentGame());
-
-			switchPanel(
-					gameFrame.getGamePage()
-					, gameFrame.getHomePage());
-			
-			System.out.println(eurekaRuner.getCurrentPlayer().getTotalScore());
+			eurekaRunner.getCurrentPlayer().addGame(
+					eurekaRunner.getCurrentGame());
 		} else if (game.getAttemptsLeft() == 0) {
-			System.out.println("You lost");
-			eurekaRuner.getCurrentPlayer().addGame(
-					eurekaRuner.getCurrentGame());
-
-			switchPanel(
-					gameFrame.getGamePage()
-					, gameFrame.getHomePage());
-			System.out.println(eurekaRuner.getCurrentPlayer().getTotalScore());
+			gameFrame.displayBackground(gameFrame.getGamePage());
+			gameFrame.getPopUp().displayGameFinished(
+					gameFrame.getLocation()
+					, false
+					, game.getScore());
+			eurekaRunner.getCurrentPlayer().addGame(
+					eurekaRunner.getCurrentGame());
 		}
+	}
+	
+	private void loadGame(PartieJeu game) {
+		gameFrame.setGamePage(eurekaRunner.getCurrentPlayer().getUsername());
+		gameFrame.getGamePage().getPlayerInput().setBorder(
+				new LineBorder(Color.decode("#FFFFFF"), 1, true));
+		eurekaRunner.setCurrentGame(game);
+		
+		GamePage gamePage = gameFrame.getGamePage();
+		
+		switchPanel(gameFrame.getHomePage(), gamePage);
+		
+		gamePage.setQuestion(game.getQuestion().getLable());
+		gamePage.setCurrentAnswer(game.getCurrentAnswer());
+		gamePage.setLevel(game.getCurrentLevel());
+		gamePage.setChansesLeft(game.getAttemptsLeft());
+		gamePage.setScore(game.getScore());
 	}
 
 	private void switchPanel(JPanel oldPanel, JPanel newPanel) {
 		gameFrame.remove(oldPanel);
 		gameFrame.add(newPanel);
 		gameFrame.repaint();
+		
+		if (backStack.contains(newPanel)) {
+			while(!backStack.empty() && backStack.pop().equals(newPanel));
+		} else {
+			backStack.push(oldPanel);
+		}
 	}
-
+	
+	private void goBack(JPanel currnetPanel) {
+		JPanel newPanel = backStack.pop();
+		
+		gameFrame.remove(currnetPanel);
+		gameFrame.add(newPanel);
+		gameFrame.repaint();
+	}
+	
 	public void actionPerformed(ActionEvent e) {
 			Component currentPage = ((Component) e.getSource()).getParent();
 			String triger = e.getActionCommand(); 
 			
 			if (triger.contentEquals("")) {
-				if (currentPage.equals(gameFrame)) {
-					
+				if (currentPage.equals(gameFrame.getPopUp().getBaseFrame())) {
+					gameFrame.getPopUp().removePopUp();
+					gameFrame.removeBackground();
 				} else {
-					eurekaRuner.terminate();
+					JPanel parent = (JPanel) ((Component) e.getSource())
+							.getParent();
+					
+					for (Component component : parent.getComponents()) {
+						if (component.equals(gameFrame.getGamePage())) {
+							eurekaRunner.getCurrentPlayer().addGame(
+									eurekaRunner.getCurrentGame());
+						}
+					}
+					
+					eurekaRunner.terminate();
 					System.exit(0);
+				}
+				
+			} else if (triger.contentEquals("Leaderboard")) {
+				gameFrame.setLeaderboard();
+				ArrayList<String> players = eurekaRunner.getPlayers();
+				
+				switchPanel(gameFrame.getHomePage(), gameFrame.getLeaderboard());
+				
+				for (String player : players) {
+					gameFrame.addPlayerToLeaderboard(player);
 				}
 				
 			} else if (triger.contentEquals("Continue")) {
 				
-				if (eurekaRuner.getCurrentPlayer() != null) {
-					
+				if (eurekaRunner.getCurrentPlayer() != null) {
+					if (eurekaRunner.getCurrentPlayer().hasCurrentGmae()) {
+
+						loadGame(eurekaRunner.getCurrentPlayer()
+								.getLastGame());
+						
+						eurekaRunner.getCurrentPlayer().removeLastGame();
+					} else {
+						gameFrame.displayBackground(gameFrame.getHomePage());
+						gameFrame.getPopUp().displayNoCurrentGame(
+								gameFrame.getLocation());
+					}
 				} else {
-					
+					gameFrame.displayBackground(gameFrame.getHomePage());
+					gameFrame.getPopUp().displayNotConnected(
+							gameFrame.getLocation());
 				}
 				
 			} else if (triger.contentEquals("New Game")) {
-				if (eurekaRuner.getCurrentPlayer() != null) {
+				if (eurekaRunner.getCurrentPlayer() != null) {
 					LinkedList<String> themes = new LinkedList<String>();
-					Iterator<ThemeJeu> it = eurekaRuner.getThemes().iterator();
+					Iterator<ThemeJeu> it = eurekaRunner.getThemes().iterator();
 					
 					while (it.hasNext()) {
 						themes.add(it.next().getLable());
@@ -182,34 +268,70 @@ public class AppControler implements ActionListener
 					
 					gameFrame.setThemeSelectionPage(
 							themes
-							, eurekaRuner.getCurrentPlayer().getUsername()
+							, eurekaRunner.getCurrentPlayer().getUsername()
+							, eurekaRunner.getCurrentPlayer().getCurrentLvl()
+								.getLvlNumber()
 						);
 					
-					switchPanel(
-							gameFrame.getHomePage()
-							, gameFrame.getThemeSelectionPage()
-						);
+					if (((JButton) e.getSource()).getParent().
+							equals(gameFrame.getHomePage())) {
+						
+						Joueur currentPlayer = eurekaRunner.getCurrentPlayer();
+						
+						if (!currentPlayer.hasCurrentGmae()) {
+							
+							switchPanel(
+									gameFrame.getHomePage()
+									, gameFrame.getThemeSelectionPage()
+								);
+						} else {
+							gameFrame.displayBackground(gameFrame.getHomePage());
+							gameFrame.getPopUp().displayLoseProgress(
+									gameFrame.getLocation());
+						}
+					} else if (((JButton) e.getSource()).getParent()
+							.equals(gameFrame.getPopUp().getGameFinished())) {
+
+						gameFrame.getPopUp().removePopUp();
+						gameFrame.removeBackground();
+						switchPanel(
+								gameFrame.getGamePage()
+								, gameFrame.getThemeSelectionPage()
+							);
+					} else {
+						eurekaRunner.getCurrentPlayer().removeLastGame();
+						gameFrame.getPopUp().removePopUp();
+						gameFrame.removeBackground();
+						switchPanel(
+								gameFrame.getHomePage()
+								, gameFrame.getThemeSelectionPage()
+							);
+					}
 				} else {
-					gameFrame.getPopUp().displayPopUp(gameFrame.getLocation());
+					gameFrame.displayBackground(gameFrame.getHomePage());
+					gameFrame.getPopUp().displayNotConnected(
+							gameFrame.getLocation());
 				}
 			} else if (triger.contentEquals("Confirm")) {
 				if (currentPage.equals(gameFrame.getConnectionPage())) {
 					ConnectionPage connectionPage = (ConnectionPage) currentPage;
-					ErrorCode error = eurekaRuner.connection();
+					ErrorCode error = eurekaRunner.connection();
 	
 					if (error.equals(ErrorCode.WRONG_USERNAME)) {
 						connectionPage.setUsernameError(error.getErrorMessage());
 					} else if (error.equals(ErrorCode.WRONG_PASSWORD)) {
 						connectionPage.setPasswordError(error.getErrorMessage());
 					} else if (error.equals(ErrorCode.NO_ERROR)){
-						gameFrame.getHomePage().setUsername(
-								eurekaRuner.getCurrentPlayer().getUsername());
-	
+						gameFrame.getHomePage().setPlayerText(
+							eurekaRunner.getCurrentPlayer().getUsername()
+							, eurekaRunner.getCurrentPlayer().getCurrentLvl().
+								getLvlNumber());
+						
 						switchPanel(connectionPage, gameFrame.getHomePage());
 					}
 				} else if (currentPage.equals(gameFrame.getInscriptionPage())) {
 					InscriptionPage inscriptionPage = (InscriptionPage)currentPage;
-					ErrorCode error = eurekaRuner.inscription();
+					ErrorCode error = eurekaRunner.inscription();
 					
 					if (error.equals(ErrorCode.UNAVALABLE_USERNAME)) {
 						inscriptionPage.setUsernameError(
@@ -224,18 +346,27 @@ public class AppControler implements ActionListener
 								, false);
 						
 					} else if (error.equals(ErrorCode.NO_ERROR)) {
-						gameFrame.getHomePage().setUsername(
-								eurekaRuner.getCurrentPlayer().getUsername());
+						int lvl = 0;
+						
+						if (eurekaRunner.getCurrentPlayer().getCurrentLvl()
+								!= null) {
+							lvl = eurekaRunner.getCurrentPlayer()
+									.getCurrentLvl().getLvlNumber();
+						}
+						gameFrame.getHomePage().setPlayerText(
+							eurekaRunner.getCurrentPlayer().getUsername()
+							, lvl);
 						gameFrame.getHomePage().hideAccountCreation();
 						switchPanel(inscriptionPage, gameFrame.getHomePage());
 					}
 					
 				} else if (currentPage.equals(gameFrame.getGamePage())) {
-					playRound(eurekaRuner.getCurrentGame());
+					playRound(eurekaRunner.getCurrentGame());
 				}
 			} else if (currentPage.equals(gameFrame.getThemeSelectionPage())) {
+				
 				Iterator<ThemeJeu> themesIterator =
-						eurekaRuner.getThemes().iterator();
+						eurekaRunner.getThemes().iterator();
 				ThemeJeu selectedTheme = null;
 				
 				while (themesIterator.hasNext() && selectedTheme == null) {
@@ -248,41 +379,93 @@ public class AppControler implements ActionListener
 				
 				if (selectedTheme != null) {
 					gameFrame.setGamePage(
-							eurekaRuner.getCurrentPlayer().getUsername());
+							eurekaRunner.getCurrentPlayer().getUsername());
 					
-					startGame(selectedTheme, eurekaRuner.getCurrentPlayer());
+					startGame(selectedTheme, eurekaRunner.getCurrentPlayer());
 				}
 				
+			} else if (triger.contentEquals("Home Page")) {
+				gameFrame.getPopUp().removePopUp();
+				gameFrame.removeBackground();
+				switchPanel(
+						gameFrame.getGamePage()
+						, gameFrame.getHomePage()
+					);
+			} else if (triger.contentEquals("Replay")) {
+				gameFrame.getPopUp().removePopUp();
+				gameFrame.removeBackground();
+				startGame(eurekaRunner.getCurrentGame().getTheme()
+						, eurekaRunner.getCurrentPlayer());
+			} else if (triger.contentEquals("Log In")) {
+				gameFrame.getPopUp().removePopUp();
+				gameFrame.removeBackground();
+				switchPanel(
+						gameFrame.getHomePage()
+						, gameFrame.getConnectionPage()
+					);
+			} else if (triger.contentEquals("Create Account")) {
+				gameFrame.getPopUp().removePopUp();
+				gameFrame.removeBackground();
+				switchPanel(
+						gameFrame.getHomePage()
+						, gameFrame.getInscriptionPage()
+					);
+			} else if (triger.contentEquals("Cancel")
+					|| triger.contentEquals("Okay")) {
+				
+				gameFrame.getPopUp().removePopUp();
+				gameFrame.removeBackground();
 			}
 		}
 
 	@Override
-	public void mouseClicked(MouseEvent e) {
-		if (eurekaRuner.getCurrentPlayer() == null) {
+	public void mouseClicked(MouseEvent e) {		
+		if (e.getSource().getClass().equals(JLabel.class)) {
+			JLabel label = (JLabel) e.getSource();
 			int triger = e.getButton();
+			boolean noPlayer = eurekaRunner.getCurrentPlayer() == null;
 			
-			if (e.getSource().equals(gameFrame.getHomePage().getUsername())) {
-				if (triger == MouseEvent.BUTTON1) {
+			if (triger == MouseEvent.BUTTON1) {
+
+				if (label.getText().equals("Back")) {
+					
+					if(label.getParent().equals(gameFrame.getGamePage())) {
+						eurekaRunner.getCurrentPlayer()
+							.addGame(eurekaRunner.getCurrentGame());
+					}
+					
+					goBack((JPanel) label.getParent());
+					
+				} else if (label.getText().equals("Log In") && noPlayer) {
+
 					switchPanel(
 							gameFrame.getHomePage()
 							, gameFrame.getConnectionPage()
 							);
-				}
-			} else if (e.getSource().equals(
-					gameFrame.getHomePage().getCreateAccount())) {
-				
-				if (triger == MouseEvent.BUTTON1) {
+				} else if (label.getText().equals("Creat one now!")) {
+
 					switchPanel(
 							gameFrame.getHomePage()
 							, gameFrame.getInscriptionPage()
 							);
+				} else if (label.getText().equals("About")) {
+					gameFrame.displayBackground(gameFrame.getHomePage());
+					gameFrame.getPopUp().displayAbout(gameFrame.getLocation());
+				} else if (label.getText().equals("Help")
+						|| label.getText().equals("?")) {
+					
+					gameFrame.displayBackground(gameFrame.getHomePage());
+					gameFrame.getPopUp().displayHelp(gameFrame.getLocation());
 				}
 			}
 		}
 	}
 
 	public void mousePressed(MouseEvent e) {
-		
+		if (e.getY() < 32) { 
+			this.x = e.getX();
+			this.y = e.getY();
+		}
 	}
 
 	public void mouseReleased(MouseEvent e) {
@@ -294,6 +477,20 @@ public class AppControler implements ActionListener
 	}
 
 	public void mouseExited(MouseEvent e) {
+		
+	}
+
+	@Override
+	public void mouseDragged(MouseEvent e) {
+		if (e.getY() < 32) { 
+			gameFrame.setLocation(e.getXOnScreen() - x, e.getYOnScreen() - y);
+		}
+		
+	}
+
+	@Override
+	public void mouseMoved(MouseEvent e) {
+		// TODO Auto-generated method stub
 		
 	}
 
@@ -324,20 +521,22 @@ public class AppControler implements ActionListener
 			int day, month, year;
 			StringTokenizer birthDateTokenizer =
 					new StringTokenizer(dateString);
+			Calendar birthDate;
 			try {
 				day = Integer.valueOf(birthDateTokenizer.nextToken());
 				month = Integer.valueOf(birthDateTokenizer.nextToken()) - 1;
-				year = Integer.valueOf(birthDateTokenizer.nextToken()) - 1900;
+				year = Integer.valueOf(birthDateTokenizer.nextToken());
 			} catch (NoSuchElementException e1) {
 				day = -1;
 				month = -1;
 				year = -1;
 			}
-			Date birthDate = new Date(year, month, day);
-
+			
+			birthDate = Joueur.checkDate(year, month, day);
+			
 			boolean firstNameValid = Joueur.isFirstNameValid(firstName);
 			boolean lastNameValid = Joueur.isLastNameValid(lastName);
-			boolean dateValid = Joueur.isDateValide(birthDate);
+			boolean dateValid = birthDate != null;
 			boolean usernameValid = Joueur.isUsernameValid(username);
 			boolean passwordValid = Joueur.isPasswordValid(new String(password));
 			boolean confirPasswordValid = true;

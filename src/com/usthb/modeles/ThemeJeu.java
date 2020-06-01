@@ -70,19 +70,21 @@ public class ThemeJeu implements Serializable {
 
 			System.out.println("Question level " + i) ;
 			questionLvl = Levels.getLvl(i);
-
-			System.out.println("lable");
-			questionLable = new String(MainApp.console.nextLine());
 			
-			System.out.println("answer");
-			questionAnswer = new String(MainApp.console.nextLine());
-			
-			this.questions.add(new QuestionAdulte(
-												this.generateQuestionID() + i
-												, questionLvl
-												, questionLable
-												, questionAnswer
-											));
+			for (int j = 1; j <= 5; j++) {
+				System.out.println("lable");
+				questionLable = new String(MainApp.console.nextLine());
+				
+				System.out.println("answer");
+				questionAnswer = new String(MainApp.console.nextLine());
+				
+				this.questions.add(new QuestionAdulte(
+													this.generateQuestionID() + i + "" + j
+													, questionLvl
+													, questionLable
+													, questionAnswer
+												));
+			}
 		}
 		
 		
@@ -95,18 +97,20 @@ public class ThemeJeu implements Serializable {
 			System.out.println("Question level " + i) ;
 			questionLvl = Levels.getLvl(i);
 
-			System.out.println("lable");
-			questionLable = new String(MainApp.console.nextLine());
-			
-			System.out.println("answer");
-			questionAnswer = new String(MainApp.console.nextLine());
-			
-			this.questions.add(new QuestionEnfant(
-												this.generateQuestionID() + i
-												, questionLvl
-												, questionLable
-												, questionAnswer
-											));
+			for (int j = 1; j <= 5; j++) {
+				System.out.println("lable");
+				questionLable = new String(MainApp.console.nextLine());
+				
+				System.out.println("answer");
+				questionAnswer = new String(MainApp.console.nextLine());
+				
+				this.questions.add(new QuestionEnfant(
+													this.generateQuestionID() + i + "" + j
+													, questionLvl
+													, questionLable
+													, questionAnswer
+												));
+			}
 		}
 
 	}

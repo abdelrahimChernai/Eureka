@@ -15,6 +15,8 @@ import com.usthb.controler.AppControler;
 
 public class ConnectionPage extends JPanel {
 	private AppControler manager = new AppControler();
+	private JLabel back;
+	private JLabel logIn;
 	private JLabel usernameText;
 	private JLabel passwordText;
 	private JLabel usernameError;
@@ -26,29 +28,42 @@ public class ConnectionPage extends JPanel {
 	public ConnectionPage(Font font) {
 		super(null, true);
 		
+		back = new JLabel("Back");
+		back.setFont(font);
+		back.setForeground(Color.decode("#BB86FC"));
+		back.setBounds(60, 90, 32, 20);
+		back.addMouseListener(manager);
+	
+		logIn = new JLabel("Log In");
+		Font temp = font.deriveFont(30f);
+		logIn.setFont(temp);
+		logIn.setHorizontalAlignment(SwingConstants.CENTER);
+		logIn.setForeground(Color.decode("#FFFFFF"));
+		logIn.setBounds(349, 117, 111, 40);
+		
 		usernameText = new JLabel("Username");
 		usernameText.setFont(font);
-		usernameText.setBounds(300, 184, 92, 27);
+		usernameText.setBounds(300, 239, 92, 27);
 		usernameText.setForeground(Color.decode("#FFFFFF"));
 
 		passwordText = new JLabel("Password");
 		passwordText.setFont(font);
-		passwordText.setBounds(300, 314, 80, 27);
+		passwordText.setBounds(300, 336, 80, 27);
 		passwordText.setForeground(Color.decode("#FFFFFF"));
 		
 		usernameError = new JLabel();
 		usernameError.setFont(font);
-		usernameError.setBounds(353, 256, 111, 20);
+		usernameError.setBounds(353, 311, 111, 20);
 		usernameError.setForeground(Color.decode("#E81123"));
 		
 		passwordError = new JLabel();
 		passwordError.setFont(font);
-		passwordError.setBounds(278, 386, 296, 20);
+		passwordError.setBounds(278, 408, 296, 20);
 		passwordError.setForeground(Color.decode("#E81123"));
 		
 		usernameInput = new JTextField();
 		usernameInput.setFont(font);
-		usernameInput.setBounds(280, 211, 250, 45);
+		usernameInput.setBounds(280, 266, 250, 45);
 		usernameInput.setHorizontalAlignment(SwingConstants.CENTER);
 		usernameInput.setBackground(Color.decode("#1A1919"));
 		usernameInput.setForeground(Color.decode("#FFFFFF"));
@@ -58,7 +73,7 @@ public class ConnectionPage extends JPanel {
 		
 		passwordInput = new JPasswordField();
 		passwordInput.setFont(font);
-		passwordInput.setBounds(280, 341, 250, 45);
+		passwordInput.setBounds(280, 363, 250, 45);
 		passwordInput.setHorizontalAlignment(SwingConstants.CENTER);
 		passwordInput.setBackground(Color.decode("#1A1919"));	
 		passwordInput.setForeground(Color.decode("#FFFFFF"));
@@ -76,6 +91,8 @@ public class ConnectionPage extends JPanel {
 		confirmButton.addActionListener(manager);
 
 		this.setBackground(Color.decode("#1A1919"));
+		this.add(back);
+		this.add(logIn);
 		this.add(usernameText);
 		this.add(usernameInput);
 		this.add(usernameError);
@@ -96,7 +113,7 @@ public class ConnectionPage extends JPanel {
 
 	public void setUsernameError(String errorMesseg) {
 		int width = errorMesseg.length() * 8;
-		usernameError.setBounds(((810 - width) / 2), 264, width, 20);
+		usernameError.setBounds(((810 - width) / 2), 311, width, 20);
 		usernameError.setText(errorMesseg);
 		usernameError.setHorizontalAlignment(SwingConstants.CENTER);
 		
@@ -115,7 +132,7 @@ public class ConnectionPage extends JPanel {
 
 	public void setPasswordError(String errorMesseg) {
 		int width =  errorMesseg.length() * 8;
-		passwordError.setBounds(((810 - width) / 2), 395, width, 20);
+		passwordError.setBounds(((810 - width) / 2), 408, width, 20);
 		passwordError.setText(errorMesseg);
 		passwordError.setHorizontalAlignment(SwingConstants.CENTER);
 		

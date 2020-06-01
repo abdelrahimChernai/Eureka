@@ -6,11 +6,13 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.NoSuchElementException;
 import java.util.Scanner;
+import java.util.Set;
 import java.util.StringTokenizer;
 
 import com.usthb.controler.AppControler;
@@ -221,9 +223,9 @@ public class MainApp {
 		String lastName;
 		String username;
 		String password;
-		Date birthDate;
+		Calendar birthDate;
 		StringTokenizer birthDateString;
-		int day, mounth, year;
+		int day, month, year;
 		
 		firstName = AppControler.getInscriptionFirstname();
 		
@@ -239,12 +241,19 @@ public class MainApp {
 
 		birthDateString =
 				new StringTokenizer(AppControler.getInscriptionBirthDate());
-		day = Integer.parseUnsignedInt(birthDateString.nextToken());
-		mounth = Integer.parseUnsignedInt(birthDateString.nextToken()) - 1;
-		year = Integer.parseUnsignedInt(birthDateString.nextToken()) - 1900;
-		birthDate = new Date(year, mounth, day);
+		try {
+			day = Integer.parseUnsignedInt(birthDateString.nextToken());
+			month = Integer.parseUnsignedInt(birthDateString.nextToken());
+			year = Integer.parseUnsignedInt(birthDateString.nextToken());
+		} catch (NoSuchElementException e) {
+			day = -1;
+			month = -1;
+			year = -1;
+		}
 		
-		if (!Joueur.isDateValide(birthDate)) {
+		birthDate = Joueur.checkDate(year, month, day);
+		
+		if (birthDate == null) {
 			return ErrorCode.UNVALID_DATE_FORMAT;
 		}
 		
@@ -261,14 +270,23 @@ public class MainApp {
 		}
 		
 		if (Calendar.getInstance().get(Calendar.YEAR)
-				- (birthDate.getYear() + 1900)
+				- (birthDate.get(Calendar.YEAR))
 			> 18) { // le joueur est adulte
-
-		newPlayer =
-				new Adulte(firstName, lastName, username, password, birthDate);
+			
+			newPlayer = new Adulte(
+					firstName,
+					lastName,
+					username,
+					password,
+					birthDate.getTime()
+				);
 		} else {
-		newPlayer =
-				new Enfant(firstName, lastName, username, password, birthDate);
+			newPlayer = new Enfant(firstName,
+					lastName,
+					username,
+					password,
+					birthDate.getTime()
+				);
 		}
 		
 		//Pour des raisons de sécurité on efface le mot de passe
@@ -366,5 +384,37 @@ public class MainApp {
 	public HashSet<ThemeJeu> getThemes() {
 		return themes;
 	}
-	
+
+
+	public ArrayList<String> getPlayers() {
+		Set<Integer> keySet = players.keySet();
+		ArrayList<String> players = new ArrayList<String>();
+		int i = 1;
+		
+
+		int previousMax = Integer.MAX_VALUE;
+		Joueur previousMaxPlayer = null;
+		
+		while(players.size() < keySet.size()) {
+			int maxScore = 0;
+			int maxKey = 0;
+
+			for(Integer key : keySet) {
+				if (this.players.get(key).getTotalScore() >= maxScore
+					&& this.players.get(key).getTotalScore() <= previousMax
+					&& !this.players.get(key).equals(previousMaxPlayer)) {
+					
+					maxKey = key;
+					maxScore = this.players.get(key).getTotalScore();
+				}
+			}
+			
+			players.add(i + "    " + this.players.get(maxKey).toString());
+			previousMax = maxScore;
+			previousMaxPlayer = this.players.get(maxKey);
+			i++;
+		}
+		
+		return players;
+	}
 }
