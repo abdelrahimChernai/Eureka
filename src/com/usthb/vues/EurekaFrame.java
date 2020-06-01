@@ -12,7 +12,6 @@ import java.util.LinkedList;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
-import javax.swing.JScrollPane;
 
 import com.usthb.controler.AppControler;
 import com.usthb.dessin.Potence;

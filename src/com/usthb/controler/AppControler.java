@@ -27,15 +27,25 @@ import com.usthb.MainApp;
 import com.usthb.modeles.Joueur;
 import com.usthb.modeles.PartieJeu;
 import com.usthb.modeles.ThemeJeu;
-import com.usthb.modeles.ThemeType;
 import com.usthb.vues.ConnectionPage;
 import com.usthb.vues.EurekaFrame;
 import com.usthb.vues.GamePage;
 import com.usthb.vues.InscriptionPage;
-import com.usthb.vues.Leaderboard;
-import com.usthb.vues.PopUp;
 
-
+/**
+ * <b>C'est dans cette classe que ce passe l'applicatin</b>
+ * <p>
+ * 	D'abbord l'initielisation de la liste des joueurs et des thèmes puis
+ * 	l'affichage de la page d'acueille (plus de details dans a suite de la doc)
+ * </p>
+ * 
+ * @author Abdelrahim Chernai
+ * @author Yasmine Bouamra
+ * 
+ * 
+ * @see AppControler#start()
+ * 
+ */
 public class AppControler implements
 	ActionListener
 	, MouseListener
@@ -49,6 +59,16 @@ public class AppControler implements
 	//La position d'un clique, utilisé pour pouvoir bouger la fenêtre
 	private int x, y;
 	
+	/**
+	 * <p>
+	 * 	Creation d'un Object MainApp pour representer les modèles et un objet
+	 *	EurekaFrame représentant les pages de l'application puis initialisation
+	 *	des données et enfin affichage le fenêtre avec la Home page
+	 * </p>
+	 * 
+	 * @see MainApp
+	 * @see EurekaFrame
+	 */
 	public static void start() {
 		eurekaRunner = new  MainApp();
 		gameFrame = new EurekaFrame(PartieJeu.getHangman());
@@ -57,31 +77,59 @@ public class AppControler implements
 		eurekaRunner.initialization();
 		gameFrame.setVisible(true);
 	}
-
+	
+	/**
+	 * récupère le username de l'utilisateur qui se connecte
+	 * @return le nom d'utilisateur du joueur depuis la page de connection
+	 */
 	public static String getConnectionUsername() {
 		return gameFrame.getConnectionPage().getUsernameInput().getText();
 	}
 	
+	/**
+	 * récupère le mot de passe de l'utilisateur qui se connecte
+	 * @return le mot de passe du joueur depuis la page de connection
+	 */
 	public static String getConnectionPassword() {
 		return gameFrame.getConnectionPage().getPasswordInput().getText();
 	}
 	
+	/**
+	 * récupère le username de l'utilisateur qui s'inscrit
+	 * @return le nom d'utilisateur du joueur depuis la page d'inscription
+	 */
 	public static String getInscriptionUsername() {
 		return gameFrame.getInscriptionPage().getUsernameInput().getText();
 	}
 	
+	/**
+	 * récupère le prénom de l'utilisateur qui s'inscrit
+	 * @return le prénom du joueur depuis la page d'inscription
+	 */
 	public static String getInscriptionFirstname() {
 		return gameFrame.getInscriptionPage().getFirsnameInput().getText();
 	}
 	
+	/**
+	 * récupère le nom de l'utilisateur qui s'inscrit
+	 * @return le nom du joueur depuis la page d'inscription
+	 */
 	public static String getInscriptionLastname() {
 		return gameFrame.getInscriptionPage().getLastnameInput().getText();
 	}
 	
+	/**
+	 * récupère le date de naissance de l'utilisateur qui s'inscrit
+	 * @return le date de naissance du joueur depuis la page d'inscription
+	 */
 	public static String getInscriptionBirthDate() {
 		return gameFrame.getInscriptionPage().getBirthDateInput().getText();
 	}
 	
+	/**
+	 * récupère le mot de passe de l'utilisateur qui s'inscrit
+	 * @return le mot de passe du joueur depuis la page d'inscription
+	 */
 	public static String getInscriptionPassword() {
 		InscriptionPage inscriptionPage = gameFrame.getInscriptionPage();
 		String password =
@@ -89,6 +137,13 @@ public class AppControler implements
 		return password;
 	}
 	
+	
+	/**
+	 * <b>Lance une partie avec le thème choisit</b>
+	 * 
+	 * @param theme le theme de la partie en lancement
+	 * @param player le joueur lançant la partie
+	 */
 	private void startGame(ThemeJeu theme, Joueur player) {
 		gameFrame.getGamePage().getPlayerInput().setBorder(
 				new LineBorder(Color.decode("#FFFFFF"), 1, true));
@@ -107,7 +162,13 @@ public class AppControler implements
 		gamePage.setScore(currentGame.getScore());
 		switchPanel(gameFrame.getThemeSelectionPage(), gamePage);
 	}
-
+	
+	/**
+	 * <b>S'occupe du déroulement de la partie en cours lors ce qu'un
+	 * Modification a eu lieu</b>
+	 * 
+	 * @param game la partie en cours
+	 */
 	private void playRound(PartieJeu game) {
 		GamePage gamePage = gameFrame.getGamePage();
 		
@@ -172,7 +233,13 @@ public class AppControler implements
 		gamePage.setChansesLeft(game.getAttemptsLeft());
 		gamePage.setScore(game.getScore());
 	}
-
+	
+	/**
+	 * <b>s'occupe du changement de pages</b>
+	 * 
+	 * @param oldPanel page courante
+	 * @param newPanel page vers la quelle on souhaite aller
+	 */
 	private void switchPanel(JPanel oldPanel, JPanel newPanel) {
 		gameFrame.remove(oldPanel);
 		gameFrame.add(newPanel);
@@ -185,6 +252,10 @@ public class AppControler implements
 		}
 	}
 	
+	/**
+	 * <b>retour vers la page précédente en utilisant le backStack</b>
+	 * @param currnetPanel la page courante
+	 */
 	private void goBack(JPanel currnetPanel) {
 		JPanel newPanel = backStack.pop();
 		
@@ -193,15 +264,24 @@ public class AppControler implements
 		gameFrame.repaint();
 	}
 	
+	/**
+	 * <p>
+	 * 	cette méthode s'occupe de la gestion des événement en relation avec les
+	 * 	boutons et fait les redirection/affichage nécessaire et les appelant
+	 * 	les méthodes précédentes
+	 * </p>
+	 */
 	public void actionPerformed(ActionEvent e) {
 			Component currentPage = ((Component) e.getSource()).getParent();
 			String triger = e.getActionCommand(); 
 			
+			//cas bouton fermer
 			if (triger.contentEquals("")) {
+				//si c'est une pop up
 				if (currentPage.equals(gameFrame.getPopUp().getBaseFrame())) {
 					gameFrame.getPopUp().removePopUp();
 					gameFrame.removeBackground();
-				} else {
+				} else { //si c'est l'application
 					JPanel parent = (JPanel) ((Component) e.getSource())
 							.getParent();
 					
@@ -216,6 +296,7 @@ public class AppControler implements
 					System.exit(0);
 				}
 				
+				//bouton leaderboard
 			} else if (triger.contentEquals("Leaderboard")) {
 				gameFrame.setLeaderboard();
 				ArrayList<String> players = eurekaRunner.getPlayers();
@@ -225,7 +306,7 @@ public class AppControler implements
 				for (String player : players) {
 					gameFrame.addPlayerToLeaderboard(player);
 				}
-				
+				//bouton continuer
 			} else if (triger.contentEquals("Continue")) {
 				
 				if (eurekaRunner.getCurrentPlayer() != null) {
@@ -246,6 +327,7 @@ public class AppControler implements
 							gameFrame.getLocation());
 				}
 				
+				//bouton new game
 			} else if (triger.contentEquals("New Game")) {
 				if (eurekaRunner.getCurrentPlayer() != null) {
 					LinkedList<String> themes = new LinkedList<String>();
@@ -301,6 +383,7 @@ public class AppControler implements
 					gameFrame.getPopUp().displayNotConnected(
 							gameFrame.getLocation());
 				}
+				//bouton confirmation
 			} else if (triger.contentEquals("Confirm")) {
 				if (currentPage.equals(gameFrame.getConnectionPage())) {
 					ConnectionPage connectionPage = (ConnectionPage) currentPage;
@@ -372,7 +455,7 @@ public class AppControler implements
 					
 					startGame(selectedTheme, eurekaRunner.getCurrentPlayer());
 				}
-				
+				//bouton page d'aceuille
 			} else if (triger.contentEquals("Home Page")) {
 				gameFrame.getPopUp().removePopUp();
 				gameFrame.removeBackground();
@@ -380,11 +463,13 @@ public class AppControler implements
 						gameFrame.getGamePage()
 						, gameFrame.getHomePage()
 					);
+				//boutons replay
 			} else if (triger.contentEquals("Replay")) {
 				gameFrame.getPopUp().removePopUp();
 				gameFrame.removeBackground();
 				startGame(eurekaRunner.getCurrentGame().getTheme()
 						, eurekaRunner.getCurrentPlayer());
+				//boutons connection
 			} else if (triger.contentEquals("Log In")) {
 				gameFrame.getPopUp().removePopUp();
 				gameFrame.removeBackground();
@@ -392,6 +477,7 @@ public class AppControler implements
 						gameFrame.getHomePage()
 						, gameFrame.getConnectionPage()
 					);
+				//boutons creation de compt
 			} else if (triger.contentEquals("Create Account")) {
 				gameFrame.getPopUp().removePopUp();
 				gameFrame.removeBackground();
@@ -399,6 +485,7 @@ public class AppControler implements
 						gameFrame.getHomePage()
 						, gameFrame.getInscriptionPage()
 					);
+				//boutons annuler ou ok
 			} else if (triger.contentEquals("Cancel")
 					|| triger.contentEquals("Okay")) {
 				

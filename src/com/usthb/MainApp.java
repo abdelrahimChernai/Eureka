@@ -28,8 +28,8 @@ import com.usthb.modeles.ThemeJeu;
  *  représente l'application
  * </b>
  * <p>
- *	S'ocupe d'orienter l'enchainement des évènements pour qu'ils soient traités
- *	en envoyant chaque événement à la classe qui s'occupe de le gérer
+ *	Représente les composantes "logique" du programme et c'est a travers une
+ *	instance de cette classe que les traitement se font dans le contrôleur 
  * </p>
  * 
  * @author Abdelrahim Chernai
@@ -38,10 +38,22 @@ import com.usthb.modeles.ThemeJeu;
  */
 public class MainApp {
 	
-	public static Scanner console = new Scanner(System.in);		// TEST
 	
+	/**
+	 * utilisé pour la lecture des questions
+	 */
+	public static Scanner console = new Scanner(System.in);
+	
+	
+	/**
+	 * Représente le joueur connecté
+	 */
 	private Joueur currnetPlayer;
 	
+	
+	/**
+	 * Représente la partie en cours
+	 */
 	private PartieJeu currentGame;
 	
 	/**
@@ -70,7 +82,9 @@ public class MainApp {
 	private HashSet<ThemeJeu> themes;
 	
 	
-	
+	/**
+	 * Initialisation des valeur nécessaire 
+	 */
 	public MainApp() {
 		this.players = new HashMap<Integer, Joueur>();
 		this.themes  = new HashSet<ThemeJeu>();
@@ -81,22 +95,9 @@ public class MainApp {
 	/**
 	 * <p>
 	 * 	Se lance dès le lancement du jeu pour préparer les éléments et données
-	 * 	nécessaires en faisant ce qui suit :
+	 * 	nécessaires en Récupérant la liste des joueurs et la list des thèmes
+	 * 	depuis un fichier.
 	 * </p>
-	 * <ol>
-	 * 	<li>
-	 * 		Ouvre la fenêtre de chargement
-	 * 		//TODO donner plus de détailles sur ce point
-	 * 	</li>
-	 * 	<li>
-	 * 		Récupère la liste des joueurs depuis un fichier et la list des 
-	 * 		thèmes.
-	 *	</li>
-	 * 	<li>
-	 * 		ferme la fenêtre de chargement et ouvre la fenêtre principale
-	 * 		//TODO donner plus de détailles sur ce point
-	 * 	</li>
-	 * <ol>
 	 *
 	 * @see MainApp#themes
 	 * @see MainApp#players
@@ -155,15 +156,14 @@ public class MainApp {
 	
 	/**
 	 * <p>
-	 * 	Demande un nom d'utilisateur vérifie si l'id généré par ce dernier
-	 * 	existe sinon se répète jusau'à insertion d'un nom d'utilisateur valide
-	 * 	puis demande un mot de passe jusqu'au l'insertion du mot de passe
-	 * 	correspondant au profile représenté par le nom d'utilisateur, puis, une
-	 * 	fois que le bon mot de passe est inséré, retourne les données du
-	 * 	joueur.
+	 * 	vérifie si l'id généré par le nom d'utilisateur entré existe sinon
+	 * 	Retourne un code d'erreur, si le non d'utilisateur est valide vérifie
+	 * 	si le mot de passe est correspondant au profile représenté par le nom
+	 * 	d'utilisateur, sinon retourne une erreur, si le bon mot de passe est
+	 * 	inséré, retourne un code NO_ERROR qui permet de continuer vers la home
+	 * 	page
 	 * </p>
-	 * @return les données du joueur sous forme de Joueur, voir la
-	 * documentation de la class Joueur pour plus de détails
+	 * @return Un code d'erreur correspondent a l'erreur rencontré
 	 * 
 	 * @see com.usthb.modeles.Joueur
 	 * 
@@ -171,7 +171,11 @@ public class MainApp {
 	 * @see com.usthb.modeles.Joueur#id
 	 * @see com.usthb.modeles.Joueur#setId()
 	 * 
-	 * @since 1.1.1
+	 * @see com.usthb.ErrorCode
+	 * 
+	 * @see com.usthb.controler.AppControler
+	 * 
+	 * @since 1.2
 	 */
 	public ErrorCode connection() {
 		String username;
@@ -198,14 +202,15 @@ public class MainApp {
 	
 	/**
 	 * <p>
-	 *	Lie le Nom, Prénom, date de naissance, un nom d'utilisateur puis crée
-	 *	un id et vérifie qu'il n'existe pas dans la liste des joueurs puis lie
-	 *	un mot de passe et demande de le confirmer, cette méthode vérifie que
-	 *	les entrées sont conforme aux normes utilisées dans le code. Voir la
-	 *	documentation de Joueur pour plus de détails. Une fois que les données
-	 *	initialisées, le joueur est ajouté a la liste des joueurs puis on
-	 *	appelle la méthode connexion pour le connecter et lui propose de
-	 *	commencer une partie. Voir la documentation de MainApp.connection
+	 *	Récupère le Nom, Prénom, date de naissance et nom d'utilisateur puis
+	 *	crée un id et vérifie qu'il n'existe pas dans la liste des joueurs et
+	 *	que les formats son valide sinon existe retourne une erreur, insert le
+	 *	joueur dans la list de joueurs.
+	 * </p>
+	 * <p>
+	 * NOTE : la verification dans cette méthode est secondaire car une
+	 * Vérification est déjà faite dans le Contrôleur en utilisant les même
+	 * standard.
 	 * </p>
 	 * @return
 	 * 
@@ -215,7 +220,10 @@ public class MainApp {
 	 * @see Joueur#hashCode()
 	 * @see Joueur#setId()
 	 * 
-	 * @since 1.1.1
+	 * @see ErrorCode
+	 * @see AppControler
+	 * 
+	 * @since 1.2
 	 */
 	public ErrorCode inscription() {
 		Joueur newPlayer;
@@ -385,7 +393,13 @@ public class MainApp {
 		return themes;
 	}
 
-
+	/**
+	 * <b>S\occupe de retourner les information des joueurs sous forme de liste
+	 * de String</b>
+	 * @return une liste contenant les information des joueurs (on a fait
+	 * attention a ne retourner que le minimum nécessaire afin de preserver les
+	 * informations des joueurs)
+	 */
 	public ArrayList<String> getPlayers() {
 		Set<Integer> keySet = players.keySet();
 		ArrayList<String> players = new ArrayList<String>();
@@ -395,6 +409,7 @@ public class MainApp {
 		int previousMax = Integer.MAX_VALUE;
 		Joueur previousMaxPlayer = null;
 		
+		//un tri des joueur selon leur scores
 		while(players.size() < keySet.size()) {
 			int maxScore = 0;
 			int maxKey = 0;

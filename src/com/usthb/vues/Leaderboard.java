@@ -43,13 +43,14 @@ public class Leaderboard extends JPanel {
 		
 		leaderboard = new JPanel(new GridLayout(8, 1, 0, 20));
 		leaderboard.setBackground(Color.decode("#1A1919"));
-		leaderboard.setBounds(105, 173, 1000, 600);
+		leaderboard.setBounds(105, 173, 415, 600);
 		
 		shownPlayers = 0;
 		
 		scrollPane = new JScrollPane(leaderboard);
 		
 		scrollPane.setBounds(105, 173, 600, 415);
+		scrollPane.setBackground(new Color(0.f, 0.f, 0.f, 0.f));
 		scrollPane.setBorder(BorderFactory.createEmptyBorder());
 		scrollPane.setAutoscrolls(true);
 		
